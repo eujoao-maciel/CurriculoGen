@@ -39,7 +39,7 @@ const Testimonial = () => {
                         <p>{card.name}</p>
 
                         <svg
-                            className="mt-0.5 fill-green-500"
+                            className="mt-0.5 fill-purple-500"
                             width="12"
                             height="12"
                             viewBox="0 0 12 12"
@@ -72,8 +72,8 @@ const Testimonial = () => {
                 id="testimonials"
                 className="flex flex-col items-center my-10 scroll-mt-12"
             >
-                <div className="flex items-center gap-2 text-sm text-green-600 bg-green-400/10 rounded-full px-6 py-1.5">
-                    <BookUserIcon className="size-4.5 stroke-green-600" />
+                <div className="flex items-center gap-2 text-sm text-purple-600 bg-purple-400/20 rounded-full px-6 py-1.5">
+                    <BookUserIcon className="size-4.5 stroke-purple-600" />
                     <span>Depoimentos</span>
                 </div>
 
