@@ -1,19 +1,18 @@
 import { useState } from "react"
 import { Link } from "react-router-dom"
-
 import { Check } from "lucide-react"
 
 const Hero = () => {
     const [menuOpen, setMenuOpen] = useState(false)
 
     const logos = [
-        "https://saasly.prebuiltui.com/assets/companies-logo/instagram.svg",
-        "https://saasly.prebuiltui.com/assets/companies-logo/framer.svg",
-        "https://saasly.prebuiltui.com/assets/companies-logo/microsoft.svg",
-        "https://saasly.prebuiltui.com/assets/companies-logo/huawei.svg",
-        "https://saasly.prebuiltui.com/assets/companies-logo/walmart.svg",
+        "/instagram.svg",
+        "/framer.svg",
+        "/huawei.svg", 
+        "/samsung.svg",
+        "/microsoft.svg"
     ]
-
+   
     return (
         <>
             <div className="min-h-screen pb-20">
@@ -214,7 +213,7 @@ const Hero = () => {
                                 key={index}
                                 src={logo}
                                 alt="logo"
-                                className="h-6 w-auto max-w-xs"
+                                className="h-12 w-auto max-w-xs opacity-[.50]"
                             />
                         ))}
                     </div>
