@@ -60,8 +60,8 @@ const ResumeBuider = () => {
       "
          >
             <Link
-              to={'/app'}
-              className="
+               to={'/app'}
+               className="
                flex
                gap-2
                items-center
@@ -72,6 +72,16 @@ const ResumeBuider = () => {
             >
                <ArrowLeftIcon className="size-4" /> Voltar
             </Link>
+         </div>
+
+         <div className="max-w-7x1 mx-auto px-4 pb-8">
+            <div className="grid lg:grid-cols-12 gap-8">
+               {/* Left Panel - Form*/}
+               <div></div>
+
+               {/* Right Panel - Preview*/}
+               <div></div>
+            </div>
          </div>
       </div>
    )
