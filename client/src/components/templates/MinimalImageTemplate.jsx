@@ -40,10 +40,10 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
             {/* Name + Title */}
             <div className="col-span-2 flex flex-col justify-center py-10 px-8">
                <h1 className="text-4xl font-bold text-zinc-700 tracking-widest">
-                  {data.personal_info?.full_name || 'Your Name'}
+                  {data.personal_info?.full_name || 'Seu Nome '}
                </h1>
                <p className="uppercase text-zinc-600 font-medium text-sm tracking-widest">
-                  {data?.personal_info?.profession || 'Profession'}
+                  {data?.personal_info?.profession || 'Profissão'}
                </p>
             </div>
 
@@ -86,7 +86,7 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
                {data.education && data.education.length > 0 && (
                   <section className="mb-8">
                      <h2 className="text-sm font-semibold tracking-widest text-zinc-600 mb-3">
-                        EDUCATION
+                       EDUCAÇÃO 
                      </h2>
                      <div className="space-y-4 text-sm">
                         {data.education.map((edu, index) => (
@@ -108,7 +108,7 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
                {data.skills && data.skills.length > 0 && (
                   <section>
                      <h2 className="text-sm font-semibold tracking-widest text-zinc-600 mb-3">
-                        SKILLS
+                        HABILIDADES 
                      </h2>
                      <ul className="space-y-1 text-sm">
                         {data.skills.map((skill, index) => (
@@ -128,7 +128,7 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
                         className="text-sm font-semibold tracking-widest mb-3"
                         style={{ color: accentColor }}
                      >
-                        SUMMARY
+                        RESUMO
                      </h2>
                      <p className="text-zinc-700 leading-relaxed">
                         {data.professional_summary}
@@ -143,7 +143,7 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
                         className="text-sm font-semibold tracking-widest mb-4"
                         style={{ color: accentColor }}
                      >
-                        EXPERIENCE
+                        EXPERIÊNCIA 
                      </h2>
                      <div className="space-y-6 mb-8">
                         {data.experience.map((exp, index) => (
@@ -187,7 +187,7 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
                         className="text-sm uppercase tracking-widest font-semibold"
                         style={{ color: accentColor }}
                      >
-                        PROJECTS
+                        PROJETOS
                      </h2>
                      <div className="space-y-4">
                         {data.project.map((project, index) => (
