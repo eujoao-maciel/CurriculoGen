@@ -11,8 +11,11 @@ import {
    ChevronLeft,
    ChevronRight,
 } from 'lucide-react'
+
+import TemplateSelector from '../components/TemplateSelector.jsx'
 import PersonalInfoForm from '../components/PersonalInfoForm.jsx'
 import ResumePreview from '../components/ResumePreview.jsx'
+import ColorPicker from '../components/ColorPicker.jsx'
 
 const ResumeBuider = () => {
    const { resumeId } = useParams()
@@ -38,20 +41,7 @@ const ResumeBuider = () => {
       public: false,
    })
 
-   const dummyResumeData = [
-      {
-         _id: '1',
-         title: 'Frontend Developer Resume',
-         name: 'João',
-         skills: ['React', 'JS'],
-      },
-      {
-         _id: '2',
-         title: 'Backend Developer Resume',
-         name: 'Maria',
-         skills: ['Node', 'SQL'],
-      },
-   ]
+   const dummyResumeData = []
 
    const [activeSectionIndex, setActiveSectionIndex] = useState(0)
    const [removeBackground, setRemoveBackground] = useState(false)
@@ -167,7 +157,28 @@ const ResumeBuider = () => {
                           border-gray-300
                        "
                      >
-                        <div></div>
+                        <div className="flex items-center gap-2">
+                           <TemplateSelector
+                              selectedTemplate={resumeData.template}
+                              onChange={(template) =>
+                                 setResumeData((prev) => ({
+                                    ...prev,
+                                    template,
+                                 }))
+                              }
+                           />
+
+                           <ColorPicker
+                              selectedColor={resumeData.accent_color}
+                              onChange={(color) =>
+                                 setResumeData((prev) => ({
+                                    ...prev,
+                                    accent_color: color,
+                                 }))
+                              }
+                           />
+                        </div>
+
                         <div className="flex items-center">
                            {activeSectionIndex !== 0 && (
                               <button
