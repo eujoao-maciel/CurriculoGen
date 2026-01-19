@@ -9,7 +9,7 @@ const ColorPicker = ({ selectedColor, onChange }) => {
       { name: 'Verde', value: '#10B981' },
       { name: 'Vermelho', value: '#EF4444' },
       { name: 'Laranja', value: '#F97316' },
-      { name: 'Verde-azulado', value: '#14B8A6' },
+      { name: 'turquesa', value: '#14B8A6' },
       { name: 'Rosa', value: '#EC4899' },
       { name: 'Cinza', value: '#6B7280' },
       { name: 'Preto', value: '#030303' },
