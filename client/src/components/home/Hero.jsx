@@ -1,196 +1,195 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
-import { Check } from 'lucide-react'
+import { useState } from "react"
+import { Link } from "react-router-dom"
+import { Check } from "lucide-react"
 
 const Hero = () => {
-   const [menuOpen, setMenuOpen] = useState(false)
+    const [menuOpen, setMenuOpen] = useState(false)
 
-   const logos = [
-      '/instagram.svg',
-      '/framer.svg',
-      '/huawei.svg',
-      '/samsung.svg',
-      '/microsoft.svg',
-   ]
+    const logos = [
+        "/instagram.svg",
+        "/framer.svg",
+        "/huawei.svg",
+        "/samsung.svg",
+        "/microsoft.svg",
+    ]
 
-   return (
-      <>
-         <div className="min-h-screen pb-20">
-            {/* Navbar */}
+    return (
+        <>
+            <div className="min-h-screen pb-20">
+                {/* Navbar */}
+                <nav className="z-50 flex items-center justify-between w-full py-4 px-6 md:px-16 lg:px-24 xl:px-40 text-sm">
+                    <a href="#">
+                        <img
+                            src="/Logo.png"
+                            alt="logo"
+                            className="h-30 w-auto"
+                        />
+                    </a>
 
-            <nav className="z-50 flex items-center justify-between w-full py-4 px-6 md:px-16 lg:px-24 xl:px-40 text-sm">
-               <a href="#">
-                  {/* Logo */}
+                    <div className="hidden md:flex items-center gap-8 transition duration-500 text-base text-slate-800">
+                        <a
+                            href="#"
+                            className=" hover:text-purple-600 transition"
+                        >
+                            Inicio
+                        </a>
 
-                  <img src="/Logo.png" alt="logo" className="h-30 w-auto" />
-               </a>
+                        <a
+                            href="#features"
+                            className="hover:text-purple-600 transition"
+                        >
+                            Funcionalidades
+                        </a>
 
-               <div className="hidden md:flex items-center gap-8 transition duration-500 text-slate-800">
-                  <a href="#" className="hover:text-purple-600 transition">
-                     Inicio
-                  </a>
+                        <a
+                            href="#testimonials"
+                            className="hover:text-purple-600 transition"
+                        >
+                            Depoimentos
+                        </a>
 
-                  <a
-                     href="#features"
-                     className="hover:text-purple-600 transition"
-                  >
-                     Funcionalidades
-                  </a>
+                        <a
+                            href="#cta"
+                            className="hover:text-purple-600 transition"
+                        >
+                            Contato
+                        </a>
+                    </div>
 
-                  <a
-                     href="#testimonials"
-                     className="hover:text-purple-600 transition"
-                  >
-                     Depoimentos
-                  </a>
+                    <div className="flex gap-2">
+                        <Link
+                            to="/app?state=register"
+                            className="hidden md:block px-6 py-2 bg-purple-500 hover:bg-purple-700 active:scale-95 transition-all rounded-full text-white"
+                        >
+                            Começar
+                        </Link>
 
-                  <a href="#cta" className="hover:text-purple-600 transition">
-                     Contato
-                  </a>
-               </div>
+                        <Link
+                            to="/app?state=login"
+                            className="hidden md:block px-6 py-2 border active:scale-95 hover:bg-slate-50 transition-all rounded-full text-slate-700 hover:text-slate-900"
+                        >
+                            Login
+                        </Link>
+                    </div>
 
-               <div className="flex gap-2">
-                  <Link
-                     to="/app?state=register"
-                     className="hidden md:block px-6 py-2 bg-purple-500 hover:bg-purple-700 active:scale-95 transition-all rounded-full text-white"
-                  >
-                     Começar
-                  </Link>
+                    <button
+                        onClick={() => setMenuOpen(true)}
+                        className="md:hidden active:scale-90 transition"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="26"
+                            height="26"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            className="lucide lucide-menu"
+                        >
+                            <path d="M4 5h16M4 12h16M4 19h16" />
+                        </svg>
+                    </button>
+                </nav>
+                {/* Mobile Menu */}
+                <div
+                    className={`fixed inset-0 z-[100] bg-black/40 text-black backdrop-blur flex flex-col items-center justify-center text-lg gap-8 md:hidden transition-transform duration-300 ${menuOpen ? "translate-x-0" : "-translate-x-full"}`}
+                >
+                    <a href="#" className="text-white">
+                        Inicio
+                    </a>
 
-                  <Link
-                     to="/app?state=login"
-                     className="hidden md:block px-6 py-2 border active:scale-95 hover:bg-slate-50 transition-all rounded-full text-slate-700 hover:text-slate-900"
-                  >
-                     Login
-                  </Link>
-               </div>
+                    <a href="#features" className="text-white">
+                        Funcionalidades
+                    </a>
 
-               <button
-                  onClick={() => setMenuOpen(true)}
-                  className="md:hidden active:scale-90 transition"
-               >
-                  <svg
-                     xmlns="http://www.w3.org/2000/svg"
-                     WIdth="26"
-                     height="26"
-                     fill="none"
-                     stroke="currentColor"
-                     strokeWidth="2"
-                     className="lucide lucide-menu"
-                  >
-                     <path d="M4 5h16M4 12h16M4 19h16" />
-                  </svg>
-               </button>
-            </nav>
+                    <a href="#testimonials" className="text-white">
+                        Depoimentos
+                    </a>
 
-            {/* Mobile Menu */}
+                    <a href="#cta" className="text-white">
+                        Contato
+                    </a>
 
-            <div
-               className={`fixed inset-0 z-[100] bg-black/40 text-black backdrop-blur flex flex-col items-center justify-center text-lg gap-8 md:hidden transition-transform duration-300 ${menuOpen ? 'translate-x-0' : '-translate-x-full'}`}
-            >
-               <a href="#" className="text-white">
-                  Inicio
-               </a>
+                    <button
+                        onClick={() => setMenuOpen(false)}
+                        className="active:ring-3 active:ring-white aspect-square size-10 p-1 items-center justify-center bg-purple-600 hover:bg-green-700 transition text-white rounded-md flex"
+                    >
+                        X
+                    </button>
+                </div>
+                {/* Hero Section */}
+                <div className="relative flex flex-col items-center md:items-start justify-center mt-8 text-sm px-4 md:items-left md:px-16 lg:px-24 xl:px-40 text-black">
+                    <div className="absolute top-28 xl:top-10 -z-10 left-1/4 size-72 sm:size-96 xl:size-120 2xl:size-132 bg-purple-300 blur-[100px] opacity-30"></div>
 
-               <a href="#features" className="text-white">
-                  Funcionalidades
-               </a>
+                    <h1 className="text-5xl text-center md:text-7xl font-semibold max-w-5xl md:text-left mt-8 md:leading-[70px]">
+                        Crie um currículo profissional com{" "}
+                        <span className="bg-gradient-to-r from-purple-900 to-purple-700 bg-clip-text text-transparent text-nowrap">
+                            CurriculoGen{" "}
+                        </span>
+                    </h1>
 
-               <a href="#testimonials" className="text-white">
-                  Depoimentos
-               </a>
+                    <p className="text-center max-w-md md:text-left text-base my-7">
+                        Crie, edite, e baixe currículos profissionais com
+                        CurrículoGen-IA.
+                    </p>
 
-               <a href="#cta" className="text-white">
-                  Contato
-               </a>
+                    {/* CTA Buttons */}
 
-               <button
-                  onClick={() => setMenuOpen(false)}
-                  className="active:ring-3 active:ring-white aspect-square size-10 p-1 items-center justify-center bg-purple-600 hover:bg-green-700 transition text-white rounded-md flex"
-               >
-                  X
-               </button>
+                    <div className="flex items-center gap-4 ">
+                        <Link
+                            to="/app"
+                            className="bg-purple-500 hover:bg-purple-600 text-white rounded-full px-9 h-12 m-1 ring-offset-2 ring-1 ring-purple-400 flex items-center transition-colors"
+                        >
+                            Começar
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                className="lucide lucide-arrow-right ml-1 size-4"
+                                aria-hidden="true"
+                            >
+                                <path d="M5 12h14"></path>
+                                <path d="m12 5 7 7-7 7"></path>
+                            </svg>
+                        </Link>
+
+                        <button className="flex items-center gap-2 border border-slate-400 hover:bg-purple-50 transition rounded-full px-7 h-12 text-slate-700">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="1"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                className="lucide lucide-video size-5"
+                                aria-hidden="true"
+                            >
+                                <path d="m16 13 5.223 3.482a.5.5 0 0 0 .777-.416V7.87a.5.5 0 0 0-.752-.432L16 10.5"></path>
+                                <rect
+                                    x="2"
+                                    y="6"
+                                    width="14"
+                                    height="12"
+                                    rx="2"
+                                ></rect>
+                            </svg>
+
+                            <span>Testar</span>
+                        </button>
+                    </div>
+                </div>
             </div>
 
-            {/* Hero Section */}
-
-            <div className="relative flex flex-col items-center justify-center text-sm px-4 md:px-16 lg:px-24 xl:px-40 text-black">
-               <div className="absolute top-28 xl:top-10 -z-10 left-1/4 size-72 sm:size-96 xl:size-120 2xl:size-132 bg-purple-300 blur-[100px] opacity-30"></div>
-
-               {/* Avatars + Stars */}
-
-               <div class="flex items-center gap-2 text-slate-600 border border-slate-300 rounded-full px-4 py-2">
-                  <Check />
-                  <span>Mais de 1000 modelos testados.</span>
-               </div>
-
-               {/* Headline + CTA */}
-
-               <h1 className="text-5xl md:text-7xl font-semibold max-w-5xl text-center mt-4 md:leading-[70px]">
-                  crie um currículo profissional com{' '} 
-                  <span classname="bg-gradient-to-r from-purple-900 to-purple-700 bg-clip-text text-transparent text-nowrap">
-                     CurrículoGen {' '}
-                  </span>
-
-               </h1>
-
-               <p className="max-w-md text-center text-base my-7">
-                  Crie, edite, e baixe currículos profissionais com
-                  CurrículoGen-IA.
-               </p>
-
-               {/* CTA Buttons */}
-
-               <div className="flex items-center gap-4 ">
-                  <Link
-                     to="/app"
-                     className="bg-purple-500 hover:bg-purple-600 text-white rounded-full px-9 h-12 m-1 ring-offset-2 ring-1 ring-purple-400 flex items-center transition-colors"
-                  >
-                     Começar
-                     <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="lucide lucide-arrow-right ml-1 size-4"
-                        aria-hidden="true"
-                     >
-                        <path d="M5 12h14"></path>
-                        <path d="m12 5 7 7-7 7"></path>
-                     </svg>
-                  </Link>
-
-                  <button className="flex items-center gap-2 border border-slate-400 hover:bg-purple-50 transition rounded-full px-7 h-12 text-slate-700">
-                     <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="1"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        className="lucide lucide-video size-5"
-                        aria-hidden="true"
-                     >
-                        <path d="m16 13 5.223 3.482a.5.5 0 0 0 .777-.416V7.87a.5.5 0 0 0-.752-.432L16 10.5"></path>
-                        <rect x="2" y="6" width="14" height="12" rx="2"></rect>
-                     </svg>
-
-                     <span>Testar</span>
-                  </button>
-               </div>
-            </div>
-         </div>
-
-         <style>
-            {`
+            <style>
+                {`
 
                     @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
@@ -202,9 +201,9 @@ const Hero = () => {
                     }
 
                 `}
-         </style>
-      </>
-   )
+            </style>
+        </>
+    )
 }
 
 export default Hero
