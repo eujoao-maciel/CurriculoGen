@@ -1,5 +1,4 @@
 import { useState } from "react"
-import { Zap } from "lucide-react"
 import Title from "./Title.jsx"
 
 const Features = () => {
@@ -10,11 +9,6 @@ const Features = () => {
             id="features"
             className="flex flex-col items-center my-10 scroll-mt-12"
         >
-            <div className="flex items-center gap-2 text-sm text-purple-600 bg-purple-400/20 rounded-full px-4 py-1">
-                <Zap width={14} />
-                <span>Crie seu currículo em minutos</span>
-            </div>
-
             <Title
                 title="Construa seu currículo"
                 description="Nosso processo simplificado ajuda você a criar um currículo profissional em minutos com ferramentas e recursos inteligentes impulsionados por IA."
