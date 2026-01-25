@@ -21,9 +21,15 @@ const Features = () => {
                 {/* Imagem */}
                 <div className="w-full md:w-1/2 flex justify-center">
                     <img
-                        className="w-full max-w-2xl h-auto object-contain"
+                        className="w-full max-w-2xl h-auto object-contain rounded-2xl transition-all duration-500"
                         src="/imgs/featureimageanime.jpeg"
                         alt="Interface do gerador de currículos"
+                        style={{
+                            maskImage:
+                                "radial-gradient(circle, black 60%, transparent 100%)",
+                            WebkitMaskImage:
+                                "radial-gradient(circle, black 60%, transparent 100%)",
+                        }}
                     />
                 </div>
 
