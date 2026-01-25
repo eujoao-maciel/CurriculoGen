@@ -129,7 +129,7 @@ const Hero = () => {
 
                     <p className="text-center max-w-md md:text-left text-base my-7">
                         Crie, edite, e baixe currículos profissionais com
-                        CurrículoGen-IA.
+                        CurrículoGen.
                     </p>
 
                     {/* CTA Buttons */}

@@ -124,7 +124,7 @@ const Footer = () => {
 
                 <div className="flex flex-col max-md:items-center max-md:text-center gap-2 items-end">
                     <p className="max-w-60">
-                       Currículos profissionais, impulsionados por inteligência artificial.
+                        Plataforma de criação de currículos profissionais.
                     </p>
 
                     <div className="flex items-center gap-4 mt-3">

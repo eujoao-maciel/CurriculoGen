@@ -1,5 +1,4 @@
 import Title from "./Title.jsx"
-import { BookUserIcon } from "lucide-react"
 
 const Testimonial = () => {
     const cardsData = [
@@ -72,11 +71,6 @@ const Testimonial = () => {
                 id="testimonials"
                 className="flex flex-col items-center my-10 scroll-mt-12"
             >
-                <div className="flex items-center gap-2 text-sm text-purple-600 bg-purple-400/20 rounded-full px-6 py-1.5">
-                    <BookUserIcon className="size-4.5 stroke-purple-600" />
-                    <span>Depoimentos</span>
-                </div>
-
                 <Title
                     title="Não confie apenas em nossas palavras"
                     description="Veja o que nossos usuários dizem sobre nós. Estamos sempre buscando maneiras de melhorar. Se você teve uma experiência positiva, deixe seu depoimento."
