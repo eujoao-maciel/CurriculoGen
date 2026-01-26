@@ -15,9 +15,9 @@ const Hero = () => {
 
    return (
       <>
-         <div className="min-h-screen pb-20">
+         <div className="min-h-screen ">
             {/* Navbar */}
-            <nav className="z-50 flex items-center justify-between h-30 w-full py-4 px-6 md:px-16 lg:px-24 xl:px-40 text-sm">
+            <nav className="z-50 flex items-center justify-between h-40 w-full py-4 px-6 md:px-16 lg:px-24 xl:px-40 text-sm">
                <a href="#">
                   <h1 className="text-slate-100 font-semibold text-3xl">
                      CurriculoGen
