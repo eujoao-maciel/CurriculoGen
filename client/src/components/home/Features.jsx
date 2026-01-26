@@ -18,7 +18,7 @@ const Features = () => {
                 <div className="w-full md:w-1/2 flex justify-center">
                     <img
                         className="w-full max-w-2xl h-auto object-contain rounded-2xl transition-all duration-500"
-                        src="/imgs/featureimageanime.jpeg"
+                        src="/imgs/imagemilustrativafeature.jpg"
                         alt="Interface do gerador de currículos"
                         style={{
                             maskImage:
