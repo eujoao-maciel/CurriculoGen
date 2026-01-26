@@ -60,7 +60,7 @@ const Dashboard = () => {
    }
 
    return (
-      <div>
+      <div className="">
          <div className="mx-auto max-w-7xl px-4 py-8">
             <p className="text-2x1 text-tranparent mb-6 bg-gradient-to-r from-slate-600 to-slate-700 bg-clip-text font-medium sm:hidden">
                Bem Vindo, teste nome
@@ -260,8 +260,8 @@ const Dashboard = () => {
                            px-4
                            py-2
                            mb-4
-                           focus:border-purple-600
-                           ring-purple-600
+                           focus:border-black-600
+                           ring-sky-600
                         "
                         required
                      />
@@ -270,10 +270,10 @@ const Dashboard = () => {
                         className="
                         w-full
                         py-2
-                        bg-purple-600
+                        bg-gray-800
                         text-white
                         rounded
-                        hover:bg-purple-700
+                        hover:bg-gray-900
                         transition-colors
                      "
                      >
@@ -347,8 +347,8 @@ const Dashboard = () => {
                            px-4
                            py-2
                            mb-4
-                           focus:border-purple-600
-                           ring-purple-600
+                           focus:border-black-600
+                           ring-sky-600
                         "
                         value={title}
                         required
@@ -370,8 +370,8 @@ const Dashboard = () => {
                                 gap-2 border group text-slate-400
                                 border-slate-400 border-dashed
                                 rounded-md p-4 py-10 my-4 
-                                hover:border-purple-500 
-                                hover:text-purple-700
+                                hover:border-black 
+                                hover:text-black
                                 cursor-pointer transition-colors
                               "
                            >
@@ -399,10 +399,10 @@ const Dashboard = () => {
                         className="
                         w-full
                         py-2
-                        bg-purple-600
+                        bg-gray-900
                         text-white
                         rounded
-                        hover:bg-purple-700
+                        hover:bg-gray-800
                         transition-colors
                      "
                      >
