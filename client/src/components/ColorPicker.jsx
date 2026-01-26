@@ -22,15 +22,15 @@ const ColorPicker = ({ selectedColor, onChange }) => {
          <button
             onClick={() => setIsOpen(!isOpen)}
             className="
-              flex items-center gap-1 text-sm
-              text-blue-600 bg-gradient-to-br
-              from-blue-50 to-blue-100
-              ring-blue-300 hover:ring
-              transition-all px-1 py-2 
-              reounded-lg
-            "
+                 flex items-center gap-1
+                 text-sm text-purple-600
+                 bg-gradient-to-br from-indigo-50
+                 to-indigo-100 ring-black
+                 hover:ring transition-all px-3 
+                 py-2 rounded-lg
+         "
          >
-            <Palette size={16} /> <span className="max-sm:hidden">Realce</span>
+            <Palette className="text-gray-900" size={16} /> <span className="max-sm:hidden text-gray-900">Realce</span>
          </button>
 
          {isOpen && (

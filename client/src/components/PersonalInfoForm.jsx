@@ -166,8 +166,8 @@ const PersonalInfoForm = ({
                         mt-1 w-full px-3 py-2
                         border border-gray-300
                         rounded-lg focus:ring
-                        focus:ring-purple-500
-                        focus:border-purple-500
+                        focus:ring-gray-900
+                        focus:border-gray-500
                         outline-none text-sm
                         transition-colors
                      "

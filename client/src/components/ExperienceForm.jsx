@@ -47,8 +47,8 @@ const ExperienceForm = ({ data, onChange }) => {
                className="
                     flex items-center gap-2 
                     px-3 py-1 text-sm rounded
-                    hover:bg-purple-200
-                    bg-purple-100 text-purple-700
+                    hover:bg-sky-100
+                    bg-sky-50 text-sky-600
                     transition-colors
                  "
             >
@@ -70,13 +70,13 @@ const ExperienceForm = ({ data, onChange }) => {
                {data.map((experience, index) => (
                   <div
                      key={index}
-                       className="
+                     className="
                          p-4 border border-gray-200
                          rounded-lg space-y-3
                       "
                   >
                      <div className="flex justify-between items-start">
-                        <h4>Experiência #(index + 1)</h4>
+                        <h4>Experiência {index + 1}</h4>
                         <button
                            onClick={() => removeExperience(index)}
                            className="text-red-500 hover:text-red-700 transition-colors"
@@ -173,15 +173,15 @@ const ExperienceForm = ({ data, onChange }) => {
                            <button
                               className="
                                     flex items-center gap-1 px-2
-                                    py-1 text-xs bg-purple-100 
-                                    text-purple-700 rounded
-                                    hover:bg-purple-200
+                                    py-1 text-xs bg-sky-50 
+                                    text-sky-700 rounded
+                                    hover:bg-sky-100
                                     transition-colors
                                     disabled:opacity-50
                                 "
                            >
                               <Sparkles className="w-3 h-3" />
-                              Melhorar com IA
+                              Melhorar 
                            </button>
                         </div>
 

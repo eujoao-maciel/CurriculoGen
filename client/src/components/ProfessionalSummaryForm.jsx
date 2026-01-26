@@ -26,15 +26,15 @@ const ProfessionalSummaryForm = ({ data, onChange, setResumeData }) => {
                 <button
                     className="
                         flex items-center gap=2
-                        px-3 py-1 text-sm bg-purple-100
-                        text-purple-700 rounded 
-                        hover:bg-purple-200
+                        px-3 py-1 text-sm bg-sky-50
+                        text-sky-600 rounded 
+                        hover:bg-sky-100
                         transition-colors
                         disabled:opacity-50
                     "
                 >
                     <Sparkles className="size-4" />
-                    Aprimorar com IA
+                    Aprimorar  
                 </button>
             </div>
         
@@ -47,8 +47,8 @@ const ProfessionalSummaryForm = ({ data, onChange, setResumeData }) => {
                       w-full p-3 px-4 mt-2 border
                       text-sm border-gray-300
                       rounded-lg focus:ring
-                      focus:ring-purple-500
-                      focus:border-purple-500
+                      focus:ring-black
+                      focus:border-black
                       outline-none resize-none
                       transition-colors 
                    " 

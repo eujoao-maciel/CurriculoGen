@@ -38,13 +38,13 @@ const TemplateSelector = ({ selectedTemplate, onChange }) => {
             className="
            flex items-center gap-1
            text-sm text-purple-600
-           bg-gradient-to-br from-purple-50
-           to-purple-100 ring-purple-300
+           bg-gradient-to-br from-indigo-50
+           to-indigo-100 ring-black
            hover:ring transition-all px-3 
            py-2 rounded-lg
          "
          >
-            <Layout size={14} /> <span className="max-sm:hidden">Modelo</span>
+            <Layout className="text-gray-900"size={14} /> <span className="max-sm:hidden text-indigo-900">Modelo</span>
          </button>
          {isOpen && (
             <div
@@ -65,10 +65,10 @@ const TemplateSelector = ({ selectedTemplate, onChange }) => {
                      }}
                      className={`
                   relative p-3 border rounded-md
-                  cursor-pointer transition-all
+                  cursor-pointer bg-gray-100 transition-all
                   ${
                      selectedTemplate === template.id
-                        ? 'border-purple-400 bg-purple-100'
+                        ? 'border-gray-900 bg-sky-100'
                         : 'border-gray-300 hover:border-gray-400 hover:bg-gray-100'
                   }
                `}
@@ -77,7 +77,7 @@ const TemplateSelector = ({ selectedTemplate, onChange }) => {
                         <div className="absolute top-2 right-2">
                            <div
                               className="
-                               size-5 bg-purple-400 rounded-full
+                               size-5 bg-black rounded-full
                                flex items-center justify-center
                             "
                            >
@@ -92,7 +92,7 @@ const TemplateSelector = ({ selectedTemplate, onChange }) => {
                         </h4>
                         <div
                            className="
-                           mt-2 p-2 bg-purple-50
+                           mt-2 p-2 bg-indigo-50
                            rounded text-xs italic
                            text-gray-500
                        "
