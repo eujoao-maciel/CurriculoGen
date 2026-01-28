@@ -119,7 +119,7 @@ const ExperienceForm = ({ data, onChange }) => {
                                  e.target.value
                               )
                            }
-                           type="mounth"
+                           type="date"
                            className="px-3 py-2 text-sm rounded-lg"
                         />
 
@@ -132,7 +132,7 @@ const ExperienceForm = ({ data, onChange }) => {
                                  e.target.value
                               )
                            }
-                           type="mounth"
+                           type="date"
                            className="
                               px-3 py-2 text-sm 
                               rounded-lg 
@@ -159,7 +159,7 @@ const ExperienceForm = ({ data, onChange }) => {
                                  text-blue-600 
                            "
                         />
-                        <span className="text-sm text-gray-700">
+                        <span className="text-sm ml-2 text-gray-700">
                            Emprego atual aqui
                         </span>
                      </label>

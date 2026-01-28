@@ -4,7 +4,7 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
    const formatDate = (dateStr) => {
       if (!dateStr) return ''
       const [year, month] = dateStr.split('-')
-      return new Date(year, month - 1).toLocaleDateString('en-US', {
+      return new Date(year, month - 1).toLocaleDateString('pt-BR', {
          year: 'numeric',
          month: 'short',
       })
@@ -86,18 +86,15 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
                {data.education && data.education.length > 0 && (
                   <section className="mb-8">
                      <h2 className="text-sm font-semibold tracking-widest text-zinc-600 mb-3">
-                       EDUCAÇÃO 
+                        ESCOLARIDADE
                      </h2>
                      <div className="space-y-4 text-sm">
                         {data.education.map((edu, index) => (
                            <div key={index}>
-                              <p className="font-semibold uppercase">
-                                 {edu.degree}
+                              <p className="font-semibold">
+                                {edu.field && `${edu.field} - ` }{edu.degree}
                               </p>
                               <p className="text-zinc-600">{edu.institution}</p>
-                              <p className="text-xs text-zinc-500">
-                                 {formatDate(edu.graduation_date)}
-                              </p>
                            </div>
                         ))}
                      </div>
@@ -108,7 +105,7 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
                {data.skills && data.skills.length > 0 && (
                   <section>
                      <h2 className="text-sm font-semibold tracking-widest text-zinc-600 mb-3">
-                        HABILIDADES 
+                        HABILIDADES
                      </h2>
                      <ul className="space-y-1 text-sm">
                         {data.skills.map((skill, index) => (
@@ -143,7 +140,7 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
                         className="text-sm font-semibold tracking-widest mb-4"
                         style={{ color: accentColor }}
                      >
-                        EXPERIÊNCIA 
+                        EXPERIÊNCIA
                      </h2>
                      <div className="space-y-6 mb-8">
                         {data.experience.map((exp, index) => (
@@ -155,7 +152,7 @@ const MinimalImageTemplate = ({ data, accentColor }) => {
                                  <span className="text-xs text-zinc-500">
                                     {formatDate(exp.start_date)} -{' '}
                                     {exp.is_current
-                                       ? 'Present'
+                                       ? 'Atual'
                                        : formatDate(exp.end_date)}
                                  </span>
                               </div>

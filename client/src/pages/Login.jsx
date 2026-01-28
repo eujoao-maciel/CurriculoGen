@@ -26,7 +26,7 @@ const Login = () => {
       <div className="flex items-center justify-center min-h-screen bg-gray-600">
          <form
             onSubmit={handleSubmit}
-            className="sm:w-[350px] w-full text-center border border-gray-300/60 rounded-2xl px-8 bg-gray-400"
+            className="w-[300px] md:w-[350px] text-center border border-black rounded-2xl px-8 bg-gray-400"
          >
             <h1 className="text-gray-900 text-3xl mt-10 font-medium">
                {state === 'login' ? 'Login' : 'Cadastrar'}

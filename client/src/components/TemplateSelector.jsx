@@ -37,14 +37,14 @@ const TemplateSelector = ({ selectedTemplate, onChange }) => {
             onClick={() => setIsOpen(!isOpen)}
             className="
            flex items-center gap-1
-           text-sm text-purple-600
-           bg-gradient-to-br from-indigo-50
+           text-sm bg-gradient-to-br from-indigo-50
            to-indigo-100 ring-black
            hover:ring transition-all px-3 
            py-2 rounded-lg
          "
          >
-            <Layout className="text-gray-900"size={14} /> <span className="max-sm:hidden text-indigo-900">Modelo</span>
+            <Layout className="text-gray-900" size={14} />{' '}
+            <span className="max-sm:hidden text-gray-900">Modelo</span>
          </button>
          {isOpen && (
             <div

@@ -4,7 +4,7 @@ const ClassicTemplate = ({ data, accentColor }) => {
     const formatDate = (dateStr) => {
         if (!dateStr) return ""
         const [year, month] = dateStr.split("-")
-        return new Date(year, month - 1).toLocaleDateString("en-US", {
+        return new Date(year, month - 1).toLocaleDateString("pt-BR", {
             year: "numeric",
             month: "short",
         })
@@ -69,7 +69,7 @@ const ClassicTemplate = ({ data, accentColor }) => {
                         className="text-xl font-semibold mb-3"
                         style={{ color: accentColor }}
                     >
-                        PERFIL PROFISSIONAL
+                        RESUMO 
                     </h2>
                     <p className="text-gray-700 leading-relaxed">
                         {data.professional_summary}
@@ -107,7 +107,7 @@ const ClassicTemplate = ({ data, accentColor }) => {
                                         <p>
                                             {formatDate(exp.start_date)} -{" "}
                                             {exp.is_current
-                                                ? "Present"
+                                                ? "Atual"
                                                 : formatDate(exp.end_date)}
                                         </p>
                                     </div>
@@ -160,7 +160,7 @@ const ClassicTemplate = ({ data, accentColor }) => {
                         className="text-xl font-semibold mb-4"
                         style={{ color: accentColor }}
                     >
-                        EDUCAÇÂO
+                        ESCOLARIDADE
                     </h2>
 
                     <div className="space-y-3">
@@ -171,8 +171,8 @@ const ClassicTemplate = ({ data, accentColor }) => {
                             >
                                 <div>
                                     <h3 className="font-semibold text-gray-900">
-                                        {edu.degree}{" "}
-                                        {edu.field && `in ${edu.field}`}
+                                        {edu.field && `${edu.field} - `}{" "}
+                                        {edu.degree}
                                     </h3>
                                     <p className="text-gray-700">
                                         {edu.institution}
@@ -182,9 +182,6 @@ const ClassicTemplate = ({ data, accentColor }) => {
                                             GPA: {edu.gpa}
                                         </p>
                                     )}
-                                </div>
-                                <div className="text-sm text-gray-600">
-                                    <p>{formatDate(edu.graduation_date)}</p>
                                 </div>
                             </div>
                         ))}

@@ -17,7 +17,8 @@ import PersonalInfoForm from '../components/PersonalInfoForm.jsx'
 import ResumePreview from '../components/ResumePreview.jsx'
 import ColorPicker from '../components/ColorPicker.jsx'
 import ProfessionalSummaryForm from '../components/ProfessionalSummaryForm.jsx'
-import ExperienceForm from "../components/ExperienceForm.jsx"
+import ExperienceForm from '../components/ExperienceForm.jsx'
+import EducationForm from '../components/EducationForm.jsx'
 
 const ResumeBuider = () => {
    const { resumeId } = useParams()
@@ -257,6 +258,17 @@ const ResumeBuider = () => {
                                  setResumeData((prev) => ({
                                     ...prev,
                                     experience: data,
+                                 }))
+                              }
+                           />
+                        )}
+                        {activeSection.id === 'education' && (
+                           <EducationForm
+                              data={resumeData.education}
+                              onChange={(data) =>
+                                 setResumeData((prev) => ({
+                                    ...prev,
+                                    education: data,
                                  }))
                               }
                            />
