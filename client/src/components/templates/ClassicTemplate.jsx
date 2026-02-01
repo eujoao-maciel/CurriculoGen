@@ -69,7 +69,7 @@ const ClassicTemplate = ({ data, accentColor }) => {
                         className="text-xl font-semibold mb-3"
                         style={{ color: accentColor }}
                     >
-                        RESUMO 
+                        RESUMO
                     </h2>
                     <p className="text-gray-700 leading-relaxed">
                         {data.professional_summary}
@@ -84,7 +84,7 @@ const ClassicTemplate = ({ data, accentColor }) => {
                         className="text-xl font-semibold mb-4"
                         style={{ color: accentColor }}
                     >
-                        EXPERIENCIA PROFISSIONAL
+                        EXPERIÊNCIA PROFISSIONAL
                     </h2>
 
                     <div className="space-y-4">
@@ -137,7 +137,8 @@ const ClassicTemplate = ({ data, accentColor }) => {
                         {data.project.map((proj, index) => (
                             <div
                                 key={index}
-                                className="flex justify-between items-start border-l-3 border-gray-300 pl-6"
+                                className="flex justify-between items-start border-l-3 pl-6"
+                                style={{ borderColor: accentColor }}
                             >
                                 <div>
                                     <li className="font-semibold text-gray-800 ">
