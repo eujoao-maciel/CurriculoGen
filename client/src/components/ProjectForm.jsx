@@ -32,7 +32,7 @@ const ProjectForm = ({ data, onChange }) => {
                         text-gray-900
                      "
                >
-                  Mostre seus projetos
+                    Mostre seus projetos
                </h3>
                <p className="text-sm text-gray-500">Adicione seu projeto</p>
             </div>
