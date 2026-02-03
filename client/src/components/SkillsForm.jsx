@@ -54,9 +54,11 @@ const SkillsForm = ({ data, onChange }) => {
                     disabled={!newSkill.trim}
                     className="
                       flex items-center gap-2 px-4
-                      py-2 text-sm bg-blue-600 
-                      text-white rounded-lg 
-                      hover:bg-blue-700 transition-colors
+                      py-2 text-sm bg-gradient-to-br 
+                      from-indigo-100 to-indigo-200
+                      text-indigo-600 rounded-lg 
+                      ring-indigo-300 hover:ring
+                      hover:bg-indigo-600 transition-colors
                       disabled:opacity-50 
                       disabled:cursor-not-allowed
                    "
@@ -72,14 +74,14 @@ const SkillsForm = ({ data, onChange }) => {
                             key={index}
                             className="
                            flex items-center gap-2 px-3
-                           py-1 bg-blue-100 text-blue-800
+                           py-1 bg-sky-100 text-sky-600
                            rounded-full text-sm
                         "
                         >
                             {skill}
                             <button
                                 onClick={() => removeSkills(index)}
-                                className="ml-1 hover:bg-blue-200 rounded-full p-0.5"
+                                className="ml-1 hover:bg-sky-200 rounded-full p-0.5"
                             >
                                 <X className="w-3 h-3" />
                             </button>
