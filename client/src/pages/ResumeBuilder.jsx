@@ -13,7 +13,7 @@ import {
    Share2Icon,
    EyeIcon,
    EyeOffIcon,
-   DownloadIcon
+   DownloadIcon,
 } from 'lucide-react'
 
 import TemplateSelector from '../components/TemplateSelector.jsx'
@@ -47,7 +47,7 @@ const ResumeBuider = () => {
       skills: [],
       template: 'classic',
       accent_color: '#3B82F6',
-      public: false,
+      public: true,
    })
 
    const dummyResumeData = []
@@ -80,6 +80,27 @@ const ResumeBuider = () => {
 
       loadExistingResume()
    }, [])
+
+   const changeResumeVisibility = async () => {
+      setResumeData({ ...resumeData, public: !resumeData.public })
+   }
+
+   const handleShare = () => {
+      const resumeUrl = `${window.location.origin}/view/${resumeId}`
+
+      if (navigator.share) {
+         navigator.share({
+            url: resumeUrl,
+            text: 'meu curriculo',
+         })
+      } else {
+         alert('Função share não é suportada pelo navegador.')
+      }
+   }
+
+   const downloadResume = () => {
+      window.print()
+   }
 
    return (
       <div>
@@ -326,21 +347,8 @@ const ResumeBuider = () => {
                                 justify-end gap-2
                              "
                      >
-                        {resumeData.public && (
-                           <button
-                              className="
-                              flex items-center p-2 px-4
-                              gap-2 text-xs bg-gradient-to-br
-                              from-blue-100 to-blue-200 
-                              text-blue-600 rounded-lg
-                              ring-blue-300 hover:ring
-                              transition-colors
-                            "
-                           >
-                              <Share2Icon className="size-4" />
-                           </button>
-                        )}
                         <button
+                           onClick={changeResumeVisibility}
                            className="
                               flex items-center p-2 px-4 gap-2
                               text-xs rounded-lg bg-gradient-to-br 
@@ -358,12 +366,13 @@ const ResumeBuider = () => {
                         </button>
 
                         <button
+                           onClick={downloadResume}
                            className="
                               flex items-center gap-2 px-6
                               py-2 text-xs rounded-lg
-                              bg-gradient-to-br from-sky-100
-                              to-sky-200 text-sky-600
-                              ring-sky-300 hover:ring
+                              bg-gradient-to-br from-emerald-100
+                              to-emerald-200 text-emerald-600
+                              ring-emerald-300 hover:ring
                               transition-colors
                           "
                         >
