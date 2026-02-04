@@ -10,9 +10,6 @@ import {
    Sparkles,
    ChevronLeft,
    ChevronRight,
-   Share2Icon,
-   EyeIcon,
-   EyeOffIcon,
    DownloadIcon,
 } from 'lucide-react'
 
@@ -80,23 +77,6 @@ const ResumeBuider = () => {
 
       loadExistingResume()
    }, [])
-
-   const changeResumeVisibility = async () => {
-      setResumeData({ ...resumeData, public: !resumeData.public })
-   }
-
-   const handleShare = () => {
-      const resumeUrl = `${window.location.origin}/view/${resumeId}`
-
-      if (navigator.share) {
-         navigator.share({
-            url: resumeUrl,
-            text: 'meu curriculo',
-         })
-      } else {
-         alert('Função share não é suportada pelo navegador.')
-      }
-   }
 
    const downloadResume = () => {
       window.print()
@@ -342,37 +322,19 @@ const ResumeBuider = () => {
                   <div className="relative w-full">
                      <div
                         className="
-                                absolute bottom-3 left-0
+                                absolute bottom-4 left-0
                                 right-0 flex items-center
                                 justify-end gap-2
                              "
                      >
                         <button
-                           onClick={changeResumeVisibility}
-                           className="
-                              flex items-center p-2 px-4 gap-2
-                              text-xs rounded-lg bg-gradient-to-br 
-                              from-indigo-100 to-indigo-200
-                              text-indigo-600 ring-indigo-300
-                              hover:ring transition-colors
-                           "
-                        >
-                           {resumeData.public ? (
-                              <EyeIcon className="size-4" />
-                           ) : (
-                              <EyeOffIcon className="size-4" />
-                           )}
-                           {resumeData.public ? 'Publico' : 'Privado'}
-                        </button>
-
-                        <button
                            onClick={downloadResume}
                            className="
                               flex items-center gap-2 px-6
                               py-2 text-xs rounded-lg
-                              bg-gradient-to-br from-emerald-100
-                              to-emerald-200 text-emerald-600
-                              ring-emerald-300 hover:ring
+                              bg-gradient-to-br from-sky-100
+                              to-sky-200 text-sky-600
+                              ring-sky-300 hover:ring
                               transition-colors
                           "
                         >
