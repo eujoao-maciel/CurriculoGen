@@ -57,12 +57,7 @@ const ResumePreview = ({ data, template, accentColor, classes = '' }) => {
                }
 
                #resume-preview {
-                 position: absolute;
-                 left: 0;
-                 top: 0
-                 width: 100%;
                  height: auto;
-                 margin: 0;
                  padding: 0;
                  box-shadow: none !important;
                  border: none !important;

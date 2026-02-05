@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
+import { useReactToPrint } from 'react-to-print'
 import { useParams, Link } from 'react-router-dom'
 import {
    ArrowLeftIcon,
@@ -25,6 +26,9 @@ import SkillsForm from '../components/SkillsForm.jsx'
 
 const ResumeBuider = () => {
    const { resumeId } = useParams()
+
+   const contentRef = useRef(null)
+   const reactToPrintFn = useReactToPrint({ contentRef })
 
    const [resumeData, setResumeData] = useState({
       _id: '',
@@ -328,7 +332,7 @@ const ResumeBuider = () => {
                              "
                      >
                         <button
-                           onClick={downloadResume}
+                           onClick={reactToPrintFn}
                            className="
                               flex items-center gap-2 px-6
                               py-2 text-xs rounded-lg
@@ -344,11 +348,13 @@ const ResumeBuider = () => {
                   </div>
 
                   {/* -- resume preview -- */}
-                  <ResumePreview
-                     data={resumeData}
-                     template={resumeData.template}
-                     accentColor={resumeData.accent_color}
-                  />
+                  <div ref={contentRef}>
+                     <ResumePreview
+                        data={resumeData}
+                        template={resumeData.template}
+                        accentColor={resumeData.accent_color}
+                     />
+                  </div>
                </div>
             </div>
          </div>
