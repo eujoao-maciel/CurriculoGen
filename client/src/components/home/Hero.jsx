@@ -18,7 +18,7 @@ const Hero = () => {
                <div className="hidden md:flex items-center gap-8 transition duration-500 text-base text-slate-800">
                   <a
                      href="#"
-                     className="text-slate-300 hover:text-black transition"
+                     className="text-slate-200 hover:text-black transition"
                   >
                      Inicio
                   </a>
@@ -111,14 +111,14 @@ const Hero = () => {
             <div className="relative flex flex-col items-center md:items-center justify-center mt-8 text-sm px-4 md:items-center md:px-16 lg:px-24 xl:px-40 text-black">
                <div className="absolute z-1 top-28 xl:top-10 -z-10 left-1/4 size-72 sm:size-96 xl:size-120 2xl:size-132 bg-gray-200 blur-[80px] opacity-30"></div>
 
-               <h1 className="z-2 text-7xl text-slate-100 text-center md:text-7xl font-semibold max-w-4xl md:text-center mt-8 md:leading-[70px]">
+               <h1 className="z-2 text-4xl text-slate-100 text-center md:text-7xl font-semibold max-w-4xl md:text-center mt-8 md:leading-[70px]">
                   Crie um currículo profissional com{' '}
                   <span className="z-2 bg-slate-100 bg-clip-text text-transparent text-nowrap">
                      CurriculoGen{' '}
                   </span>
                </h1>
 
-               <p className="z-2 text-center text-stone-800 0 max-w-md md:text-center text-base my-7">
+               <p className="z-2 text-center text-slate-300  max-w-md md:text-center text-base my-7">
                   Crie, edite e baixe currículos profissionais com CurrículoGen.
                </p>
 
