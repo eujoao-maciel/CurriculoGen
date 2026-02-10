@@ -8,14 +8,14 @@ const Hero = () => {
       <>
          <div className="min-h-screen ">
             {/* Navbar */}
-            <nav className="z-50 flex items-center justify-between h-40 w-full py-4 px-6 md:px-16 lg:px-24 xl:px-40 text-sm">
+            <nav className="z-50 flex flex-col gap-5 items-center justify-center lg:flex-row lg:justify-between h-40 w-full py-4 px-6 md:px-16 lg:px-24 xl:px-40 text-sm">
                <a href="#">
                   <h1 className="text-slate-100 font-semibold text-3xl">
                      CurriculoGen
                   </h1>
                </a>
 
-               <div className="hidden md:flex items-center gap-8 transition duration-500 text-base text-slate-800">
+               <div className="hidden mg:flex items-center justify-center gap-8 transition duration-500 text-base text-slate-800">
                   <a
                      href="#"
                      className="text-slate-200 hover:text-black transition"
@@ -31,13 +31,6 @@ const Hero = () => {
                   </a>
 
                   <a
-                     href="#testimonials"
-                     className="text-slate-200 hover:text-black transition"
-                  >
-                     Depoimentos
-                  </a>
-
-                  <a
                      href="#cta"
                      className="text-slate-200 hover:text-black transition"
                   >
@@ -48,70 +41,25 @@ const Hero = () => {
                <div className="flex gap-2">
                   <Link
                      to="/app?state=register"
-                     className="hidden md:block px-6 py-2 bg-gray-900 hover:bg-gray-800 border-black hover:border-blackactive:scale-95 transition-all rounded-full text-slate-200"
+                     className="hidden lg:block px-6 py-2 bg-gray-900 hover:bg-gray-800 border-black hover:border-blackactive:scale-95 transition-all rounded-full text-slate-200"
                   >
                      Começar
                   </Link>
 
                   <Link
                      to="/app?state=login"
-                     className="hidden md:block px-6 py-2 border active:scale-95 hover:bg-gray-700 hover:text-slate-100 transition-all rounded-full text-slate-200 hover:text-gray-300"
+                     className="hidden lg:block px-6 py-2 border active:scale-95 hover:bg-gray-700 hover:text-slate-100 transition-all rounded-full text-slate-200 hover:text-gray-300"
                   >
                      login
                   </Link>
                </div>
-
-               <button
-                  onClick={() => setMenuOpen(true)}
-                  className="md:hidden active:scale-90 transition text-slate-200"
-               >
-                  <svg
-                     xmlns="http://www.w3.org/2000/svg"
-                     width="26"
-                     height="26"
-                     fill="none"
-                     stroke="currentColor"
-                     strokeWidth="2"
-                     className="lucide lucide-menu"
-                  >
-                     <path d="M4 5h16M4 12h16M4 19h16" />
-                  </svg>
-               </button>
             </nav>
-            {/* Mobile Menu */}
-            <div
-               className={`fixed inset-0 z-[100] bg-black/40 backdrop-blur flex flex-col items-center justify-center text-lg gap-8 md:hidden transform transition-transform duration-300 ${
-                  menuOpen ? 'translate-x-0' : '-translate-x-full'
-               }`}
-            >
-               <a href="#" className="text-white">
-                  Inicio
-               </a>
 
-               <a href="#features" className="text-white">
-                  Funcionalidades
-               </a>
-
-               <a href="#testimonials" className="text-white">
-                  Depoimentos
-               </a>
-
-               <a href="#cta" className="text-white">
-                  Contato
-               </a>
-
-               <button
-                  onClick={() => setMenuOpen(false)}
-                  className="active:ring-3 active:ring-white aspect-square size-10 p-1 items-center justify-center bg-black hover:bg-red-700 transition text-white rounded-md flex"
-               >
-                  X
-               </button>
-            </div>
             {/* Hero Section */}
-            <div className="relative flex flex-col items-center md:items-center justify-center mt-8 text-sm px-4 md:items-center md:px-16 lg:px-24 xl:px-40 text-black">
+            <div className="relative flex flex-col items-center md:items-center justify-center lg:mt-8 text-sm px-4 md:items-center md:px-16 lg:px-24 xl:px-40 text-black">
                <div className="absolute z-1 top-28 xl:top-10 -z-10 left-1/4 size-72 sm:size-96 xl:size-120 2xl:size-132 bg-gray-200 blur-[80px] opacity-30"></div>
 
-               <h1 className="z-2 text-4xl text-slate-100 text-center md:text-7xl font-semibold max-w-4xl md:text-center mt-8 md:leading-[70px]">
+                 <h1 className="z-2 text-5xl text-slate-100 text-center lg:text-7xl font-semibold max-w-4xl lg:mt-8 leading-[70px]">
                   Crie um currículo profissional com{' '}
                   <span className="z-2 bg-slate-100 bg-clip-text text-transparent text-nowrap">
                      CurriculoGen{' '}
