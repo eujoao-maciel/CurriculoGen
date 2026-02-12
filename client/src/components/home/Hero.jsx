@@ -6,12 +6,12 @@ const Hero = () => {
 
    return (
       <>
-         <div className="min-h-screen ">
+         <div className="min-h-screen">
             {/* Navbar */}
             <nav
                className="z-50 flex flex-col 
                gap-5 items-center justify-center 
-               md:flex-row lg:justify-between h-40 
+               lg:flex-row lg:justify-between h-40 
                w-full py-4 px-6 lg:px-24 xl:px-40 
                text-sm bg-gradient-to-b from-gray-900 to-gray-600"
             >
@@ -21,7 +21,7 @@ const Hero = () => {
                   </h1>
                </a>
 
-               <div className="flex items-center justify-center gap-8 md:ml-20 transition duration-500 text-base text-slate-800">
+               <div className="flex items-center justify-center gap-8 transition duration-500 text-base text-slate-800">
                   <a
                      href="#"
                      className="text-slate-200 hover:text-black transition"
@@ -62,23 +62,27 @@ const Hero = () => {
             </nav>
 
             {/* Hero Section */}
-            <div className="relative flex flex-col items-center md:items-center justify-center lg:mt-8 text-sm px-4 md:items-center md:px-16 lg:px-24 xl:px-40 text-black">
+            <div className="relative flex flex-col mt-10 items-center md:items-center justify-center lg:mt-8 text-sm px-4 md:items-center md:px-16 lg:px-24 xl:px-40 text-black">
                <div className="absolute z-1 top-28 xl:top-10 -z-10 left-1/4 size-72 sm:size-96 xl:size-120 2xl:size-132 bg-gray-200 blur-[80px] opacity-30"></div>
 
-               <h1 className="z-2 text-4xl text-slate-100 text-center lg:text-7xl font-bold max-w-4xl lg:mt-8 leading-[70px]">
-                  Crie um currículo profissional com{' '}
+               <h1 className="z-2 text-5xl flex flex-col font-normal md:text-5xl text-slate-100 text-center lg:text-7xl font-bold max-w-4xl lg:mt-8 leading-[70px]">
+                  Crie um currículo{' '}
+                  <span className="z-2 bg-slate-100 bg-clip-text text-transparent">
+                     profissional com{' '}
+                  </span>
                   <span className="z-2 bg-slate-100 bg-clip-text text-transparent text-nowrap">
                      CurriculoGen{' '}
                   </span>
                </h1>
 
-               <p className="z-2 text-center text-slate-300  max-w-md md:text-center text-base my-7">
-                  Crie, edite e baixe currículos profissionais com CurrículoGen.
+               <p className="text-sm flex flex-col z-2 lg:text-base text-center text-slate-300  max-w-md md:text-center my-7">
+                  Crie, edite e baixe currículos
+                  <span>profissionais com CurrículoGen.</span>
                </p>
 
                {/* CTA Buttons */}
 
-               <div className="flex items-center gap-4 ">
+               <div className="flex items-center gap-4 mt-13">
                   <Link
                      to="/app"
                      className="
