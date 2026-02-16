@@ -175,7 +175,8 @@ const Dashboard = () => {
                              right-1
                              group-hover:flex
                              items-center
-                             hidden
+                             lg:hidden
+                             flex
                           "
                         >
                            <TrashIcon
@@ -187,7 +188,8 @@ const Dashboard = () => {
                                 p-1.5
                                 hover:bg-white/50
                                 rounded
-                                text-slate-700
+                                hover:text-slate-700
+                                text-slate-500
                                 transition-colors
                               "
                            />
@@ -201,7 +203,8 @@ const Dashboard = () => {
                                 p-1.5
                                 hover:bg-white/50
                                 rounded
-                                text-slate-700
+                                text-slate-500
+                                hover:text-slate-700
                                 transition-colors
                               "
                            />
@@ -487,10 +490,10 @@ const Dashboard = () => {
                         className="
                         w-full
                         py-2
-                        bg-purple-600
+                        bg-indigo-800
                         text-white
                         rounded
-                        hover:bg-purple-700
+                        hover:bg-indigo-700
                         transition-colors
                      "
                      >
