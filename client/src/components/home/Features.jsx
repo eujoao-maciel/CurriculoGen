@@ -1,7 +1,60 @@
+import { useState } from "react"
 import { FileText, LayoutTemplate, Download } from "lucide-react"
 import Title from "./Title.jsx"
 
+const FeatureItem = ({ Icon, title, description, active, onClick }) => {
+    return (
+        <button
+            type="button"
+            onClick={onClick}
+            aria-pressed={active}
+            className={`group w-full max-w-md mx-auto flex items-start gap-4 p-6 rounded-xl border transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-300
+        ${active ? "bg-sky-100 border-sky-300" : "border-transparent hover:bg-sky-100 hover:border-sky-300"}`}
+        >
+            <Icon
+                className={`w-6 h-6 transition-colors ${active ? "text-sky-700" : "text-slate-200"} group-hover:text-sky-700`}
+            />
+
+            <div className="text-left">
+                <h3
+                    className={`text-base font-semibold transition-colors ${active ? "text-sky-900" : "text-slate-200"} group-hover:text-sky-900`}
+                >
+                    {title}
+                </h3>
+                <p
+                    className={`text-sm transition-colors ${active ? "text-sky-800" : "text-slate-300"} group-hover:text-sky-800`}
+                >
+                    {description}
+                </p>
+            </div>
+        </button>
+    )
+}
+
 const Features = () => {
+    const [activeIndex, setActiveIndex] = useState(null)
+
+    const items = [
+        {
+            Icon: FileText,
+            title: "Preenchimento Guiado",
+            description:
+                "Informe seus dados passo a passo e deixe que a plataforma organize tudo da forma correta.",
+        },
+        {
+            Icon: LayoutTemplate,
+            title: "Modelos Profissionais",
+            description:
+                "Escolha entre layouts modernos e bem estruturados, pensados para processos seletivos reais.",
+        },
+        {
+            Icon: Download,
+            title: "Exportação Fácil",
+            description:
+                "Gere seu currículo pronto para envio ou impressão, sem complicações.",
+        },
+    ]
+
     return (
         <div
             id="features"
@@ -31,144 +84,18 @@ const Features = () => {
 
                 {/* Features */}
                 <div className="w-full md:w-1/2 space-y-6">
-                    {/* Feature 1 */}
-                    <div className="flex justify-center max-w-md mx-auto group cursor-pointer">
-                        <div
-                            className="
-                                p-6 flex gap-4 rounded-xl 
-                                group-hover:bg-sky-100 group-hover:border-sky-300
-                                group-active:bg-sky-100 group-active:border-sky-300
-                                transition-colors 
-                            "
-                        >
-                            <FileText
-                                className="
-                                    size-6 text-slate-200
-                                    group-hover:text-sky-700
-                                    group-active:text-sky-700
-                                    transition-colors
-                                "
-                            />
-
-                            <div className="space-y-2">
-                                <h3
-                                    className="
-                                        text-base font-semibold text-slate-200
-                                        group-hover:text-sky-900
-                                        group-active:text-sky-900
-                                        transition-colors
-                                    "
-                                >
-                                    Preenchimento Guiado
-                                </h3>
-
-                                <p
-                                    className="
-                                        text-sm text-slate-300
-                                        group-hover:text-sky-800
-                                        group-active:text-sky-800
-                                        transition-colors
-                                    "
-                                >
-                                    Informe seus dados passo a passo e deixe que
-                                    a plataforma organize tudo da forma correta.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Feature 2 */}
-                    <div className="flex justify-center max-w-md mx-auto group cursor-pointer">
-                        <div
-                            className="
-                                p-6 flex gap-4 rounded-xl border border-transparent
-                                group-hover:bg-sky-100 group-hover:border-sky-300
-                                group-active:bg-sky-100 group-active:border-sky-300
-                                transition-colors
-                            "
-                        >
-                            <LayoutTemplate
-                                className="
-                                    size-6 text-slate-200
-                                    group-hover:text-sky-700
-                                    group-active:text-sky-700
-                                    transition-colors
-                                "
-                            />
-
-                            <div className="space-y-2">
-                                <h3
-                                    className="
-                                        text-base font-semibold text-slate-200
-                                        group-hover:text-sky-900
-                                        group-active:text-sky-900
-                                        transition-colors
-                                    "
-                                >
-                                    Modelos Profissionais
-                                </h3>
-
-                                <p
-                                    className="
-                                        text-sm text-slate-300
-                                        group-hover:text-sky-800
-                                        group-active:text-sky-800
-                                        transition-colors
-                                    "
-                                >
-                                    Escolha entre layouts modernos e bem
-                                    estruturados, pensados para processos
-                                    seletivos reais.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Feature 3 */}
-                    <div className="flex justify-center max-w-md mx-auto group cursor-pointer">
-                        <div
-                            className="
-                                p-6 flex gap-4 rounded-xl border border-transparent
-                                group-hover:bg-sky-100 group-hover:border-sky-300
-                                group-active:bg-sky-100 group-active:border-sky-300
-                                transition-colors
-                            "
-                        >
-                            <Download
-                                className="
-                                    size-6 text-slate-200
-                                    group-hover:text-sky-700
-                                    group-active:text-sky-700
-                                    transition-colors
-                                "
-                            />
-
-                            <div className="space-y-2">
-                                <h3
-                                    className="
-                                        text-base font-semibold text-slate-200
-                                        group-hover:text-sky-900
-                                        group-active:text-sky-900
-                                        transition-colors
-                                    "
-                                >
-                                    Exportação Fácil
-                                </h3>
-
-                                <p
-                                    className="
-                                        text-sm text-slate-300
-                                        group-hover:text-sky-800
-                                        group-active:text-sky-800
-                                        transition-colors
-                                    "
-                                >
-                                    Gere seu currículo pronto para envio ou
-                                    impressão, sem complicações.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+                    {items.map((it, idx) => (
+                        <FeatureItem
+                            key={idx}
+                            Icon={it.Icon}
+                            title={it.title}
+                            description={it.description}
+                            active={activeIndex === idx}
+                            onClick={() =>
+                                setActiveIndex(activeIndex === idx ? null : idx)
+                            }
+                        />
+                    ))}
                 </div>
             </div>
         </div>
