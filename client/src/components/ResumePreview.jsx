@@ -23,7 +23,7 @@ const ResumePreview = ({ data, template, accentColor, classes = '' }) => {
    }
 
    return (
-      <div className="w-full bg-gray-100">
+      <div className="w-full bg-gray-">
          <div
             id="resume-preview"
             className={

@@ -119,7 +119,8 @@ const ResumeBuider = () => {
                         relative
                         lg:col-span-5
                         rounded-lg
-                        overflow-hidden
+                        overflow-y-visible
+                        overflow-y-hidden
                         
                     "
                >
