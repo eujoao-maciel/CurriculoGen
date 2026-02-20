@@ -58,6 +58,7 @@ const ResumeBuider = () => {
         personal_info: {
             full_name: "João Francisco da Silva",
             email: "joao.silva.dev@gmail.com",
+            image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4VGKKAEhtdFaczp2WxB_sne3oz2Z7j8B3UQ&s",
             phone: "(85) 99883-8493",
             location: "Fortaleza, Ceará - Brasil",
             linkedin: "linkedin.com/in/joaofsilva",
