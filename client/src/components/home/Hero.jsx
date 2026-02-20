@@ -56,7 +56,7 @@ const Hero = () => {
                   </Link>
 
                   <Link
-                     to="/app?state=login"
+                     to="/login"
                      className="hidden lg:block px-6 py-2 border-slate-200 active:scale-95 bg-gray-700 hover:bg-gray-800 hover:text-slate-100 border border-slate-200 transition-all rounded-full text-slate-200 hover:text-gray-300"
                   >
                      login
@@ -87,7 +87,7 @@ const Hero = () => {
 
                <div className="flex flex-col mb-50 lg:mb-1 md:flex-row items-center gap-4 mt-13">
                   <Link
-                     to="/app"
+                     to="/app/builder/:id"
                      className="
                        z-2
                        bg-gray-500 
@@ -106,10 +106,11 @@ const Hero = () => {
                      <StickyNote className="size-4" /> 
                   </Link>
 
-                  <button className="flex z-2 items-center gap-2 border border-slate-200 hover:bg-gray-800 transition rounded-full px-7 h-12 text-slate-200">
+                  <Link to="login"
+                  className="flex z-2 items-center gap-2 border border-slate-200 hover:bg-gray-800 transition rounded-full px-7 h-12 text-slate-200">
                      <span>Realizar cadastro</span>
                      <LogIn className="size-4" />
-                  </button>
+                  </Link>
                </div>
             </div>
          </div>

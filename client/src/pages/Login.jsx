@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-const Login = () => {
+const Login = ({ title }) => {
    const query = new URLSearchParams(window.location.search)
    const urlState = query.get('state')
 

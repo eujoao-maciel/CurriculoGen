@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 const CallToAction = () => {
    return (
       <div id="cta" className="mt-50 w-full max-w-5xl mx-auto px-10 sm:px-16 mt-28">
@@ -7,8 +9,8 @@ const CallToAction = () => {
                Contratado.
             </p>
 
-            <a
-               href="https://prebuiltui.com"
+            <Link
+               to='/app/'
                className="flex items-center gap-2 rounded py-3 px-8 bg-gray-900 hover:bg-gray-800 transition text-white"
             >
                <span>Começar</span>
@@ -28,7 +30,7 @@ const CallToAction = () => {
                   <path d="M5 12h14" />
                   <path d="m12 5 7 7-7 7" />
                </svg>
-            </a>
+            </Link>
          </div>
       </div>
    )
