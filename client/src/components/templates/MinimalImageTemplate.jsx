@@ -237,7 +237,7 @@ const MinimalImageTemplate = ({ data = {}, accentColor = '#2563eb' }) => {
                               </div>
 
                               {exp.description && (
-                                 <ul className="list-disc list-inside text-xs text-zinc-700 mt-2 space-y-1">
+                                 <ul className="list-disc list-inside text-xs sm:text-sm text-zinc-700 mt-2 space-y-1">
                                     {exp.description
                                        .split('\n')
                                        .map((line, k) => (
