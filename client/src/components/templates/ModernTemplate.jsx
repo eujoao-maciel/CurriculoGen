@@ -17,11 +17,11 @@ const ModernTemplate = ({ data, accentColor }) => {
                 className="p-8 text-white"
                 style={{ backgroundColor: accentColor }}
             >
-                <h1 className="text-4xl font-light mb-3">
+                <h1 className="text-2xl sm:text-4xl font-light mb-3">
                     {data.personal_info?.full_name || "Seu Nome"}
                 </h1>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm ">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm ">
                     {data.personal_info?.email && (
                         <div className="flex items-center gap-2">
                             <Mail className="size-4" />
@@ -44,7 +44,7 @@ const ModernTemplate = ({ data, accentColor }) => {
                         <a
                             target="_blank"
                             href={data.personal_info?.linkedin}
-                            className="flex items-center gap-2"
+                            className="hidden sm:flex items-center gap-2"
                         >
                             <Linkedin className="size-4" />
                             <span className="break-all text-xs">
@@ -62,7 +62,7 @@ const ModernTemplate = ({ data, accentColor }) => {
                         <a
                             target="_blank"
                             href={data.personal_info?.website}
-                            className="flex items-center gap-2"
+                            className="hidden sm:flex items-center gap-2"
                         >
                             <Globe className="size-4" />
                             <span className="break-all text-xs">
@@ -81,10 +81,10 @@ const ModernTemplate = ({ data, accentColor }) => {
                 {/* Professional Summary */}
                 {data.professional_summary && (
                     <section className="mb-8">
-                        <h2 className="text-2xl font-light mb-4 pb-2 border-b border-gray-200">
+                        <h2 className="text-xl sm:text-2xl font-light mb-4 pb-2 border-b border-gray-200">
                             Resumo
                         </h2>
-                        <p className="text-gray-700 ">
+                        <p className="text-sm sm:text-base text-gray-700 ">
                             {data.professional_summary}
                         </p>
                     </section>
@@ -93,7 +93,7 @@ const ModernTemplate = ({ data, accentColor }) => {
                 {/* Experience */}
                 {data.experience && data.experience.length > 0 && (
                     <section className="mb-8">
-                        <h2 className="text-2xl font-light mb-6 pb-2 border-b border-gray-200">
+                        <h2 className="text-xl sm:text-2xl font-light mb-6 pb-2 border-b border-gray-200">
                             Experiência
                         </h2>
 
@@ -106,17 +106,17 @@ const ModernTemplate = ({ data, accentColor }) => {
                                 >
                                     <div className="flex justify-between items-start mb-2">
                                         <div>
-                                            <h3 className="text-xl font-medium text-gray-900">
+                                            <h3 className="text-base sm:text-lg font-normal text-gray-900">
                                                 {exp.position}
                                             </h3>
                                             <p
-                                                className="font-medium"
+                                                className="text-base sm:text-lg font-light"
                                                 style={{ color: accentColor }}
                                             >
                                                 {exp.company}
                                             </p>
                                         </div>
-                                        <div className="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded">
+                                        <div className="hidden sm:flex text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded">
                                             {formatDate(exp.start_date)} -{" "}
                                             {exp.is_current
                                                 ? "Atual"
@@ -124,7 +124,7 @@ const ModernTemplate = ({ data, accentColor }) => {
                                         </div>
                                     </div>
                                     {exp.description && (
-                                        <div className="text-gray-700 leading-relaxed mt-3 whitespace-pre-line">
+                                        <div className="text-sm text-gray-700 leading-relaxed mt-3 whitespace-pre-line">
                                             {exp.description}
                                         </div>
                                     )}
@@ -137,7 +137,7 @@ const ModernTemplate = ({ data, accentColor }) => {
                 {/* Projects */}
                 {data.project && data.project.length > 0 && (
                     <section className="mb-8">
-                        <h2 className="text-2xl font-light mb-4 pb-2 border-b border-gray-200">
+                        <h2 className="text-xl sm:text-2xl font-light mb-4 pb-2 border-b border-gray-200">
                             Projetos
                         </h2>
 
@@ -150,7 +150,7 @@ const ModernTemplate = ({ data, accentColor }) => {
                                 >
                                     <div className="flex justify-between items-start">
                                         <div>
-                                            <h3 className="text-lg font-medium text-gray-900">
+                                            <h3 className="text-base sm:text-lg font-normal text-gray-900">
                                                 {p.name}
                                             </h3>
                                         </div>
@@ -170,18 +170,18 @@ const ModernTemplate = ({ data, accentColor }) => {
                     {/* Education */}
                     {data.education && data.education.length > 0 && (
                         <section>
-                            <h2 className="text-2xl font-light mb-4 pb-2 border-b border-gray-200">
-                                ESCOLARIDADE
+                            <h2 className="text-xl sm:text-2xl font-light mb-4 pb-2 border-b border-gray-200">
+                                Formação
                             </h2>
 
                             <div className="space-y-4">
                                 {data.education.map((edu, index) => (
                                     <div key={index}>
-                                        <h3 className="font-semibold text-gray-900">
+                                        <h3 className="text-base sm:text-lg font-normal text-gray-900">
                                             {edu.field && `${edu.field} - `}
                                             {edu.degree}
                                         </h3>
-                                        <p style={{ color: accentColor }}>
+                                        <p className="text-base sm:text-lg font-light" style={{ color: accentColor }}>
                                             {edu.institution}
                                         </p>
                                     </div>

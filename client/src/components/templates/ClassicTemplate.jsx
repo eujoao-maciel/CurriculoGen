@@ -14,7 +14,7 @@ const ClassicTemplate = ({ data, accentColor }) => {
       <div className="max-w-4xl mx-auto p-8 bg-white text-gray-800 leading-relaxed">
          {/* Header */}
          <header
-            className="text-center mb-5 sm:mb-8 pb-6 border-b-2"
+            className="text-center mb-5 sm:mb-5 pb-5 border-b-2"
             style={{ borderColor: accentColor }}
          >
             <h1
@@ -98,7 +98,7 @@ const ClassicTemplate = ({ data, accentColor }) => {
                         className="border-l-2 pl-4"
                         style={{ borderColor: accentColor }}
                      >
-                        <div className="flex justify-between items-start mb-2">
+                        <div className="flex flex-col sm:flex-row justify-between items-start mb-2">
                            <div>
                               <h3 className="text-base sm:text-lg font-normal text-gray-900">
                                  {exp.position}
@@ -107,12 +107,14 @@ const ClassicTemplate = ({ data, accentColor }) => {
                                  {exp.company}
                               </p>
                            </div>
-                           <div className="text-right text-xs text-gray-600">
-                              <p>
-                                 {formatDate(exp.start_date)} -{' '}
-                                 {exp.is_current
-                                    ? 'Atual'
-                                    : formatDate(exp.end_date)}
+                           <div className="text-right text-xs text-gray-500">
+                              <p className="flex flex-row gap-2 sm:flex-col">
+                                 <span>{formatDate(exp.start_date)} - </span>
+                                 <span>
+                                    {exp.is_current
+                                       ? 'Atual'
+                                       : formatDate(exp.end_date)}
+                                 </span>
                               </p>
                            </div>
                         </div>
@@ -148,7 +150,9 @@ const ClassicTemplate = ({ data, accentColor }) => {
                            <li className="text-base sm:text-lg font-normal text-gray-900 ">
                               {proj.name}
                            </li>
-                           <p className="text-sm text-gray-600">{proj.description}</p>
+                           <p className="text-sm text-gray-600">
+                              {proj.description}
+                           </p>
                         </div>
                      </div>
                   ))}
@@ -176,8 +180,7 @@ const ClassicTemplate = ({ data, accentColor }) => {
                            <h3 className="text-base sm:text-lg font-normal text-gray-900">
                               {edu.field && `${edu.field} - `} {edu.degree}
                            </h3>
-                           <p className="text-gray-700">{edu.institution}</p>
-                          
+                           <p className="text-gray-600">{edu.institution}</p>
                         </div>
                      </div>
                   ))}
@@ -197,7 +200,10 @@ const ClassicTemplate = ({ data, accentColor }) => {
 
                <div className="flex gap-4 flex-wrap">
                   {data.skills.map((skill, index) => (
-                     <div key={index} className="text-sm sm:text-base text-gray-700">
+                     <div
+                        key={index}
+                        className="text-xs sm:text-sm text-gray-700"
+                     >
                         • {skill}
                      </div>
                   ))}
