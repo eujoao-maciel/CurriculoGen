@@ -106,7 +106,7 @@ const Hero = () => {
                      <StickyNote className="size-4" /> 
                   </Link>
 
-                  <Link to="login"
+                  <Link to="/login?state=register"
                   className="flex z-2 items-center gap-2 border border-slate-200 hover:bg-gray-800 transition rounded-full px-7 h-12 text-slate-200">
                      <span>Realizar cadastro</span>
                      <LogIn className="size-4" />
