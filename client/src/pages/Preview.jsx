@@ -57,7 +57,7 @@ const Preview = () => {
                   rounded-full px-6 h-9 m-1 ring-1
                   ring-offset-1 ring-green-400
                   flex items-center transition-colors"
-                  href=""
+                  href="/"
                >
                   <ArrowLeftIcon className="mr-2 size-4" />
                   Voltar para home page
