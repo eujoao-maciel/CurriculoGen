@@ -1,3 +1,5 @@
+import { Github, Linkedin } from "lucide-react"
+
 const Footer = () => {
     return (
         <>
@@ -40,51 +42,40 @@ const Footer = () => {
 
                         <div>
                             <p className="text-sky-100 font-semibold">
-                                Recursos
+                                Contato
                             </p>
 
                             <ul className="mt-2 space-y-2">
                                 <li>
                                     <a
-                                        href="/"
+                                        href="https://github.com/eujoao-maciel"
                                         className="hover:text-sky-800 transition"
                                     >
-                                        Contato
+                                        GitHub
                                     </a>
                                 </li>
 
                                 <li>
                                     <a
-                                        href="/"
+                                        href="https://www.linkedin.com/in/jo%C3%A3o-maciel-644357259/"
                                         className="hover:text-sky-800 transition"
                                     >
-                                        Sobre
+                                        Linkedin
                                     </a>
                                 </li>
                             </ul>
                         </div>
 
                         <div>
-                            <p className="text-sky-100 font-semibold">
-                                Legalidade
-                            </p>
+                            <p className="text-sky-100 font-semibold">Sobre</p>
 
                             <ul className="mt-2 space-y-2">
                                 <li>
                                     <a
-                                        href="/"
+                                        href="https://github.com/eujoao-maciel/CurriculoGen"
                                         className="hover:text-sky-800 transition"
                                     >
-                                        Termos
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a
-                                        href="/"
-                                        className="hover:text-sky-800 transition"
-                                    >
-                                        Docs 
+                                        Docs
                                     </a>
                                 </li>
                             </ul>
@@ -103,25 +94,15 @@ const Footer = () => {
                             target="_blank"
                             rel="noreferrer"
                         >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="24"
-                                height="24"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                className="lucide lucide-linkedin size-5 hover:text-sky-800"
-                                aria-hidden="true"
-                            >
-                                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                            <Linkedin className="size-5 hover:text-gray-400" />
+                        </a>
 
-                                <rect width="4" height="12" x="2" y="9"></rect>
-
-                                <circle cx="4" cy="4" r="2"></circle>
-                            </svg>
+                        <a
+                            href="https://github.com/eujoao-maciel"
+                            target="_blank"
+                            rel="noreferrer"
+                        >
+                            <Github className="size-5 hover:text-gray-400" />
                         </a>
                     </div>
 
