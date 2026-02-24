@@ -24,7 +24,7 @@ import EducationForm from "../components/EducationForm.jsx"
 import ProjectForm from "../components/ProjectForm.jsx"
 import SkillsForm from "../components/SkillsForm.jsx"
 
-const ResumeBuider = () => {
+const ResumeBuilder = () => {
     const { resumeId } = useParams()
 
     const contentRef = useRef(null)
@@ -51,84 +51,7 @@ const ResumeBuider = () => {
         public: true,
     })
 
-    /* dados para teste */
-    const resumeDataMock = {
-        title: "Currículo Teste",
-
-        personal_info: {
-            full_name: "João Francisco da Silva",
-            email: "joao.silva.dev@gmail.com",
-            image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4VGKKAEhtdFaczp2WxB_sne3oz2Z7j8B3UQ&s",
-            phone: "(85) 99883-8493",
-            location: "Fortaleza, Ceará - Brasil",
-            linkedin: "linkedin.com/in/joaofsilva",
-            website: "https://joaosilva.dev",
-        },
-
-        professional_summary:
-            "Desenvolvedor de Software com foco em backend, experiência em Java, Spring Boot e bancos de dados relacionais. Atualmente em busca de uma oportunidade como Desenvolvedor Júnior, com forte interesse em boas práticas, arquitetura limpa e aprendizado contínuo.",
-
-        experience: [
-            {
-                position: "Desenvolvedor Backend Júnior",
-                company: "Tech Solutions LTDA",
-                start_date: "2023-01",
-                end_date: "2024-06",
-                is_current: false,
-                description:
-                    "• Desenvolvimento de APIs REST com Java e Spring Boot\n" +
-                    "• Integração com banco de dados MySQL\n" +
-                    "• Criação de testes unitários\n" +
-                    "• Participação em code reviews e melhorias de performance",
-            },
-            {
-                position: "Estagiário em Desenvolvimento de Software",
-                company: "Inova Sistemas",
-                start_date: "2022-06",
-                end_date: null,
-                is_current: true,
-                description:
-                    "• Suporte no desenvolvimento de sistemas internos\n" +
-                    "• Manutenção de código legado\n" +
-                    "• Correção de bugs e documentação técnica",
-            },
-        ],
-
-        project: [
-            {
-                name: "Sistema de Controle Financeiro",
-                description:
-                    "Aplicação backend para controle de despesas pessoais, com autenticação JWT, CRUD de transações e integração com banco de dados.",
-            },
-            {
-                name: "API de Gerenciamento de Usuários",
-                description:
-                    "API REST desenvolvida em Java com Spring Boot, aplicando princípios de Clean Architecture e validação de dados.",
-            },
-        ],
-
-        education: [
-            {
-                degree: "Tecnólogo",
-                field: "Análise e Desenvolvimento de Sistemas",
-                institution: "Instituto Federal do Ceará (IFCE)",
-                gpa: "8.5",
-            },
-        ],
-
-        skills: [
-            "Java",
-            "Spring Boot",
-            "SQL",
-            "MySQL",
-            "Git",
-            "REST APIs",
-            "JUnit",
-            "Clean Code",
-        ],
-    }
-
-    const dummyResumeData = []
+   const dummyResumeData = []
 
     const [activeSectionIndex, setActiveSectionIndex] = useState(0)
     const [removeBackground, setRemoveBackground] = useState(false)
@@ -440,7 +363,7 @@ const ResumeBuider = () => {
                         {/* -- resume preview -- */}
                         <div ref={contentRef}>
                             <ResumePreview
-                                data={resumeDataMock}
+                                data={resumeData}
                                 template={resumeData.template}
                                 accentColor={resumeData.accent_color}
                             />
@@ -452,4 +375,4 @@ const ResumeBuider = () => {
     )
 }
 
-export default ResumeBuider
+export default ResumeBuilder

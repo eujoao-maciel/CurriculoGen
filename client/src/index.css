@@ -20,3 +20,22 @@
     resize-none;
    }
 }
+
+@page {
+   size: letter;
+   margin: 0;
+}
+
+@media print {
+   body {
+      margin: 0;
+      -webkit-print-color-adjust: exact;
+   }
+
+   #resume-preview {
+      box-shadow: none !important;
+      border: none !important;
+      margin: 0;
+      padding: 0;
+   }
+}

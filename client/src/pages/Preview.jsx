@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react'
-import { dummyResumeData } from '../../public/assets.js'
+import { dummyResumeData } from '../data/dummyResumeData.js'
 import { ArrowLeftIcon } from 'lucide-react'
 
 import Loader from '../components/Loader.jsx'
@@ -25,7 +25,7 @@ const Preview = () => {
 
    return resumeData ? (
       <div className="bg-slate-100">
-         <div className="max-w-3x1 mx-auto py-10">
+         <div className="max-w-3xl mx-auto py-10">
             <ResumePreview
                data={resumeData}
                template={resumeData.template}

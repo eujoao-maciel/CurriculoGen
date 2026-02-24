@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom'
 
 const Dashboard = () => {
    const colors = ['#9333ea', '#d97706', '#dc2626', '#0284c7', '#16a32a']
-   // const [allResumes, setAllResumes] = useState([])
+   const [allResumes, setAllResumes] = useState([])
    const [showCreateResume, setShowCreateResume] = useState(false)
    const [showUploadResume, setShowUploadResume] = useState(false)
    const [title, setTitle] = useState('')
@@ -19,13 +19,6 @@ const Dashboard = () => {
    const [editResumeId, setEditResumeId] = useState('')
 
    const navigate = useNavigate()
-
-   const allResumes = [
-      { _id: 1, title: 'curriculo 1', updatedAt: '01-01-2025' },
-      { _id: 2, title: 'documento pdf', updatedAt: '02-02-2025' },
-      { _id: 3, title: 'foto', updatedAt: '03-03-2025' },
-      { _id: 4, title: 'aquivo', updatedAt: '04-04-2025' },
-   ]
 
    const createResume = async (e) => {
       e.preventDefault()
@@ -62,7 +55,7 @@ const Dashboard = () => {
    return (
       <div className="">
          <div className="mx-auto max-w-7xl px-4 py-8">
-            <p className="text-2x1 text-tranparent mb-6 bg-gradient-to-r from-slate-600 to-slate-700 bg-clip-text font-medium sm:hidden">
+            <p className="text-sm text-transparent mb-6 bg-gradient-to-r from-slate-600 to-slate-700 bg-clip-text font-medium sm:hidden">
                Bem Vindo, teste nome
             </p>
 
@@ -305,7 +298,7 @@ const Dashboard = () => {
             {showUploadResume && (
                <form
                   onSubmit={uploadResume}
-                  onClick={() => setShowCreateResume(false)}
+                  onClick={() => setShowUploadResume(false)}
                   className="
                  fixed
                  inset-0
@@ -384,7 +377,7 @@ const Dashboard = () => {
                                  </p>
                               ) : (
                                  <>
-                                    <UploadCloud className="size=14 stroke-1" />
+                                    <UploadCloud className="size-7 stroke-1" />
                                  </>
                               )}
                            </div>

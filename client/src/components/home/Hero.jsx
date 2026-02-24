@@ -66,8 +66,6 @@ const Hero = () => {
 
             {/* Hero Section */}
             <div className="relative flex flex-col mt-10 items-center justify-center lg:mt-8 text-sm px-4 md:px-16 lg:px-24 xl:px-40 text-black">
-               <div className="absolute z-1 top-28 xl:top-10 -z-10 left-1/4 size-72 sm:size-96 xl:size-120 2xl:size-132 bg-gray-200 blur-[80px] opacity-30"></div>
-
                <h1 className="z-2 text-4xl flex flex-col font-normal md:text-5xl text-slate-100 text-center lg:text-7xl font-bold max-w-4xl lg:mt-8 leading-[70px]">
                   Crie um currículo{' '}
                   <span className="z-2 bg-slate-100 bg-clip-text text-transparent">
@@ -103,11 +101,13 @@ const Hero = () => {
                        transition-colors"
                   >
                      Criar meu currículo
-                     <StickyNote className="size-4" /> 
+                     <StickyNote className="size-4" />
                   </Link>
 
-                  <Link to="/login?state=register"
-                  className="flex z-2 items-center gap-2 border border-slate-200 hover:bg-gray-800 transition rounded-full px-7 h-12 text-slate-200">
+                  <Link
+                     to="/login?state=register"
+                     className="flex z-2 items-center gap-2 border border-slate-200 hover:bg-gray-800 transition rounded-full px-7 h-12 text-slate-200"
+                  >
                      <span>Realizar cadastro</span>
                      <LogIn className="size-4" />
                   </Link>
