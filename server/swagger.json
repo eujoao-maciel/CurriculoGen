@@ -73,6 +73,91 @@
           }
         }
       }
+    },
+    "/users/login": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Login user",
+        "description": "Authenticates a user and returns a JWT token.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              },
+              "examples": {
+                "default": {
+                  "value": {
+                    "email": "jane@example.com",
+                    "password": "secret123"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Login successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginSuccess"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation failed or invalid credentials",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    { "$ref": "#/components/schemas/ValidationError" },
+                    { "$ref": "#/components/schemas/AuthError" }
+                  ]
+                },
+                "examples": {
+                  "validationError": {
+                    "value": {
+                      "error": "validation failed.",
+                      "details": [
+                        {
+                          "field": "email",
+                          "message": "email is invalid"
+                        }
+                      ]
+                    }
+                  },
+                  "invalidCredentials": {
+                    "value": {
+                      "message": "Invalid email or password."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Failed to login user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServerError"
+                },
+                "examples": {
+                  "default": {
+                    "value": {
+                      "error": "failed to login user."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -101,7 +186,7 @@
         "properties": {
           "message": {
             "type": "string",
-            "example": "user registered successfully"
+            "example": "user registered successfully."
           },
           "token": {
             "type": "string",
@@ -109,6 +194,47 @@
           },
           "user": {
             "$ref": "#/components/schemas/User"
+          }
+        }
+      },
+      "LoginRequest": {
+        "type": "object",
+        "required": ["email", "password"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "minLength": 6
+          }
+        }
+      },
+      "LoginSuccess": {
+        "type": "object",
+        "required": ["message", "token", "user"],
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Login successful."
+          },
+          "token": {
+            "type": "string",
+            "description": "JWT valid for 7 days"
+          },
+          "user": {
+            "$ref": "#/components/schemas/User"
+          }
+        }
+      },
+      "AuthError": {
+        "type": "object",
+        "required": ["message"],
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Invalid email or password."
           }
         }
       },
@@ -142,7 +268,7 @@
         "properties": {
           "error": {
             "type": "string",
-            "example": "validation failed"
+            "example": "validation failed."
           },
           "details": {
             "type": "array",
@@ -163,7 +289,7 @@
         "properties": {
           "error": {
             "type": "string",
-            "example": "user already exists"
+            "example": "user already exists."
           }
         }
       },
