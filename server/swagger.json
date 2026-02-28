@@ -1,308 +1,319 @@
 {
-  "openapi": "3.0.3",
-  "info": {
-    "title": "CurriculoGen API",
-    "version": "1.0.0",
-    "description": "API documentation"
-  },
-  "paths": {
-    "/users/register": {
-      "post": {
-        "tags": ["Auth"],
-        "summary": "Register a new user",
-        "description": "Creates a new user account and returns a JWT token.",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RegisterRequest"
-              },
-              "examples": {
-                "default": {
-                  "value": {
-                    "name": "Jane Doe",
-                    "email": "jane@example.com",
-                    "password": "secret123"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "User registered successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/RegisterSuccess"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Validation failed",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ValidationError"
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "User already exists",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ConflictError"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Failed to register user",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ServerError"
-                }
-              }
-            }
-          }
-        }
-      }
+    "openapi": "3.0.3",
+    "info": {
+        "title": "CurriculoGen API",
+        "version": "1.0.0",
+        "description": "API documentation"
     },
-    "/users/login": {
-      "post": {
-        "tags": ["Auth"],
-        "summary": "Login user",
-        "description": "Authenticates a user and returns a JWT token.",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/LoginRequest"
-              },
-              "examples": {
-                "default": {
-                  "value": {
-                    "email": "jane@example.com",
-                    "password": "secret123"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Login successful",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/LoginSuccess"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Validation failed or invalid credentials",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "oneOf": [
-                    { "$ref": "#/components/schemas/ValidationError" },
-                    { "$ref": "#/components/schemas/AuthError" }
-                  ]
-                },
-                "examples": {
-                  "validationError": {
-                    "value": {
-                      "error": "validation failed.",
-                      "details": [
-                        {
-                          "field": "email",
-                          "message": "email is invalid"
+    "paths": {
+        "/users/register": {
+            "post": {
+                "tags": ["Auth"],
+                "summary": "Register a new user",
+                "description": "Creates a new user account and returns a JWT token.",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RegisterRequest"
+                            },
+                            "examples": {
+                                "default": {
+                                    "value": {
+                                        "name": "Jane Doe",
+                                        "email": "jane@example.com",
+                                        "password": "secret123"
+                                    }
+                                }
+                            }
                         }
-                      ]
                     }
-                  },
-                  "invalidCredentials": {
-                    "value": {
-                      "message": "Invalid email or password."
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Failed to login user",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ServerError"
                 },
-                "examples": {
-                  "default": {
-                    "value": {
-                      "error": "failed to login user."
+                "responses": {
+                    "201": {
+                        "description": "User registered successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RegisterSuccess"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Validation failed",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationError"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "User already exists",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ConflictError"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Failed to register user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ServerError"
+                                }
+                            }
+                        }
                     }
-                  }
                 }
-              }
             }
-          }
-        }
-      }
-    }
-  },
-  "components": {
-    "schemas": {
-      "RegisterRequest": {
-        "type": "object",
-        "required": ["name", "email", "password"],
-        "properties": {
-          "name": {
-            "type": "string",
-            "minLength": 1
-          },
-          "email": {
-            "type": "string",
-            "format": "email"
-          },
-          "password": {
-            "type": "string",
-            "minLength": 6
-          }
-        }
-      },
-      "RegisterSuccess": {
-        "type": "object",
-        "required": ["message", "token", "user"],
-        "properties": {
-          "message": {
-            "type": "string",
-            "example": "user registered successfully."
-          },
-          "token": {
-            "type": "string",
-            "description": "JWT valid for 7 days"
-          },
-          "user": {
-            "$ref": "#/components/schemas/User"
-          }
-        }
-      },
-      "LoginRequest": {
-        "type": "object",
-        "required": ["email", "password"],
-        "properties": {
-          "email": {
-            "type": "string",
-            "format": "email"
-          },
-          "password": {
-            "type": "string",
-            "minLength": 6
-          }
-        }
-      },
-      "LoginSuccess": {
-        "type": "object",
-        "required": ["message", "token", "user"],
-        "properties": {
-          "message": {
-            "type": "string",
-            "example": "Login successful."
-          },
-          "token": {
-            "type": "string",
-            "description": "JWT valid for 7 days"
-          },
-          "user": {
-            "$ref": "#/components/schemas/User"
-          }
-        }
-      },
-      "AuthError": {
-        "type": "object",
-        "required": ["message"],
-        "properties": {
-          "message": {
-            "type": "string",
-            "example": "Invalid email or password."
-          }
-        }
-      },
-      "User": {
-        "type": "object",
-        "required": ["_id", "name", "email"],
-        "properties": {
-          "_id": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string"
-          },
-          "email": {
-            "type": "string",
-            "format": "email"
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updatedAt": {
-            "type": "string",
-            "format": "date-time"
-          }
-        }
-      },
-      "ValidationError": {
-        "type": "object",
-        "required": ["error", "details"],
-        "properties": {
-          "error": {
-            "type": "string",
-            "example": "validation failed."
-          },
-          "details": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "required": ["field", "message"],
-              "properties": {
-                "field": { "type": "string" },
-                "message": { "type": "string" }
-              }
+        },
+        "/users/login": {
+            "post": {
+                "tags": ["Auth"],
+                "summary": "Login user",
+                "description": "Authenticates a user and returns a JWT token.",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LoginRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Login successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/LoginSuccess"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Validation failed or invalid credentials",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "oneOf": [
+                                        {
+                                            "$ref": "#/components/schemas/ValidationError"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/AuthError"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Failed to login user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ServerError"
+                                }
+                            }
+                        }
+                    }
+                }
             }
-          }
+        },
+        "/users/data": {
+            "get": {
+                "tags": ["Auth"],
+                "summary": "Get authenticated user data",
+                "description": "Returns the authenticated user based on the userId extracted from the JWT token.",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GetUserSuccess"
+                                },
+                                "examples": {
+                                    "default": {
+                                        "value": {
+                                            "user": {
+                                                "_id": "65a1234567890abcdef12345",
+                                                "name": "Jane Doe",
+                                                "email": "jane@example.com",
+                                                "createdAt": "2024-01-01T00:00:00.000Z",
+                                                "updatedAt": "2024-01-01T00:00:00.000Z"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "User not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AuthError"
+                                },
+                                "examples": {
+                                    "default": {
+                                        "value": {
+                                            "message": "User not found."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid token or request error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AuthError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
-      },
-      "ConflictError": {
-        "type": "object",
-        "required": ["error"],
-        "properties": {
-          "error": {
-            "type": "string",
-            "example": "user already exists."
-          }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        },
+        "schemas": {
+            "RegisterRequest": {
+                "type": "object",
+                "required": ["name", "email", "password"],
+                "properties": {
+                    "name": { "type": "string", "minLength": 1 },
+                    "email": { "type": "string", "format": "email" },
+                    "password": { "type": "string", "minLength": 6 }
+                }
+            },
+            "RegisterSuccess": {
+                "type": "object",
+                "required": ["message", "token", "user"],
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "example": "user registered successfully."
+                    },
+                    "token": {
+                        "type": "string",
+                        "description": "JWT valid for 7 days"
+                    },
+                    "user": { "$ref": "#/components/schemas/User" }
+                }
+            },
+            "LoginRequest": {
+                "type": "object",
+                "required": ["email", "password"],
+                "properties": {
+                    "email": { "type": "string", "format": "email" },
+                    "password": { "type": "string", "minLength": 6 }
+                }
+            },
+            "LoginSuccess": {
+                "type": "object",
+                "required": ["message", "token", "user"],
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "example": "Login successful."
+                    },
+                    "token": {
+                        "type": "string",
+                        "description": "JWT valid for 7 days"
+                    },
+                    "user": { "$ref": "#/components/schemas/User" }
+                }
+            },
+            "GetUserSuccess": {
+                "type": "object",
+                "required": ["user"],
+                "properties": {
+                    "user": { "$ref": "#/components/schemas/User" }
+                }
+            },
+            "AuthError": {
+                "type": "object",
+                "required": ["message"],
+                "properties": {
+                    "message": { "type": "string" }
+                }
+            },
+            "User": {
+                "type": "object",
+                "required": ["_id", "name", "email"],
+                "properties": {
+                    "_id": { "type": "string" },
+                    "name": { "type": "string" },
+                    "email": { "type": "string", "format": "email" },
+                    "createdAt": { "type": "string", "format": "date-time" },
+                    "updatedAt": { "type": "string", "format": "date-time" }
+                }
+            },
+            "ValidationError": {
+                "type": "object",
+                "required": ["error", "details"],
+                "properties": {
+                    "error": {
+                        "type": "string",
+                        "example": "validation failed."
+                    },
+                    "details": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "required": ["field", "message"],
+                            "properties": {
+                                "field": { "type": "string" },
+                                "message": { "type": "string" }
+                            }
+                        }
+                    }
+                }
+            },
+            "ConflictError": {
+                "type": "object",
+                "required": ["error"],
+                "properties": {
+                    "error": {
+                        "type": "string",
+                        "example": "user already exists."
+                    }
+                }
+            },
+            "ServerError": {
+                "type": "object",
+                "required": ["error"],
+                "properties": {
+                    "error": { "type": "string" }
+                }
+            }
         }
-      },
-      "ServerError": {
-        "type": "object",
-        "required": ["error"],
-        "properties": {
-          "error": {
-            "type": "string",
-            "example": "failed to register user"
-          }
-        }
-      }
     }
-  }
 }
