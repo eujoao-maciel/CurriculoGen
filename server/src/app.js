@@ -3,6 +3,7 @@ import cors from 'cors'
 import swaggerUI from 'swagger-ui-express'
 import swaggerDocs from '../swagger.json' with { type: 'json' }
 import { authRoutes } from './routes/auth.js'
+import { resumeRoutes } from './routes/resume.js'
 
 export const app = express()
 
@@ -15,4 +16,5 @@ app.get('/status', (req, res) => {
 })
 
 app.use('/users/', authRoutes)
+app.use('/resume/', resumeRoutes)
 

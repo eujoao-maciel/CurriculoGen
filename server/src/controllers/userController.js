@@ -1,7 +1,7 @@
 import { User } from '../models/User.js'
 import { Resume } from '../models/Resume.js'
 import { hashPassword } from '../utils/password.js'
-import { registerSchema, loginSchema } from '../validators/user.js'
+import { registerSchema, loginSchema } from '../validators/userValidations.js'
 import jwt from 'jsonwebtoken'
 
 const generateToken = (userId) => {
@@ -17,9 +17,9 @@ const normalizeEmail = (email) => {
 
 export const registerUser = async (req, res) => {
    try {
-      const parsed = registerSchema.safeParse(req.body)
-      if (!parsed.success) {
-         const errors = parsed.error.issues.map((issue) => ({
+      const validateData = registerSchema.safeParse(req.body)
+      if (!validateData.success) {
+         const errors = validateData.error.issues.map((issue) => ({
             field: issue.path.join('.'),
             message: issue.message,
          }))
@@ -28,7 +28,7 @@ export const registerUser = async (req, res) => {
             .json({ error: 'validation failed.', details: errors })
       }
 
-      const { name, email, password } = parsed.data
+      const { name, email, password } = validateData.data
       const normalizedEmail = normalizeEmail(email)
 
       const existingUser = await User.findOne({ email: normalizedEmail })
@@ -59,9 +59,9 @@ export const registerUser = async (req, res) => {
 
 export const loginUser = async (req, res) => {
    try {
-      const parsed = loginSchema.safeParse(req.body)
-      if (!parsed.success) {
-         const errors = parsed.error.issues.map((issue) => ({
+      const validateData = loginSchema.safeParse(req.body)
+      if (!validateData.success) {
+         const errors = validateData.error.issues.map((issue) => ({
             field: issue.path.join('.'),
             message: issue.message,
          }))
@@ -71,7 +71,7 @@ export const loginUser = async (req, res) => {
             .json({ error: 'validation failed.', details: errors })
       }
 
-      const { email, password } = parsed.data
+      const { email, password } = validateData.data
       const normalizedEmail = normalizeEmail(email)
 
       const user = await User.findOne({ email: normalizedEmail })

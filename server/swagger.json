@@ -242,6 +242,105 @@
                }
             }
          }
+      },
+      "/resume/create": {
+         "post": {
+            "tags": ["Resume"],
+            "summary": "Create a new resume",
+            "description": "Creates a new resume for the authenticated user. The userId is extracted from the JWT token.",
+            "security": [
+               {
+                  "bearerAuth": []
+               }
+            ],
+            "requestBody": {
+               "required": true,
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "$ref": "#/components/schemas/CreateResumeRequest"
+                     },
+                     "examples": {
+                        "default": {
+                           "value": {
+                              "title": "Frontend Developer Resume"
+                           }
+                        }
+                     }
+                  }
+               }
+            },
+            "responses": {
+               "201": {
+                  "description": "Resume created successfully",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref": "#/components/schemas/CreateResumeSuccess"
+                        },
+                        "examples": {
+                           "default": {
+                              "value": {
+                                 "message": "Resume created successfully.",
+                                 "resume": {
+                                    "_id": "65b9876543210fedcba54321",
+                                    "title": "Frontend Developer Resume",
+                                    "userId": "65a1234567890abcdef12345",
+                                    "createdAt": "2024-01-01T00:00:00.000Z",
+                                    "updatedAt": "2024-01-01T00:00:00.000Z"
+                                 }
+                              }
+                           }
+                        }
+                     }
+                  }
+               },
+               "400": {
+                  "description": "Validation failed or bad request",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "oneOf": [
+                              {
+                                 "$ref": "#/components/schemas/ValidationError"
+                              },
+                              {
+                                 "$ref": "#/components/schemas/AuthError"
+                              }
+                           ]
+                        }
+                     }
+                  }
+               },
+               "401": {
+                  "description": "Unauthorized - invalid or missing token",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref": "#/components/schemas/AuthError"
+                        },
+                        "examples": {
+                           "default": {
+                              "value": {
+                                 "message": "Invalid token."
+                              }
+                           }
+                        }
+                     }
+                  }
+               },
+               "500": {
+                  "description": "Server error when creating resume",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref": "#/components/schemas/ServerError"
+                        }
+                     }
+                  }
+               }
+            }
+         }
       }
    },
    "components": {
@@ -384,6 +483,26 @@
             "required": ["error"],
             "properties": {
                "error": { "type": "string" }
+            }
+         },
+         "CreateResumeRequest": {
+            "type": "object",
+            "required": ["title"],
+            "properties": {
+               "title": { "type": "string", "minLength": 1 }
+            }
+         },
+         "CreateResumeSuccess": {
+            "type": "object",
+            "required": ["message", "resume"],
+            "properties": {
+               "message": {
+                  "type": "string",
+                  "example": "Resume created successfully."
+               },
+               "resume": {
+                  "$ref": "#/components/schemas/Resume"
+               }
             }
          }
       }
