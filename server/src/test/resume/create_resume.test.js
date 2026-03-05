@@ -34,14 +34,14 @@ describe('GET /resume/create', () => {
    })
 
    it('return 400 for invalid payload', async () => {
-     const token = await generateToken()
+      const token = await generateToken()
 
-     const res = await request(app)
-        .post('/resume/create')
-        .set('Authorization', `Bearer ${token}`)
-        .send({ title: '' })
+      const res = await request(app)
+         .post('/resume/create')
+         .set('Authorization', `Bearer ${token}`)
+         .send({ title: '' })
 
-     expect(res.body.error).toBe('validation failed.')
-     expect(res.status).toBe(400)
+      expect(res.body.message).toBe('validation failed.')
+      expect(res.status).toBe(400)
    })
 })

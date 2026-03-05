@@ -17,18 +17,7 @@ const normalizeEmail = (email) => {
 
 export const registerUser = async (req, res) => {
    try {
-      const validateData = registerSchema.safeParse(req.body)
-      if (!validateData.success) {
-         const errors = validateData.error.issues.map((issue) => ({
-            field: issue.path.join('.'),
-            message: issue.message,
-         }))
-         return res
-            .status(400)
-            .json({ error: 'validation failed.', details: errors })
-      }
-
-      const { name, email, password } = validateData.data
+      const { name, email, password } = req.validatedInputs 
       const normalizedEmail = normalizeEmail(email)
 
       const existingUser = await User.findOne({ email: normalizedEmail })
@@ -53,25 +42,16 @@ export const registerUser = async (req, res) => {
          user: newUser,
       })
    } catch (error) {
-      return res.status(500).json({ error: 'failed to register user.' })
+      return res.status(400).json({
+         message: error.message,
+         errors: error.details,
+      })
    }
 }
 
 export const loginUser = async (req, res) => {
    try {
-      const validateData = loginSchema.safeParse(req.body)
-      if (!validateData.success) {
-         const errors = validateData.error.issues.map((issue) => ({
-            field: issue.path.join('.'),
-            message: issue.message,
-         }))
-
-         return res
-            .status(400)
-            .json({ error: 'validation failed.', details: errors })
-      }
-
-      const { email, password } = validateData.data
+      const { email, password } = req.validatedInputs
       const normalizedEmail = normalizeEmail(email)
 
       const user = await User.findOne({ email: normalizedEmail })
@@ -93,7 +73,10 @@ export const loginUser = async (req, res) => {
          user,
       })
    } catch (error) {
-      return res.status(500).json({ error: 'failed to login user.' })
+      return res.status(400).json({
+        message: error.message,
+        errors: error.details
+      })
    }
 }
 
@@ -111,22 +94,18 @@ export const getUserById = async (req, res) => {
 
       return res.status(200).json({ user })
    } catch (error) {
-    return res
-      .status(400)
-      .json({ message: error.message })
-  }
+      return res.status(400).json({ message: error.message })
+   }
 }
 
 export const getUserResumes = async (req, res) => {
-  try {
-    const userId = req.userId
+   try {
+      const userId = req.userId
 
-    const resumes = await Resume.find({userId})
+      const resumes = await Resume.find({ userId })
 
-    return res.status(200).json({resumes})
-  } catch (error) {
-     return res
-      .status(400)
-      .json({ message: error.message })
-  }
+      return res.status(200).json({ resumes })
+   } catch (error) {
+      return res.status(400).json({ message: error.message })
+   }
 }

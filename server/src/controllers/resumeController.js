@@ -1,22 +1,9 @@
 import { Resume } from '../models/Resume.js'
-import { titleValidation } from '../validators/resumeValidations.js'
 
 export const createResume = async (req, res) => {
    try {
       const userId = req.userId
-      const validateData = titleValidation.safeParse(req.body)
-
-      if (!validateData.success) {
-         const errors = validateData.error.issues.map((issue) => ({
-            field: issue.path.join('.'),
-            message: issue.message,
-         }))
-         return res
-            .status(400)
-            .json({ error: 'validation failed.', details: errors })
-      }
-
-      const { title } = validateData.data
+      const { title } = req.validatedInputs
 
       const newResume = await Resume.create({
          userId,
@@ -28,6 +15,34 @@ export const createResume = async (req, res) => {
          resume: newResume,
       })
    } catch (error) {
-      res.status(400).json({ message: error.message })
+      return res.status(400).json({
+         message: error.message,
+         errors: error.details,
+      })
+   }
+}
+
+export const deleteResume = async (req, res) => {
+   try {
+      const userId = req.userId
+      const { resumeId } = req.validatedInputs
+
+      const deletedResume = await Resume.findOneAndDelete({
+         userId,
+         _id: resumeId,
+      })
+
+      if (!deletedResume) {
+         return res.status(404).json({ message: 'Resume not found.' })
+      }
+
+      return res.status(200).json({
+         message: 'Resume deleted successfully',
+      })
+   } catch (error) {
+      return res.status(400).json({
+         message: error.message,
+         errors: error.details,
+      })
    }
 }

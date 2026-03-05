@@ -45,7 +45,7 @@ describe('POST /users/login', () => {
       })
 
       expect(res.status).toBe(400)
-      expect(res.body.error).toBe("validation failed.")
-      expect(Array.isArray(res.body.details)).toBe(true)
+      expect(res.body.message).toBe("validation failed.")
+      expect(Array.isArray(res.body.errors)).toBe(true)
    })
 })
