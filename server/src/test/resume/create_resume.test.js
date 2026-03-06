@@ -19,7 +19,7 @@ const generateToken = async () => {
    return token
 }
 
-describe('GET /resume/create', () => {
+describe('POST /resume/create', () => {
    it('should return 201 if the resume is created successfully', async () => {
       const token = await generateToken()
       const title = 'Resume Title'
