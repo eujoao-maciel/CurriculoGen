@@ -1,30 +1,26 @@
 import request from 'supertest'
 import { describe, expect, it } from 'vitest'
 import { app } from '../../app.js'
-import { User } from '../../models/User.js'
 import { hashPassword } from '../../utils/password.js'
 import { useMongoMemoryServer } from '../setup/mongoMemoryServer.js'
+import { createUser } from '../helpers/createUser.js'
 
 useMongoMemoryServer()
 
 describe('POST /users/login', () => {
    it('login user successfully', async () => {
-      const hashed = await hashPassword('123456')
-      await User.create({
-         name: 'myname',
-         email: 'm@email.com',
-         password: hashed,
-      })
+      const hashedPass = await hashPassword('passwordtest')
+      const user = await createUser(hashedPass)
 
       const res = await request(app).post('/users/login').send({
-         email: 'm@email.com',
-         password: '123456',
+         email: 'name@email.com',
+         password: 'passwordtest',
       })
 
       expect(res.status).toBe(200)
       expect(res.body.message).toBe('Login successful.')
       expect(typeof res.body.token).toBe('string')
-      expect(res.body.user.email).toBe('m@email.com')
+      expect(res.body.user.email).toBe('name@email.com')
       expect(res.body.user.password).toBeUndefined()
    })
 

@@ -1,47 +1,35 @@
-import request from 'supertest'
-import { describe, it, expect } from 'vitest'
-import { app } from '../../app.js'
-import jwt from 'jsonwebtoken'
-import { User } from '../../models/User.js'
-import { Resume } from '../../models/Resume.js'
-import { useMongoMemoryServer } from '../setup/mongoMemoryServer.js'
+import request from "supertest"
+import { describe, it, expect } from "vitest"
+import { app } from "../../app.js"
+import { Resume } from "../../models/Resume.js"
+import { useMongoMemoryServer } from "../setup/mongoMemoryServer.js"
+import { generateToken } from "../helpers/generateToken.js"
 
 useMongoMemoryServer()
 
-const generateToken = async () => {
-   const user = await User.create({
-      name: 'name',
-      email: 'name@email.com',
-      password: 'passwordtest',
-   })
+describe("POST /resume/create", () => {
+    it("should return 201 if the resume is created successfully", async () => {
+        const { token } = await generateToken()
+        const title = "Resume Title"
 
-   const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET)
-   return token
-}
+        const res = await request(app)
+            .post("/resume/create")
+            .set("Authorization", `Bearer ${token}`)
+            .send({ title })
 
-describe('POST /resume/create', () => {
-   it('should return 201 if the resume is created successfully', async () => {
-      const token = await generateToken()
-      const title = 'Resume Title'
+        expect(res.status).toBe(201)
+        expect(res.body.message).toBe("Resume created successfully.")
+    })
 
-      const res = await request(app)
-         .post('/resume/create')
-         .set('Authorization', `Bearer ${token}`)
-         .send({ title })
+    it("return 400 for invalid payload", async () => {
+        const { token } = await generateToken()
 
-      expect(res.status).toBe(201)
-      expect(res.body.message).toBe('Resume created successfully.')
-   })
+        const res = await request(app)
+            .post("/resume/create")
+            .set("Authorization", `Bearer ${token}`)
+            .send({ title: "" })
 
-   it('return 400 for invalid payload', async () => {
-      const token = await generateToken()
-
-      const res = await request(app)
-         .post('/resume/create')
-         .set('Authorization', `Bearer ${token}`)
-         .send({ title: '' })
-
-      expect(res.body.message).toBe('validation failed.')
-      expect(res.status).toBe(400)
-   })
+        expect(res.body.message).toBe("validation failed.")
+        expect(res.status).toBe(400)
+    })
 })
