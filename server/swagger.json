@@ -601,6 +601,130 @@
                }
             }
          }
+      },
+      "/resume/update": {
+         "put": {
+            "tags": ["Resume"],
+            "summary": "Update a resume",
+            "description": "Updates an existing resume belonging to the authenticated user. Supports optional image upload and background removal.",
+            "security": [
+               {
+                  "bearerAuth": []
+               }
+            ],
+            "requestBody": {
+               "required": true,
+               "content": {
+                  "multipart/form-data": {
+                     "schema": {
+                        "type": "object",
+                        "required": ["resumeId", "resumeData"],
+                        "properties": {
+                           "resumeId": {
+                              "type": "string",
+                              "description": "ID of the resume to update",
+                              "example": "65b9876543210fedcba54321"
+                           },
+                           "resumeData": {
+                              "type": "string",
+                              "description": "JSON string containing resume data",
+                              "example": "{\"personal_info\":{\"full_name\":\"John Doe\"}}"
+                           },
+                           "removeBackground": {
+                              "type": "boolean",
+                              "description": "Optional flag to remove image background",
+                              "example": true
+                           },
+                           "image": {
+                              "type": "string",
+                              "format": "binary",
+                              "description": "Optional profile image"
+                           }
+                        }
+                     }
+                  }
+               }
+            },
+            "responses": {
+               "200": {
+                  "description": "Resume updated successfully",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "type": "object",
+                           "required": ["message", "resume"],
+                           "properties": {
+                              "message": {
+                                 "type": "string",
+                                 "example": "Saved successfully."
+                              },
+                              "resume": {
+                                 "$ref": "#/components/schemas/Resume"
+                              }
+                           }
+                        },
+                        "examples": {
+                           "default": {
+                              "value": {
+                                 "message": "Saved successfully.",
+                                 "resume": {
+                                    "_id": "65b9876543210fedcba54321",
+                                    "title": "Frontend Developer Resume",
+                                    "userId": "65a1234567890abcdef12345",
+                                    "public": false
+                                 }
+                              }
+                           }
+                        }
+                     }
+                  }
+               },
+               "404": {
+                  "description": "Resume not found",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref": "#/components/schemas/AuthError"
+                        },
+                        "examples": {
+                           "default": {
+                              "value": {
+                                 "message": "Resume not found."
+                              }
+                           }
+                        }
+                     }
+                  }
+               },
+               "400": {
+                  "description": "Validation failed or bad request",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "oneOf": [
+                              {
+                                 "$ref": "#/components/schemas/ValidationError"
+                              },
+                              {
+                                 "$ref": "#/components/schemas/AuthError"
+                              }
+                           ]
+                        }
+                     }
+                  }
+               },
+               "401": {
+                  "description": "Unauthorized - invalid or missing token",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref": "#/components/schemas/AuthError"
+                        }
+                     }
+                  }
+               }
+            }
+         }
       }
    },
    "components": {

@@ -26,8 +26,8 @@ resumeRoutes.post(
 resumeRoutes.put(
    '/update',
    authMiddleware,
-   validateRequest(updateResumeValidation),
    upload.single('image'),
+   validateRequest(updateResumeValidation),
    updateResume
 )
 resumeRoutes.delete(
