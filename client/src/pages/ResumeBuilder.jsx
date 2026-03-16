@@ -53,8 +53,6 @@ const ResumeBuilder = () => {
       public: true,
    })
 
-   const dummyResumeData = []
-
    const [activeSectionIndex, setActiveSectionIndex] = useState(0)
    const [removeBackground, setRemoveBackground] = useState(false)
 
@@ -68,21 +66,6 @@ const ResumeBuilder = () => {
    ]
 
    const activeSection = sections[activeSectionIndex]
-
-   useEffect(() => {
-      const loadExistingResume = () => {
-         const resume = dummyResumeData.find(
-            (resume) => resume._id === resumeId
-         )
-
-         if (resume) {
-            setResumeData(resume)
-            document.title = resume.title
-         }
-      }
-
-      loadExistingResume()
-   }, [])
 
    return (
       <div>
