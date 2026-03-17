@@ -29,12 +29,15 @@
 @media print {
    body * {
       visibility: hidden;
+      -webkit-print-color-adjust: exact;
    }
 
-   #resume-preview,
    #resume-preview * {
       visibility: visible;
+      print-color-adjust: exact;
+      -webkit-print-color-adjust: exact;
    }
+
 
    #resume-preview {
       position: absolute;
