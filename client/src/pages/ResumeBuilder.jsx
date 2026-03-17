@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from 'react'
-import { useReactToPrint } from 'react-to-print'
 import { useParams, Link } from 'react-router-dom'
 import {
    ArrowLeftIcon,
@@ -26,11 +25,11 @@ import SkillsForm from '../components/SkillsForm.jsx'
 
 const ResumeBuilder = () => {
    const { resumeId } = useParams()
-
    const contentRef = useRef(null)
-   const reactToPrintFn = useReactToPrint({
-      contentRef,
-   })
+
+   const printResume = () => {
+      window.print()
+   }
 
    const [resumeData, setResumeData] = useState({
       _id: '',
@@ -314,7 +313,7 @@ const ResumeBuilder = () => {
                              "
                      >
                         <button
-                           onClick={reactToPrintFn}
+                           onClick={printResume}
                            className="
                               flex items-center gap-2 px-6
                               py-2 text-xs rounded-lg
@@ -330,7 +329,7 @@ const ResumeBuilder = () => {
                   </div>
 
                   {/* -- resume preview -- */}
-                  <div ref={contentRef}>
+                  <div>
                      <ResumePreview
                         data={resumeData}
                         template={resumeData.template}
