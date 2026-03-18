@@ -24,7 +24,7 @@ const SkillsForm = ({ data, onChange }) => {
     }
 
     return (
-        <div className="space-y-4">
+        <div className="space-y-4 [overflow-wrap:anywhere] ">
             <div>
                 <h3
                     className="
@@ -40,7 +40,7 @@ const SkillsForm = ({ data, onChange }) => {
                 </p>
             </div>
 
-            <div className="flex gap-2">
+            <div className="flex flex-col sm:flex-row gap-2">
                 <input
                     type="text"
                     placeholder="Digite sua habilidade"
@@ -53,7 +53,7 @@ const SkillsForm = ({ data, onChange }) => {
                     onClick={addSkill}
                     disabled={!newSkill.trim}
                     className="
-                      flex items-center gap-2 px-4
+                      flex items-center justify-center gap-2 px-4
                       py-2 text-sm bg-gradient-to-br 
                       from-indigo-100 to-indigo-200
                       text-indigo-600 rounded-lg 

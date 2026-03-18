@@ -324,6 +324,7 @@ const ResumeBuilder = () => {
                           "
                         >
                            <DownloadIcon className="size-4" />
+                           Download
                         </button>
                      </div>
                   </div>
