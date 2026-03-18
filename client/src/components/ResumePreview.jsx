@@ -26,7 +26,7 @@ const ResumePreview = ({ data, template, accentColor, classes = '' }) => {
       <div className="w-full">
          <div
             id="resume-preview"
-            className={`border border-gray-400 print:shadow-none print:border-none ${classes}`}
+            className={`[overflow-wrap:anywhere] border border-gray-400 print:shadow-none print:border-none ${classes}`}
          >
             {renderTemplate()}
          </div>
