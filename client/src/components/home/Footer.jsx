@@ -41,7 +41,7 @@ const Footer = () => {
                         </div>
 
                         <div>
-                            <p className="text-sky-100 font-semibold">
+                            <p className="text-slate-100 font-semibold">
                                 Contato
                             </p>
 
@@ -67,7 +67,7 @@ const Footer = () => {
                         </div>
 
                         <div>
-                            <p className="text-sky-100 font-semibold">Sobre</p>
+                            <p className="text-slate-100 font-semibold">Sobre</p>
 
                             <ul className="mt-2 space-y-2">
                                 <li>
