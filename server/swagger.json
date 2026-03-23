@@ -731,6 +731,11 @@
             "tags": ["AI"],
             "summary": "Enhance professional summary",
             "description": "Enhances a resume professional summary using AI. The endpoint receives the user-written summary content and returns an improved, ATS-friendly version in 1 to 2 sentences, highlighting key skills, experience, and career objective.",
+            "security": [
+               {
+                  "bearerAuth": []
+               }
+            ],
             "requestBody": {
                "required": true,
                "content": {
@@ -810,6 +815,11 @@
             "tags": ["AI"],
             "summary": "Enhance job description",
             "description": "Enhances a resume job description using AI. The endpoint receives the user-written job description content and returns an improved, ATS-friendly version in 1 to 2 sentences, highlighting key responsibilities, achievements, and measurable impact when possible.",
+            "security": [
+               {
+                  "bearerAuth": []
+               }
+            ],
             "requestBody": {
                "required": true,
                "content": {

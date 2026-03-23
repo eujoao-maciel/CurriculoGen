@@ -15,11 +15,13 @@ export const aiRoutes = Router()
 
 aiRoutes.post(
    '/enhance-professional-summary',
+   authMiddleware,
    validateRequest(userContentValidation),
    enhanceProfessionalSummary
 )
 aiRoutes.post(
    '/enhance-job-desc',
+   authMiddleware,
    validateRequest(userContentValidation),
    enhanceJobDescription
 )
