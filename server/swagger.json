@@ -883,6 +883,108 @@
                }
             }
          }
+      },
+      "/ai/upload-resume": {
+         "post": {
+            "tags": ["AI"],
+            "summary": "Upload resume text and create a resume with AI",
+            "description": "Extracts structured resume data from the provided resume text using AI and creates a new resume for the authenticated user.",
+            "security": [
+               {
+                  "bearerAuth": []
+               }
+            ],
+            "requestBody": {
+               "required": true,
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "$ref": "#/components/schemas/UploadResumeRequest"
+                     },
+                     "examples": {
+                        "default": {
+                           "value": {
+                              "title": "Frontend Developer Resume",
+                              "resumeText": "John Doe\nFrontend Developer\nEmail: john@example.com\nPhone: +55 11 99999-9999\nLocation: São Paulo, Brazil\n\nProfessional Summary:\nFrontend developer with experience in React, JavaScript, HTML, and CSS.\n\nSkills:\nReact, JavaScript, HTML, CSS, Git\n\nExperience:\nFrontend Developer - ABC Tech\nJan 2023 - Present\nBuilt responsive interfaces and improved user experience.\n\nEducation:\nUniversity of São Paulo\nBachelor in Computer Science\n2024"
+                           }
+                        }
+                     }
+                  }
+               }
+            },
+            "responses": {
+               "200": {
+                  "description": "Resume uploaded and created successfully",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref": "#/components/schemas/UploadResumeSuccess"
+                        },
+                        "examples": {
+                           "default": {
+                              "value": {
+                                 "resumeId": "65c1234567890abcdef12345"
+                              }
+                           }
+                        }
+                     }
+                  }
+               },
+               "400": {
+                  "description": "Validation failed or AI extraction error",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "oneOf": [
+                              {
+                                 "$ref": "#/components/schemas/ValidationError"
+                              },
+                              {
+                                 "$ref": "#/components/schemas/UploadResumeError"
+                              }
+                           ]
+                        },
+                        "examples": {
+                           "validationError": {
+                              "value": {
+                                 "error": "validation failed.",
+                                 "details": [
+                                    {
+                                       "field": "resumeText",
+                                       "message": "resumeText is required."
+                                    }
+                                 ]
+                              }
+                           },
+                           "aiError": {
+                              "value": {
+                                 "message": "Failed to extract resume data.",
+                                 "errors": []
+                              }
+                           }
+                        }
+                     }
+                  }
+               },
+               "401": {
+                  "description": "Unauthorized - invalid or missing token",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref": "#/components/schemas/AuthError"
+                        },
+                        "examples": {
+                           "default": {
+                              "value": {
+                                 "message": "Invalid token."
+                              }
+                           }
+                        }
+                     }
+                  }
+               }
+            }
+         }
       }
    },
    "components": {
@@ -894,6 +996,53 @@
          }
       },
       "schemas": {
+         "UploadResumeRequest": {
+            "type": "object",
+            "required": ["title", "resumeText"],
+            "properties": {
+               "title": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Title of the resume that will be created.",
+                  "example": "Frontend Developer Resume"
+               },
+               "resumeText": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Raw resume text that will be processed by AI to extract structured resume data.",
+                  "example": "John Doe\nFrontend Developer\nEmail: john@example.com\nPhone: +55 11 99999-9999\nLocation: São Paulo, Brazil\n\nProfessional Summary:\nFrontend developer with experience in React, JavaScript, HTML, and CSS."
+               }
+            }
+         },
+         "UploadResumeSuccess": {
+            "type": "object",
+            "required": ["resumeId"],
+            "properties": {
+               "resumeId": {
+                  "type": "string",
+                  "description": "ID of the created resume.",
+                  "example": "65c1234567890abcdef12345"
+               }
+            }
+         },
+         "UploadResumeError": {
+            "type": "object",
+            "required": ["message"],
+            "properties": {
+               "message": {
+                  "type": "string",
+                  "example": "Failed to extract resume data."
+               },
+               "errors": {
+                  "type": "array",
+                  "description": "Optional error details returned by the AI or validation layer.",
+                  "items": {
+                     "type": "object"
+                  },
+                  "example": []
+               }
+            }
+         },
          "EnhanceJobDescriptionRequest": {
             "type": "object",
             "required": ["userContent"],
