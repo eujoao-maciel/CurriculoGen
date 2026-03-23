@@ -1,1025 +1,1145 @@
 {
-    "openapi": "3.0.3",
-    "info": {
-        "title": "CurriculoGen API",
-        "version": "1.0.0",
-        "description": "API documentation"
-    },
-    "paths": {
-        "/users/register": {
-            "post": {
-                "tags": ["Auth"],
-                "summary": "Register a new user",
-                "description": "Creates a new user account and returns a JWT token.",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/RegisterRequest"
-                            },
-                            "examples": {
-                                "default": {
-                                    "value": {
-                                        "name": "Jane Doe",
-                                        "email": "jane@example.com",
-                                        "password": "secret123"
-                                    }
-                                }
-                            }
+   "openapi": "3.0.3",
+   "info": {
+      "title": "CurriculoGen API",
+      "version": "1.0.0",
+      "description": "API documentation"
+   },
+   "paths": {
+      "/users/register": {
+         "post": {
+            "tags": ["Auth"],
+            "summary": "Register a new user",
+            "description": "Creates a new user account and returns a JWT token.",
+            "requestBody": {
+               "required": true,
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "$ref": "#/components/schemas/RegisterRequest"
+                     },
+                     "examples": {
+                        "default": {
+                           "value": {
+                              "name": "Jane Doe",
+                              "email": "jane@example.com",
+                              "password": "secret123"
+                           }
                         }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "User registered successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/RegisterSuccess"
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Validation failed",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ValidationError"
-                                }
-                            }
-                        }
-                    },
-                    "409": {
-                        "description": "User already exists",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ConflictError"
-                                }
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Failed to register user",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ServerError"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/users/login": {
-            "post": {
-                "tags": ["Auth"],
-                "summary": "Login user",
-                "description": "Authenticates a user and returns a JWT token.",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/LoginRequest"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Login successful",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/LoginSuccess"
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Validation failed or invalid credentials",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "oneOf": [
-                                        {
-                                            "$ref": "#/components/schemas/ValidationError"
-                                        },
-                                        {
-                                            "$ref": "#/components/schemas/AuthError"
-                                        }
-                                    ]
-                                }
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Failed to login user",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ServerError"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/users/data": {
-            "get": {
-                "tags": ["Auth"],
-                "summary": "Get authenticated user data",
-                "description": "Returns the authenticated user based on the userId extracted from the JWT token.",
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "User retrieved successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/GetUserSuccess"
-                                },
-                                "examples": {
-                                    "default": {
-                                        "value": {
-                                            "user": {
-                                                "_id": "65a1234567890abcdef12345",
-                                                "name": "Jane Doe",
-                                                "email": "jane@example.com",
-                                                "createdAt": "2024-01-01T00:00:00.000Z",
-                                                "updatedAt": "2024-01-01T00:00:00.000Z"
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "User not found",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/AuthError"
-                                },
-                                "examples": {
-                                    "default": {
-                                        "value": {
-                                            "message": "User not found."
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid token or request error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/AuthError"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/users/resumes": {
-            "get": {
-                "tags": ["Auth"],
-                "summary": "Get resumes of the authenticated user",
-                "description": "Returns all resumes associated with the logged-in user. The userId is extracted from the JWT token.",
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Resumes retrieved successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/GetUserResumesSuccess"
-                                },
-                                "examples": {
-                                    "default": {
-                                        "value": {
-                                            "resumes": [
-                                                {
-                                                    "_id": "65b1234567890abcdef12345",
-                                                    "title": "Frontend Developer Resume",
-                                                    "userId": "65a1234567890abcdef12345",
-                                                    "createdAt": "2024-01-01T00:00:00.000Z",
-                                                    "updatedAt": "2024-01-01T00:00:00.000Z"
-                                                }
-                                            ]
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid request or token error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/AuthError"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/resume/create": {
-            "post": {
-                "tags": ["Resume"],
-                "summary": "Create a new resume",
-                "description": "Creates a new resume for the authenticated user. The userId is extracted from the JWT token.",
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/CreateResumeRequest"
-                            },
-                            "examples": {
-                                "default": {
-                                    "value": {
-                                        "title": "Frontend Developer Resume"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Resume created successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/CreateResumeSuccess"
-                                },
-                                "examples": {
-                                    "default": {
-                                        "value": {
-                                            "message": "Resume created successfully.",
-                                            "resume": {
-                                                "_id": "65b9876543210fedcba54321",
-                                                "title": "Frontend Developer Resume",
-                                                "userId": "65a1234567890abcdef12345",
-                                                "createdAt": "2024-01-01T00:00:00.000Z",
-                                                "updatedAt": "2024-01-01T00:00:00.000Z"
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Validation failed or bad request",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "oneOf": [
-                                        {
-                                            "$ref": "#/components/schemas/ValidationError"
-                                        },
-                                        {
-                                            "$ref": "#/components/schemas/AuthError"
-                                        }
-                                    ]
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized - invalid or missing token",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/AuthError"
-                                },
-                                "examples": {
-                                    "default": {
-                                        "value": {
-                                            "message": "Invalid token."
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "500": {
-                        "description": "Server error when creating resume",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ServerError"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/resume/delete/{resumeId}": {
-            "delete": {
-                "tags": ["Resume"],
-                "summary": "Delete a resume",
-                "description": "Deletes a resume belonging to the authenticated user. The userId is extracted from the JWT token.",
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "resumeId",
-                        "in": "path",
-                        "required": true,
-                        "description": "ID of the resume to delete",
+                     }
+                  }
+               }
+            },
+            "responses": {
+               "201": {
+                  "description": "User registered successfully",
+                  "content": {
+                     "application/json": {
                         "schema": {
-                            "type": "string"
-                        },
-                        "example": "65b9876543210fedcba54321"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Resume deleted successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/DeleteResumeSuccess"
-                                },
-                                "examples": {
-                                    "default": {
-                                        "value": {
-                                            "message": "Resume deleted successfully"
-                                        }
-                                    }
-                                }
-                            }
+                           "$ref": "#/components/schemas/RegisterSuccess"
                         }
-                    },
-                    "404": {
-                        "description": "Resume not found",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/AuthError"
-                                },
-                                "examples": {
-                                    "default": {
-                                        "value": {
-                                            "message": "Resume not found."
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Validation failed or request error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "oneOf": [
-                                        {
-                                            "$ref": "#/components/schemas/ValidationError"
-                                        },
-                                        {
-                                            "$ref": "#/components/schemas/AuthError"
-                                        }
-                                    ]
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized - invalid or missing token",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/AuthError"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/resume/resumes/{resumeId}": {
-            "get": {
-                "tags": ["Resume"],
-                "summary": "Get a resume by ID",
-                "description": "Returns a specific resume belonging to the authenticated user. The userId is extracted from the JWT token.",
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ],
-                "parameters": [
-                    {
-                        "name": "resumeId",
-                        "in": "path",
-                        "required": true,
-                        "description": "ID of the resume to retrieve",
+                     }
+                  }
+               },
+               "400": {
+                  "description": "Validation failed",
+                  "content": {
+                     "application/json": {
                         "schema": {
-                            "type": "string"
-                        },
-                        "example": "65b9876543210fedcba54321"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Resume retrieved successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "required": ["resume"],
-                                    "properties": {
-                                        "resume": {
-                                            "$ref": "#/components/schemas/Resume"
-                                        }
-                                    }
-                                },
-                                "examples": {
-                                    "default": {
-                                        "value": {
-                                            "resume": {
-                                                "_id": "65b9876543210fedcba54321",
-                                                "title": "Frontend Developer Resume",
-                                                "userId": "65a1234567890abcdef12345"
-                                            }
-                                        }
-                                    }
-                                }
-                            }
+                           "$ref": "#/components/schemas/ValidationError"
                         }
-                    },
-                    "404": {
-                        "description": "Resume not found",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/AuthError"
-                                },
-                                "examples": {
-                                    "default": {
-                                        "value": {
-                                            "message": "Resume not found."
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Validation failed or request error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "oneOf": [
-                                        {
-                                            "$ref": "#/components/schemas/ValidationError"
-                                        },
-                                        {
-                                            "$ref": "#/components/schemas/AuthError"
-                                        }
-                                    ]
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized - invalid or missing token",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/AuthError"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/resume/public/{resumeId}": {
-            "get": {
-                "tags": ["Resume"],
-                "summary": "Get a public resume by ID",
-                "description": "Returns a resume that is marked as public. This endpoint does not require authentication and will only return resumes where the `public` field is set to true.",
-                "parameters": [
-                    {
-                        "name": "resumeId",
-                        "in": "path",
-                        "required": true,
-                        "description": "ID of the public resume to retrieve",
+                     }
+                  }
+               },
+               "409": {
+                  "description": "User already exists",
+                  "content": {
+                     "application/json": {
                         "schema": {
-                            "type": "string"
+                           "$ref": "#/components/schemas/ConflictError"
+                        }
+                     }
+                  }
+               },
+               "500": {
+                  "description": "Failed to register user",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref": "#/components/schemas/ServerError"
+                        }
+                     }
+                  }
+               }
+            }
+         }
+      },
+      "/users/login": {
+         "post": {
+            "tags": ["Auth"],
+            "summary": "Login user",
+            "description": "Authenticates a user and returns a JWT token.",
+            "requestBody": {
+               "required": true,
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "$ref": "#/components/schemas/LoginRequest"
+                     }
+                  }
+               }
+            },
+            "responses": {
+               "200": {
+                  "description": "Login successful",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref": "#/components/schemas/LoginSuccess"
+                        }
+                     }
+                  }
+               },
+               "400": {
+                  "description": "Validation failed or invalid credentials",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "oneOf": [
+                              {
+                                 "$ref": "#/components/schemas/ValidationError"
+                              },
+                              {
+                                 "$ref": "#/components/schemas/AuthError"
+                              }
+                           ]
+                        }
+                     }
+                  }
+               },
+               "500": {
+                  "description": "Failed to login user",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref": "#/components/schemas/ServerError"
+                        }
+                     }
+                  }
+               }
+            }
+         }
+      },
+      "/users/data": {
+         "get": {
+            "tags": ["Auth"],
+            "summary": "Get authenticated user data",
+            "description": "Returns the authenticated user based on the userId extracted from the JWT token.",
+            "security": [
+               {
+                  "bearerAuth": []
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "User retrieved successfully",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref": "#/components/schemas/GetUserSuccess"
                         },
-                        "example": "65b9876543210fedcba54321"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Public resume retrieved successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "required": ["resume"],
-                                    "properties": {
-                                        "resume": {
-                                            "$ref": "#/components/schemas/Resume"
-                                        }
-                                    }
-                                },
-                                "examples": {
-                                    "default": {
-                                        "value": {
-                                            "resume": {
-                                                "_id": "65b9876543210fedcba54321",
-                                                "title": "Frontend Developer Resume",
-                                                "userId": "65a1234567890abcdef12345",
-                                                "public": true
-                                            }
-                                        }
-                                    }
-                                }
-                            }
+                        "examples": {
+                           "default": {
+                              "value": {
+                                 "user": {
+                                    "_id": "65a1234567890abcdef12345",
+                                    "name": "Jane Doe",
+                                    "email": "jane@example.com",
+                                    "createdAt": "2024-01-01T00:00:00.000Z",
+                                    "updatedAt": "2024-01-01T00:00:00.000Z"
+                                 }
+                              }
+                           }
                         }
-                    },
-                    "404": {
-                        "description": "Resume not found",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/AuthError"
-                                },
-                                "examples": {
-                                    "default": {
-                                        "value": {
-                                            "message": "Resume not found."
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Validation failed",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ValidationError"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/resume/update": {
-            "put": {
-                "tags": ["Resume"],
-                "summary": "Update a resume",
-                "description": "Updates an existing resume belonging to the authenticated user. Supports optional image upload and background removal.",
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "multipart/form-data": {
-                            "schema": {
-                                "type": "object",
-                                "required": ["resumeId", "resumeData"],
-                                "properties": {
-                                    "resumeId": {
-                                        "type": "string",
-                                        "description": "ID of the resume to update",
-                                        "example": "65b9876543210fedcba54321"
-                                    },
-                                    "resumeData": {
-                                        "type": "string",
-                                        "description": "JSON string containing resume data",
-                                        "example": "{\"personal_info\":{\"full_name\":\"John Doe\"}}"
-                                    },
-                                    "removeBackground": {
-                                        "type": "boolean",
-                                        "description": "Optional flag to remove image background",
-                                        "example": true
-                                    },
-                                    "image": {
-                                        "type": "string",
-                                        "format": "binary",
-                                        "description": "Optional profile image"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Resume updated successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "required": ["message", "resume"],
-                                    "properties": {
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Saved successfully."
-                                        },
-                                        "resume": {
-                                            "$ref": "#/components/schemas/Resume"
-                                        }
-                                    }
-                                },
-                                "examples": {
-                                    "default": {
-                                        "value": {
-                                            "message": "Saved successfully.",
-                                            "resume": {
-                                                "_id": "65b9876543210fedcba54321",
-                                                "title": "Frontend Developer Resume",
-                                                "userId": "65a1234567890abcdef12345",
-                                                "public": false
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Resume not found",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/AuthError"
-                                },
-                                "examples": {
-                                    "default": {
-                                        "value": {
-                                            "message": "Resume not found."
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Validation failed or bad request",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "oneOf": [
-                                        {
-                                            "$ref": "#/components/schemas/ValidationError"
-                                        },
-                                        {
-                                            "$ref": "#/components/schemas/AuthError"
-                                        }
-                                    ]
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized - invalid or missing token",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/AuthError"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/ai/enhance-job-desc": {
-            "post": {
-                "tags": ["AI"],
-                "summary": "Enhance professional summary",
-                "description": "Enhances a resume professional summary using AI. The endpoint receives the user-written summary content and returns an improved, ATS-friendly version in 1 to 2 sentences, highlighting key skills, experience, and career objective.",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/EnhanceProfessionalSummaryRequest"
-                            },
-                            "examples": {
-                                "default": {
-                                    "value": {
-                                        "userContent": "Frontend developer with experience building responsive web applications using React, JavaScript, and CSS. Looking for an opportunity to contribute to modern web projects and continue growing professionally."
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Professional summary enhanced successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/EnhanceProfessionalSummarySuccess"
-                                },
-                                "examples": {
-                                    "default": {
-                                        "value": {
-                                            "enhancedSummaryContent": "Frontend developer with experience building responsive web applications using React, JavaScript, and CSS, delivering user-focused and scalable solutions. Seeking to contribute strong front-end skills and continue growing in modern web development environments."
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Validation failed or AI request error",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "oneOf": [
-                                        {
-                                            "$ref": "#/components/schemas/ValidationError"
-                                        },
-                                        {
-                                            "$ref": "#/components/schemas/EnhanceProfessionalSummaryError"
-                                        }
-                                    ]
-                                },
-                                "examples": {
-                                    "validationError": {
-                                        "value": {
-                                            "error": "validation failed.",
-                                            "details": [
-                                                {
-                                                    "field": "userContent",
-                                                    "message": "userContent is required."
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    "aiError": {
-                                        "value": {
-                                            "message": "Failed to enhance professional summary.",
-                                            "errors": []
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    },
-    "components": {
-        "securitySchemes": {
-            "bearerAuth": {
-                "type": "http",
-                "scheme": "bearer",
-                "bearerFormat": "JWT"
-            }
-        },
-        "schemas": {
-            "EnhanceProfessionalSummaryRequest": {
-                "type": "object",
-                "required": ["userContent"],
-                "properties": {
-                    "userContent": {
-                        "type": "string",
-                        "minLength": 1,
-                        "description": "Professional summary text written by the user that will be improved by AI.",
-                        "example": "Frontend developer with experience building responsive web applications using React, JavaScript, and CSS."
-                    }
-                }
-            },
-            "EnhanceProfessionalSummarySuccess": {
-                "type": "object",
-                "required": ["enhancedSummaryContent"],
-                "properties": {
-                    "enhancedSummaryContent": {
-                        "type": "string",
-                        "description": "AI-enhanced professional summary.",
-                        "example": "Frontend developer with experience building responsive web applications using React, JavaScript, and CSS, delivering user-focused and scalable solutions. Seeking to contribute strong front-end skills and continue growing in modern web development environments."
-                    }
-                }
-            },
-            "EnhanceProfessionalSummaryError": {
-                "type": "object",
-                "required": ["message"],
-                "properties": {
-                    "message": {
-                        "type": "string",
-                        "example": "Failed to enhance professional summary."
-                    },
-                    "errors": {
-                        "type": "array",
-                        "description": "Optional error details returned by the AI or validation layer.",
-                        "items": {
-                            "type": "object"
+                     }
+                  }
+               },
+               "404": {
+                  "description": "User not found",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref": "#/components/schemas/AuthError"
                         },
-                        "example": []
-                    }
-                }
-            },
-            "DeleteResumeSuccess": {
-                "type": "object",
-                "required": ["message"],
-                "properties": {
-                    "message": {
-                        "type": "string",
-                        "example": "Resume deleted successfully"
-                    }
-                }
-            },
-            "RegisterRequest": {
-                "type": "object",
-                "required": ["name", "email", "password"],
-                "properties": {
-                    "name": { "type": "string", "minLength": 1 },
-                    "email": { "type": "string", "format": "email" },
-                    "password": { "type": "string", "minLength": 6 }
-                }
-            },
-            "GetUserResumesSuccess": {
-                "type": "object",
-                "required": ["resumes"],
-                "properties": {
-                    "resumes": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/Resume"
+                        "examples": {
+                           "default": {
+                              "value": {
+                                 "message": "User not found."
+                              }
+                           }
                         }
-                    }
-                }
-            },
-            "RegisterSuccess": {
-                "type": "object",
-                "required": ["message", "token", "user"],
-                "properties": {
-                    "message": {
-                        "type": "string",
-                        "example": "user registered successfully."
-                    },
-                    "token": {
-                        "type": "string",
-                        "description": "JWT valid for 7 days"
-                    },
-                    "user": { "$ref": "#/components/schemas/User" }
-                }
-            },
-            "LoginRequest": {
-                "type": "object",
-                "required": ["email", "password"],
-                "properties": {
-                    "email": { "type": "string", "format": "email" },
-                    "password": { "type": "string", "minLength": 6 }
-                }
-            },
-            "LoginSuccess": {
-                "type": "object",
-                "required": ["message", "token", "user"],
-                "properties": {
-                    "message": {
-                        "type": "string",
-                        "example": "Login successful."
-                    },
-                    "token": {
-                        "type": "string",
-                        "description": "JWT valid for 7 days"
-                    },
-                    "user": { "$ref": "#/components/schemas/User" }
-                }
-            },
-            "GetUserSuccess": {
-                "type": "object",
-                "required": ["user"],
-                "properties": {
-                    "user": { "$ref": "#/components/schemas/User" }
-                }
-            },
-            "AuthError": {
-                "type": "object",
-                "required": ["message"],
-                "properties": {
-                    "message": { "type": "string" }
-                }
-            },
-            "User": {
-                "type": "object",
-                "required": ["_id", "name", "email"],
-                "properties": {
-                    "_id": { "type": "string" },
-                    "name": { "type": "string" },
-                    "email": { "type": "string", "format": "email" },
-                    "createdAt": { "type": "string", "format": "date-time" },
-                    "updatedAt": { "type": "string", "format": "date-time" }
-                }
-            },
-            "Resume": {
-                "type": "object",
-                "required": ["_id", "title", "userId"],
-                "properties": {
-                    "_id": { "type": "string" },
-                    "title": { "type": "string" },
-                    "userId": { "type": "string" },
-                    "createdAt": { "type": "string", "format": "date-time" },
-                    "updatedAt": { "type": "string", "format": "date-time" },
-                    "public": { "type": "boolean", "example": true }
-                }
-            },
-            "ValidationError": {
-                "type": "object",
-                "required": ["error", "details"],
-                "properties": {
-                    "error": {
-                        "type": "string",
-                        "example": "validation failed."
-                    },
-                    "details": {
-                        "type": "array",
-                        "items": {
-                            "type": "object",
-                            "required": ["field", "message"],
-                            "properties": {
-                                "field": { "type": "string" },
-                                "message": { "type": "string" }
-                            }
+                     }
+                  }
+               },
+               "400": {
+                  "description": "Invalid token or request error",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref": "#/components/schemas/AuthError"
                         }
-                    }
-                }
-            },
-            "ConflictError": {
-                "type": "object",
-                "required": ["error"],
-                "properties": {
-                    "error": {
-                        "type": "string",
-                        "example": "user already exists."
-                    }
-                }
-            },
-            "ServerError": {
-                "type": "object",
-                "required": ["error"],
-                "properties": {
-                    "error": { "type": "string" }
-                }
-            },
-            "CreateResumeRequest": {
-                "type": "object",
-                "required": ["title"],
-                "properties": {
-                    "title": { "type": "string", "minLength": 1 }
-                }
-            },
-            "CreateResumeSuccess": {
-                "type": "object",
-                "required": ["message", "resume"],
-                "properties": {
-                    "message": {
-                        "type": "string",
-                        "example": "Resume created successfully."
-                    },
-                    "resume": {
-                        "$ref": "#/components/schemas/Resume"
-                    }
-                }
+                     }
+                  }
+               }
             }
-        }
-    }
+         }
+      },
+      "/users/resumes": {
+         "get": {
+            "tags": ["Auth"],
+            "summary": "Get resumes of the authenticated user",
+            "description": "Returns all resumes associated with the logged-in user. The userId is extracted from the JWT token.",
+            "security": [
+               {
+                  "bearerAuth": []
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "Resumes retrieved successfully",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref": "#/components/schemas/GetUserResumesSuccess"
+                        },
+                        "examples": {
+                           "default": {
+                              "value": {
+                                 "resumes": [
+                                    {
+                                       "_id": "65b1234567890abcdef12345",
+                                       "title": "Frontend Developer Resume",
+                                       "userId": "65a1234567890abcdef12345",
+                                       "createdAt": "2024-01-01T00:00:00.000Z",
+                                       "updatedAt": "2024-01-01T00:00:00.000Z"
+                                    }
+                                 ]
+                              }
+                           }
+                        }
+                     }
+                  }
+               },
+               "400": {
+                  "description": "Invalid request or token error",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref": "#/components/schemas/AuthError"
+                        }
+                     }
+                  }
+               }
+            }
+         }
+      },
+      "/resume/create": {
+         "post": {
+            "tags": ["Resume"],
+            "summary": "Create a new resume",
+            "description": "Creates a new resume for the authenticated user. The userId is extracted from the JWT token.",
+            "security": [
+               {
+                  "bearerAuth": []
+               }
+            ],
+            "requestBody": {
+               "required": true,
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "$ref": "#/components/schemas/CreateResumeRequest"
+                     },
+                     "examples": {
+                        "default": {
+                           "value": {
+                              "title": "Frontend Developer Resume"
+                           }
+                        }
+                     }
+                  }
+               }
+            },
+            "responses": {
+               "201": {
+                  "description": "Resume created successfully",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref": "#/components/schemas/CreateResumeSuccess"
+                        },
+                        "examples": {
+                           "default": {
+                              "value": {
+                                 "message": "Resume created successfully.",
+                                 "resume": {
+                                    "_id": "65b9876543210fedcba54321",
+                                    "title": "Frontend Developer Resume",
+                                    "userId": "65a1234567890abcdef12345",
+                                    "createdAt": "2024-01-01T00:00:00.000Z",
+                                    "updatedAt": "2024-01-01T00:00:00.000Z"
+                                 }
+                              }
+                           }
+                        }
+                     }
+                  }
+               },
+               "400": {
+                  "description": "Validation failed or bad request",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "oneOf": [
+                              {
+                                 "$ref": "#/components/schemas/ValidationError"
+                              },
+                              {
+                                 "$ref": "#/components/schemas/AuthError"
+                              }
+                           ]
+                        }
+                     }
+                  }
+               },
+               "401": {
+                  "description": "Unauthorized - invalid or missing token",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref": "#/components/schemas/AuthError"
+                        },
+                        "examples": {
+                           "default": {
+                              "value": {
+                                 "message": "Invalid token."
+                              }
+                           }
+                        }
+                     }
+                  }
+               },
+               "500": {
+                  "description": "Server error when creating resume",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref": "#/components/schemas/ServerError"
+                        }
+                     }
+                  }
+               }
+            }
+         }
+      },
+      "/resume/delete/{resumeId}": {
+         "delete": {
+            "tags": ["Resume"],
+            "summary": "Delete a resume",
+            "description": "Deletes a resume belonging to the authenticated user. The userId is extracted from the JWT token.",
+            "security": [
+               {
+                  "bearerAuth": []
+               }
+            ],
+            "parameters": [
+               {
+                  "name": "resumeId",
+                  "in": "path",
+                  "required": true,
+                  "description": "ID of the resume to delete",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "example": "65b9876543210fedcba54321"
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "Resume deleted successfully",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref": "#/components/schemas/DeleteResumeSuccess"
+                        },
+                        "examples": {
+                           "default": {
+                              "value": {
+                                 "message": "Resume deleted successfully"
+                              }
+                           }
+                        }
+                     }
+                  }
+               },
+               "404": {
+                  "description": "Resume not found",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref": "#/components/schemas/AuthError"
+                        },
+                        "examples": {
+                           "default": {
+                              "value": {
+                                 "message": "Resume not found."
+                              }
+                           }
+                        }
+                     }
+                  }
+               },
+               "400": {
+                  "description": "Validation failed or request error",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "oneOf": [
+                              {
+                                 "$ref": "#/components/schemas/ValidationError"
+                              },
+                              {
+                                 "$ref": "#/components/schemas/AuthError"
+                              }
+                           ]
+                        }
+                     }
+                  }
+               },
+               "401": {
+                  "description": "Unauthorized - invalid or missing token",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref": "#/components/schemas/AuthError"
+                        }
+                     }
+                  }
+               }
+            }
+         }
+      },
+      "/resume/resumes/{resumeId}": {
+         "get": {
+            "tags": ["Resume"],
+            "summary": "Get a resume by ID",
+            "description": "Returns a specific resume belonging to the authenticated user. The userId is extracted from the JWT token.",
+            "security": [
+               {
+                  "bearerAuth": []
+               }
+            ],
+            "parameters": [
+               {
+                  "name": "resumeId",
+                  "in": "path",
+                  "required": true,
+                  "description": "ID of the resume to retrieve",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "example": "65b9876543210fedcba54321"
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "Resume retrieved successfully",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "type": "object",
+                           "required": ["resume"],
+                           "properties": {
+                              "resume": {
+                                 "$ref": "#/components/schemas/Resume"
+                              }
+                           }
+                        },
+                        "examples": {
+                           "default": {
+                              "value": {
+                                 "resume": {
+                                    "_id": "65b9876543210fedcba54321",
+                                    "title": "Frontend Developer Resume",
+                                    "userId": "65a1234567890abcdef12345"
+                                 }
+                              }
+                           }
+                        }
+                     }
+                  }
+               },
+               "404": {
+                  "description": "Resume not found",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref": "#/components/schemas/AuthError"
+                        },
+                        "examples": {
+                           "default": {
+                              "value": {
+                                 "message": "Resume not found."
+                              }
+                           }
+                        }
+                     }
+                  }
+               },
+               "400": {
+                  "description": "Validation failed or request error",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "oneOf": [
+                              {
+                                 "$ref": "#/components/schemas/ValidationError"
+                              },
+                              {
+                                 "$ref": "#/components/schemas/AuthError"
+                              }
+                           ]
+                        }
+                     }
+                  }
+               },
+               "401": {
+                  "description": "Unauthorized - invalid or missing token",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref": "#/components/schemas/AuthError"
+                        }
+                     }
+                  }
+               }
+            }
+         }
+      },
+      "/resume/public/{resumeId}": {
+         "get": {
+            "tags": ["Resume"],
+            "summary": "Get a public resume by ID",
+            "description": "Returns a resume that is marked as public. This endpoint does not require authentication and will only return resumes where the `public` field is set to true.",
+            "parameters": [
+               {
+                  "name": "resumeId",
+                  "in": "path",
+                  "required": true,
+                  "description": "ID of the public resume to retrieve",
+                  "schema": {
+                     "type": "string"
+                  },
+                  "example": "65b9876543210fedcba54321"
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "Public resume retrieved successfully",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "type": "object",
+                           "required": ["resume"],
+                           "properties": {
+                              "resume": {
+                                 "$ref": "#/components/schemas/Resume"
+                              }
+                           }
+                        },
+                        "examples": {
+                           "default": {
+                              "value": {
+                                 "resume": {
+                                    "_id": "65b9876543210fedcba54321",
+                                    "title": "Frontend Developer Resume",
+                                    "userId": "65a1234567890abcdef12345",
+                                    "public": true
+                                 }
+                              }
+                           }
+                        }
+                     }
+                  }
+               },
+               "404": {
+                  "description": "Resume not found",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref": "#/components/schemas/AuthError"
+                        },
+                        "examples": {
+                           "default": {
+                              "value": {
+                                 "message": "Resume not found."
+                              }
+                           }
+                        }
+                     }
+                  }
+               },
+               "400": {
+                  "description": "Validation failed",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref": "#/components/schemas/ValidationError"
+                        }
+                     }
+                  }
+               }
+            }
+         }
+      },
+      "/resume/update": {
+         "put": {
+            "tags": ["Resume"],
+            "summary": "Update a resume",
+            "description": "Updates an existing resume belonging to the authenticated user. Supports optional image upload and background removal.",
+            "security": [
+               {
+                  "bearerAuth": []
+               }
+            ],
+            "requestBody": {
+               "required": true,
+               "content": {
+                  "multipart/form-data": {
+                     "schema": {
+                        "type": "object",
+                        "required": ["resumeId", "resumeData"],
+                        "properties": {
+                           "resumeId": {
+                              "type": "string",
+                              "description": "ID of the resume to update",
+                              "example": "65b9876543210fedcba54321"
+                           },
+                           "resumeData": {
+                              "type": "string",
+                              "description": "JSON string containing resume data",
+                              "example": "{\"personal_info\":{\"full_name\":\"John Doe\"}}"
+                           },
+                           "removeBackground": {
+                              "type": "boolean",
+                              "description": "Optional flag to remove image background",
+                              "example": true
+                           },
+                           "image": {
+                              "type": "string",
+                              "format": "binary",
+                              "description": "Optional profile image"
+                           }
+                        }
+                     }
+                  }
+               }
+            },
+            "responses": {
+               "200": {
+                  "description": "Resume updated successfully",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "type": "object",
+                           "required": ["message", "resume"],
+                           "properties": {
+                              "message": {
+                                 "type": "string",
+                                 "example": "Saved successfully."
+                              },
+                              "resume": {
+                                 "$ref": "#/components/schemas/Resume"
+                              }
+                           }
+                        },
+                        "examples": {
+                           "default": {
+                              "value": {
+                                 "message": "Saved successfully.",
+                                 "resume": {
+                                    "_id": "65b9876543210fedcba54321",
+                                    "title": "Frontend Developer Resume",
+                                    "userId": "65a1234567890abcdef12345",
+                                    "public": false
+                                 }
+                              }
+                           }
+                        }
+                     }
+                  }
+               },
+               "404": {
+                  "description": "Resume not found",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref": "#/components/schemas/AuthError"
+                        },
+                        "examples": {
+                           "default": {
+                              "value": {
+                                 "message": "Resume not found."
+                              }
+                           }
+                        }
+                     }
+                  }
+               },
+               "400": {
+                  "description": "Validation failed or bad request",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "oneOf": [
+                              {
+                                 "$ref": "#/components/schemas/ValidationError"
+                              },
+                              {
+                                 "$ref": "#/components/schemas/AuthError"
+                              }
+                           ]
+                        }
+                     }
+                  }
+               },
+               "401": {
+                  "description": "Unauthorized - invalid or missing token",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref": "#/components/schemas/AuthError"
+                        }
+                     }
+                  }
+               }
+            }
+         }
+      },
+      "/ai/enhance-professional-summary": {
+         "post": {
+            "tags": ["AI"],
+            "summary": "Enhance professional summary",
+            "description": "Enhances a resume professional summary using AI. The endpoint receives the user-written summary content and returns an improved, ATS-friendly version in 1 to 2 sentences, highlighting key skills, experience, and career objective.",
+            "requestBody": {
+               "required": true,
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "$ref": "#/components/schemas/EnhanceProfessionalSummaryRequest"
+                     },
+                     "examples": {
+                        "default": {
+                           "value": {
+                              "userContent": "Frontend developer with experience building responsive web applications using React, JavaScript, and CSS. Looking for an opportunity to contribute to modern web projects and continue growing professionally."
+                           }
+                        }
+                     }
+                  }
+               }
+            },
+            "responses": {
+               "200": {
+                  "description": "Professional summary enhanced successfully",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref": "#/components/schemas/EnhanceProfessionalSummarySuccess"
+                        },
+                        "examples": {
+                           "default": {
+                              "value": {
+                                 "enhancedSummaryContent": "Frontend developer with experience building responsive web applications using React, JavaScript, and CSS, delivering user-focused and scalable solutions. Seeking to contribute strong front-end skills and continue growing in modern web development environments."
+                              }
+                           }
+                        }
+                     }
+                  }
+               },
+               "400": {
+                  "description": "Validation failed or AI request error",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "oneOf": [
+                              {
+                                 "$ref": "#/components/schemas/ValidationError"
+                              },
+                              {
+                                 "$ref": "#/components/schemas/EnhanceProfessionalSummaryError"
+                              }
+                           ]
+                        },
+                        "examples": {
+                           "validationError": {
+                              "value": {
+                                 "error": "validation failed.",
+                                 "details": [
+                                    {
+                                       "field": "userContent",
+                                       "message": "userContent is required."
+                                    }
+                                 ]
+                              }
+                           },
+                           "aiError": {
+                              "value": {
+                                 "message": "Failed to enhance professional summary.",
+                                 "errors": []
+                              }
+                           }
+                        }
+                     }
+                  }
+               }
+            }
+         }
+      },
+      "/ai/enhance-job-desc": {
+         "post": {
+            "tags": ["AI"],
+            "summary": "Enhance job description",
+            "description": "Enhances a resume job description using AI. The endpoint receives the user-written job description content and returns an improved, ATS-friendly version in 1 to 2 sentences, highlighting key responsibilities, achievements, and measurable impact when possible.",
+            "requestBody": {
+               "required": true,
+               "content": {
+                  "application/json": {
+                     "schema": {
+                        "$ref": "#/components/schemas/EnhanceJobDescriptionRequest"
+                     },
+                     "examples": {
+                        "default": {
+                           "value": {
+                              "userContent": "Responsible for building frontend interfaces, fixing bugs, and working with the team to improve the user experience."
+                           }
+                        }
+                     }
+                  }
+               }
+            },
+            "responses": {
+               "200": {
+                  "description": "Job description enhanced successfully",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "$ref": "#/components/schemas/EnhanceJobDescriptionSuccess"
+                        },
+                        "examples": {
+                           "default": {
+                              "value": {
+                                 "enhancedJobDescription": "Developed and improved frontend interfaces, resolved application issues, and collaborated with cross-functional teams to enhance user experience and product quality."
+                              }
+                           }
+                        }
+                     }
+                  }
+               },
+               "400": {
+                  "description": "Validation failed or AI request error",
+                  "content": {
+                     "application/json": {
+                        "schema": {
+                           "oneOf": [
+                              {
+                                 "$ref": "#/components/schemas/ValidationError"
+                              },
+                              {
+                                 "$ref": "#/components/schemas/EnhanceJobDescriptionError"
+                              }
+                           ]
+                        },
+                        "examples": {
+                           "validationError": {
+                              "value": {
+                                 "error": "validation failed.",
+                                 "details": [
+                                    {
+                                       "field": "userContent",
+                                       "message": "userContent is required."
+                                    }
+                                 ]
+                              }
+                           },
+                           "aiError": {
+                              "value": {
+                                 "message": "Failed to enhance job description.",
+                                 "errors": []
+                              }
+                           }
+                        }
+                     }
+                  }
+               }
+            }
+         }
+      }
+   },
+   "components": {
+      "securitySchemes": {
+         "bearerAuth": {
+            "type": "http",
+            "scheme": "bearer",
+            "bearerFormat": "JWT"
+         }
+      },
+      "schemas": {
+         "EnhanceJobDescriptionRequest": {
+            "type": "object",
+            "required": ["userContent"],
+            "properties": {
+               "userContent": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Job description text written by the user that will be improved by AI.",
+                  "example": "Responsible for building frontend interfaces, fixing bugs, and working with the team to improve the user experience."
+               }
+            }
+         },
+         "EnhanceJobDescriptionSuccess": {
+            "type": "object",
+            "required": ["enhancedJobDescription"],
+            "properties": {
+               "enhancedJobDescription": {
+                  "type": "string",
+                  "description": "AI-enhanced job description.",
+                  "example": "Developed and improved frontend interfaces, resolved application issues, and collaborated with cross-functional teams to enhance user experience and product quality."
+               }
+            }
+         },
+         "EnhanceJobDescriptionError": {
+            "type": "object",
+            "required": ["message"],
+            "properties": {
+               "message": {
+                  "type": "string",
+                  "example": "Failed to enhance job description."
+               },
+               "errors": {
+                  "type": "array",
+                  "description": "Optional error details returned by the AI or validation layer.",
+                  "items": {
+                     "type": "object"
+                  },
+                  "example": []
+               }
+            }
+         },
+         "EnhanceProfessionalSummaryRequest": {
+            "type": "object",
+            "required": ["userContent"],
+            "properties": {
+               "userContent": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Professional summary text written by the user that will be improved by AI.",
+                  "example": "Frontend developer with experience building responsive web applications using React, JavaScript, and CSS."
+               }
+            }
+         },
+         "EnhanceProfessionalSummarySuccess": {
+            "type": "object",
+            "required": ["enhancedSummaryContent"],
+            "properties": {
+               "enhancedSummaryContent": {
+                  "type": "string",
+                  "description": "AI-enhanced professional summary.",
+                  "example": "Frontend developer with experience building responsive web applications using React, JavaScript, and CSS, delivering user-focused and scalable solutions. Seeking to contribute strong front-end skills and continue growing in modern web development environments."
+               }
+            }
+         },
+         "EnhanceProfessionalSummaryError": {
+            "type": "object",
+            "required": ["message"],
+            "properties": {
+               "message": {
+                  "type": "string",
+                  "example": "Failed to enhance professional summary."
+               },
+               "errors": {
+                  "type": "array",
+                  "description": "Optional error details returned by the AI or validation layer.",
+                  "items": {
+                     "type": "object"
+                  },
+                  "example": []
+               }
+            }
+         },
+         "DeleteResumeSuccess": {
+            "type": "object",
+            "required": ["message"],
+            "properties": {
+               "message": {
+                  "type": "string",
+                  "example": "Resume deleted successfully"
+               }
+            }
+         },
+         "RegisterRequest": {
+            "type": "object",
+            "required": ["name", "email", "password"],
+            "properties": {
+               "name": { "type": "string", "minLength": 1 },
+               "email": { "type": "string", "format": "email" },
+               "password": { "type": "string", "minLength": 6 }
+            }
+         },
+         "GetUserResumesSuccess": {
+            "type": "object",
+            "required": ["resumes"],
+            "properties": {
+               "resumes": {
+                  "type": "array",
+                  "items": {
+                     "$ref": "#/components/schemas/Resume"
+                  }
+               }
+            }
+         },
+         "RegisterSuccess": {
+            "type": "object",
+            "required": ["message", "token", "user"],
+            "properties": {
+               "message": {
+                  "type": "string",
+                  "example": "user registered successfully."
+               },
+               "token": {
+                  "type": "string",
+                  "description": "JWT valid for 7 days"
+               },
+               "user": { "$ref": "#/components/schemas/User" }
+            }
+         },
+         "LoginRequest": {
+            "type": "object",
+            "required": ["email", "password"],
+            "properties": {
+               "email": { "type": "string", "format": "email" },
+               "password": { "type": "string", "minLength": 6 }
+            }
+         },
+         "LoginSuccess": {
+            "type": "object",
+            "required": ["message", "token", "user"],
+            "properties": {
+               "message": {
+                  "type": "string",
+                  "example": "Login successful."
+               },
+               "token": {
+                  "type": "string",
+                  "description": "JWT valid for 7 days"
+               },
+               "user": { "$ref": "#/components/schemas/User" }
+            }
+         },
+         "GetUserSuccess": {
+            "type": "object",
+            "required": ["user"],
+            "properties": {
+               "user": { "$ref": "#/components/schemas/User" }
+            }
+         },
+         "AuthError": {
+            "type": "object",
+            "required": ["message"],
+            "properties": {
+               "message": { "type": "string" }
+            }
+         },
+         "User": {
+            "type": "object",
+            "required": ["_id", "name", "email"],
+            "properties": {
+               "_id": { "type": "string" },
+               "name": { "type": "string" },
+               "email": { "type": "string", "format": "email" },
+               "createdAt": { "type": "string", "format": "date-time" },
+               "updatedAt": { "type": "string", "format": "date-time" }
+            }
+         },
+         "Resume": {
+            "type": "object",
+            "required": ["_id", "title", "userId"],
+            "properties": {
+               "_id": { "type": "string" },
+               "title": { "type": "string" },
+               "userId": { "type": "string" },
+               "createdAt": { "type": "string", "format": "date-time" },
+               "updatedAt": { "type": "string", "format": "date-time" },
+               "public": { "type": "boolean", "example": true }
+            }
+         },
+         "ValidationError": {
+            "type": "object",
+            "required": ["error", "details"],
+            "properties": {
+               "error": {
+                  "type": "string",
+                  "example": "validation failed."
+               },
+               "details": {
+                  "type": "array",
+                  "items": {
+                     "type": "object",
+                     "required": ["field", "message"],
+                     "properties": {
+                        "field": { "type": "string" },
+                        "message": { "type": "string" }
+                     }
+                  }
+               }
+            }
+         },
+         "ConflictError": {
+            "type": "object",
+            "required": ["error"],
+            "properties": {
+               "error": {
+                  "type": "string",
+                  "example": "user already exists."
+               }
+            }
+         },
+         "ServerError": {
+            "type": "object",
+            "required": ["error"],
+            "properties": {
+               "error": { "type": "string" }
+            }
+         },
+         "CreateResumeRequest": {
+            "type": "object",
+            "required": ["title"],
+            "properties": {
+               "title": { "type": "string", "minLength": 1 }
+            }
+         },
+         "CreateResumeSuccess": {
+            "type": "object",
+            "required": ["message", "resume"],
+            "properties": {
+               "message": {
+                  "type": "string",
+                  "example": "Resume created successfully."
+               },
+               "resume": {
+                  "$ref": "#/components/schemas/Resume"
+               }
+            }
+         }
+      }
+   }
 }

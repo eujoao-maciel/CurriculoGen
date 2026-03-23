@@ -9,30 +9,30 @@ import {
 
 vi.mock('../../config/ai.js')
 
-describe('POST ai/enhance-professional-summary', () => {
+describe('POST ai/enhance-job-desc', () => {
    beforeEach(() => {
       vi.clearAllMocks()
    })
 
-   it('should return 200 with enhanced summary content', async () => {
-      const fakeContent = 'Results-driven engineer with +5 years of experience.'
+   it('should return 200 with enhanced job desc content', async () => {
+      const fakeContent = 'This is the improved job description.'
       mockOpenAiSuccess(fakeContent)
 
       const res = await request(app)
-         .post('/ai/enhance-professional-summary')
+         .post('/ai/enhance-job-desc')
          .send({
-            userContent: 'I am an engineer with 5 years of experience',
+            userContent: 'This is the normal job description',
          })
 
       expect(res.status).toBe(200)
-      expect(res.body).toHaveProperty('enhancedSummaryContent', fakeContent)
+      expect(res.body).toHaveProperty('enhancedJobDescription', fakeContent)
    })
 
    it('should return 400 when OpenAi throws an error', async () => {
       mockOpenAiError()
 
       const res = await request(app)
-         .post('/ai/enhance-professional-summary')
+         .post('/ai/enhance-job-desc')
          .send({ userContent: 'user content text' })
 
       expect(res.status).toBe(400)
@@ -41,9 +41,9 @@ describe('POST ai/enhance-professional-summary', () => {
    it('should send userContent inside the user message to OpenAi', async () => {
       mockOpenAiSuccess()
 
-      const userContent = 'Backend developer focused on Node.js'
+      const userContent = 'Job description.'
       const res = await request(app)
-         .post('/ai/enhance-professional-summary')
+         .post('/ai/enhance-job-desc')
          .send({ userContent })
 
       const callArgs = openAiSpy.mock.calls[0][0]
