@@ -8,9 +8,12 @@ import { aiRoutes } from './routes/ai.js'
 
 export const app = express()
 
-app.use(cors())
 app.use(express.json())
 app.use('/api-doc', swaggerUI.serve, swaggerUI.setup(swaggerDocs))
+app.use(cors({
+  origin: 'http://localhost:5173',
+  credentials: true
+}))
 
 app.get('/status', (req, res) => {
   res.json({ message: 'api is running' })
