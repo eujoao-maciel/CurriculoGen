@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { api } from './configs/api.js'
+import { Toaster } from 'react-hot-toast'
 
 import { login, setLoading } from './app/features/authSlice.js'
 
@@ -20,7 +21,7 @@ const App = () => {
 
       try {
          if (token) {
-            const response = await fetch(`http://localhost:3333/users/data`, {
+            const response = await fetch(`${api}/users/data`, {
                method: 'GET',
                headers: {
                   Authorization: `Bearer ${token}`,
@@ -33,7 +34,6 @@ const App = () => {
             }
 
             const data = await response.json()
-            console.log(data)
 
             if (data.user) {
                dispatch(login({ token, user: data.user }))
@@ -52,6 +52,7 @@ const App = () => {
 
    return (
       <>
+         <Toaster />
          <Routes>
             <Route path="/" element={<Home />} />
 
