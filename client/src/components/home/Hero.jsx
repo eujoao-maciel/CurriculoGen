@@ -1,10 +1,13 @@
 import { useState } from 'react'
+import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 import { LogIn } from 'lucide-react'
 import { StickyNote } from 'lucide-react'
+import { ClipboardPen } from 'lucide-react'
 
 const Hero = () => {
+   const { user } = useSelector((state) => state.auth)
    const [menuOpen, setMenuOpen] = useState(false)
 
    return (
@@ -51,6 +54,7 @@ const Hero = () => {
                   <Link
                      to="/app?state=register"
                      className="hidden lg:block px-6 py-2 bg-gray-700 hover:bg-gray-900 border-black border border-slate-200 transition-all rounded-full text-slate-200"
+                     hidden={user}
                   >
                      Começar
                   </Link>
@@ -58,8 +62,18 @@ const Hero = () => {
                   <Link
                      to="/login"
                      className="hidden lg:block px-6 py-2 border-slate-200 active:scale-95 bg-gray-700 hover:bg-gray-800 hover:text-slate-100 border border-slate-200 transition-all rounded-full text-slate-200 hover:text-gray-300"
+                     hidden={user}
                   >
                      login
+                  </Link>
+
+                  <Link
+                     to="/app"
+                     className="hidden lg:flex items-center justify-center gap-2 block px-6 py-2 border-slate-200 active:scale-95 bg-gray-500 hover:bg-gray-800 hover:text-slate-100 border border-slate-200 transition-all rounded-full text-slate-900 hover:text-gray-300"
+                     hidden={!user}
+                  >
+                     Dashboard
+                     <ClipboardPen className="size-4" />
                   </Link>
                </div>
             </nav>
@@ -90,7 +104,7 @@ const Hero = () => {
                        z-2
                        bg-gray-500 
                        hover:bg-gray-800
-                       text-stone-900 
+                       text-slate-900 
                        hover:text-slate-200
                        rounded-full 
                        px-9 gap-2
@@ -107,9 +121,18 @@ const Hero = () => {
                   <Link
                      to="/login?state=register"
                      className="flex z-2 items-center gap-2 border border-slate-200 hover:bg-gray-800 transition rounded-full px-7 h-12 text-slate-200"
+                     hidden={user}
                   >
                      <span>Realizar cadastro</span>
                      <LogIn className="size-4" />
+                  </Link>
+                  <Link
+                     to="/login?state=register"
+                     className="flex lg:hidden z-2 items-center gap-2 border border-slate-200 hover:bg-gray-800 transition rounded-full px-7 h-12 text-slate-200"
+                     hidden={!user}
+                  >
+                     <span>Dashboard</span>
+                     <ClipboardPen className="size-4" />
                   </Link>
                </div>
             </div>
