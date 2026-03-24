@@ -1,11 +1,16 @@
 import { Link, useNavigate } from "react-router-dom"
+import { useSelector, useDispatch } from 'react-redux'
+import { logout } from '../app/features/authSlice.js'
 
 const NavBar = () => {
-    const user = { name: "nome teste" }
+    const { user } = useSelector(state => state.auth)
+
+    const dispatch = useDispatch()
     const navigate = useNavigate()
 
     const logoutUser = () => {
         navigate("/")
+        dispatch(logout(user)) 
     }
 
     return (

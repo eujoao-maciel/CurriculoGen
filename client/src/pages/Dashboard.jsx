@@ -1,5 +1,8 @@
 import { PlusIcon, UploadCloudIcon } from 'lucide-react'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+
 import {
    FilePenLineIcon,
    PencilIcon,
@@ -7,7 +10,7 @@ import {
    XIcon,
    UploadCloud,
 } from 'lucide-react'
-import { useNavigate } from 'react-router-dom'
+
 
 const Dashboard = () => {
    const colors = ['#9333ea', '#d97706', '#dc2626', '#0284c7', '#16a32a']
@@ -17,6 +20,8 @@ const Dashboard = () => {
    const [title, setTitle] = useState('')
    const [resume, setResume] = useState(null)
    const [editResumeId, setEditResumeId] = useState('')
+   
+   const { user } = useSelector(state => state.auth)
 
    const navigate = useNavigate()
 
@@ -56,7 +61,7 @@ const Dashboard = () => {
       <div className="">
          <div className="mx-auto max-w-7xl px-4 py-8">
             <p className="text-sm text-transparent mb-6 bg-gradient-to-r from-slate-600 to-slate-700 bg-clip-text font-medium sm:hidden">
-               Bem Vindo, teste nome
+               Olá, {user?.name}
             </p>
 
             <div className="flex gap-4">
