@@ -127,7 +127,7 @@ const Hero = () => {
                      <LogIn className="size-4" />
                   </Link>
                   <Link
-                     to="/login?state=register"
+                     to="/app"
                      className="flex lg:hidden z-2 items-center gap-2 border border-slate-200 hover:bg-gray-800 transition rounded-full px-7 h-12 text-slate-200"
                      hidden={!user}
                   >

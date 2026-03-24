@@ -2,6 +2,9 @@ import { PlusIcon, UploadCloudIcon } from 'lucide-react'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import { api } from '../configs/api.js'
+import pdfToText from 'react-pdftotext'
+import toast from 'react-hot-toast'
 
 import {
    FilePenLineIcon,
@@ -11,7 +14,6 @@ import {
    UploadCloud,
 } from 'lucide-react'
 
-
 const Dashboard = () => {
    const colors = ['#9333ea', '#d97706', '#dc2626', '#0284c7', '#16a32a']
    const [allResumes, setAllResumes] = useState([])
@@ -20,17 +22,38 @@ const Dashboard = () => {
    const [title, setTitle] = useState('')
    const [resume, setResume] = useState(null)
    const [editResumeId, setEditResumeId] = useState('')
-   
-   const { user } = useSelector(state => state.auth)
+   const [isLoading, setIsLoading] = useState(false)
+
+   const { user, token } = useSelector((state) => state.auth)
 
    const navigate = useNavigate()
 
    const createResume = async (e) => {
       e.preventDefault()
 
-      setShowCreateResume(false)
+      try {
+         const response = await fetch(`${api}/resume/create`, {
+            method: 'POST',
+            headers: {
+               'Content-Type': 'application/json',
+               Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({ title }),
+         })
 
-      navigate(`/app/builder/res123`)
+         const data = await response.json()
+
+         if (!response.ok) {
+            throw new Error(data?.message || 'Server error.')
+         }
+
+         setAllResumes([...allResumes, data.resume])
+         setTitle('')
+         setShowCreateResume(false)
+         navigate(`/app/builder/${data.resume._id}`)
+      } catch (error) {
+         toast.error(error)
+      }
    }
 
    const editTitle = async (e) => {
@@ -51,10 +74,35 @@ const Dashboard = () => {
 
    const uploadResume = async (e) => {
       e.preventDefault()
+      setIsLoading(true)
 
-      setShowCreateResume(false)
+      try {
+         console.log(resume)
+         const resumeText = await pdfToText(resume)
 
-      navigate(`/app/builder/res123`)
+         console.log(resumeText)
+         const response = await fetch(`${api}/ai/upload-resume`, {
+            method: 'POST',
+            headers: {
+               'Content-Type': 'application/json',
+               Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({ title, resumeText }),
+         })
+
+         const data = await response.json()
+
+         if (!response.ok) {
+            throw new Error(data?.message || 'Server error.')
+         }
+
+         setTitle('')
+         setResume(null)
+         setShowUploadResume(false)
+         navigate(`/app/builder/${data.resumeId}`)
+      } catch (error) {
+         toast(error.message)
+      }
    }
 
    return (
