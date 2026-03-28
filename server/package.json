@@ -23,6 +23,7 @@
     "mongoose": "^9.2.2",
     "multer": "^2.0.2",
     "openai": "^6.27.0",
+    "pdf-parse": "^2.4.5",
     "swagger-ui-express": "^5.0.1",
     "zod": "^4.0.5"
   },

@@ -1,4 +1,5 @@
 import { Router } from 'express'
+import { upload } from '../middlewares/upload.js'
 import { authMiddleware } from '../middlewares/authMiddleware.js'
 import { validateRequest } from '../middlewares/validateRequest.js'
 import {
@@ -28,6 +29,7 @@ aiRoutes.post(
 aiRoutes.post(
    '/upload-resume',
    authMiddleware,
+   upload.single('resume'),
    validateRequest(uploadResumeValidation),
    uploadResume
 )
