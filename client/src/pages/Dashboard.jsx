@@ -1,5 +1,5 @@
 import { PlusIcon, UploadCloudIcon } from "lucide-react"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { useSelector } from "react-redux"
 import { api } from "../configs/api.js"
@@ -27,6 +27,27 @@ const Dashboard = () => {
 
     const navigate = useNavigate()
 
+    const loadAllResumes = async () => {
+        try {
+            const response = await fetch(`${api}/users/resumes`, {
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+
+            const data = await response.json()
+
+            if (!response.ok) {
+                throw new Error(data?.message || "Erro ao buscar currículos")
+            }
+
+            setAllResumes(data.resumes)
+        } catch (error) {
+            toast.error(error.message)
+        }
+    }
+
     const createResume = async (e) => {
         e.preventDefault()
 
@@ -51,7 +72,7 @@ const Dashboard = () => {
             setShowCreateResume(false)
             navigate(`/app/builder/${data.resume._id}`)
         } catch (error) {
-            toast.error(error)
+            toast.error(error.message)
         }
     }
 
@@ -102,6 +123,10 @@ const Dashboard = () => {
             toast(error.message)
         }
     }
+
+    useEffect(() => {
+        loadAllResumes()
+    }, [])
 
     return (
         <div className="">
