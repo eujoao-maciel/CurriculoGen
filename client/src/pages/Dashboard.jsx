@@ -79,6 +79,33 @@ const Dashboard = () => {
 
     const editTitle = async (e) => {
         e.preventDefault()
+        try {
+            const response = await fetch(`${api}/resume/update`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({
+                    resumeId: editResumeId,
+                    resumeData: title,
+                }),
+            })
+            
+            const data = await response.json()
+
+            setAllResumes(
+                allResumes.map((resume) =>
+                    resume._id === editResumeId ? { ...resume, title } : resume
+                )
+            )
+
+            setTitle('')
+            setEditResumeId('')
+            toast.success(data.message)
+        } catch (error) {
+            toast.error(error.message)
+        }
     }
 
     const deleteResume = async (resumeId) => {
@@ -99,7 +126,9 @@ const Dashboard = () => {
                 )
 
                 const data = await response.json()
-                setAllResumes(allResumes.filter(resume => resume._id !== resumeId))
+                setAllResumes(
+                    allResumes.filter((resume) => resume._id !== resumeId)
+                )
                 toast.success(data.message)
             }
         } catch (error) {
