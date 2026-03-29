@@ -11,6 +11,7 @@ import {
     TrashIcon,
     XIcon,
     UploadCloud,
+    LoaderCircleIcon,
 } from "lucide-react"
 
 const Dashboard = () => {
@@ -81,14 +82,28 @@ const Dashboard = () => {
     }
 
     const deleteResume = async (resumeId) => {
-        const confirm = window.confirm(
-            "Tem certeza que deseja excluir esse arquivo?"
-        )
-
-        if (confirm) {
-            setAllResumes((prev) =>
-                prev.filter((resume) => resume._id !== resumeId)
+        try {
+            const confirm = window.confirm(
+                "Tem certeza que deseja excluir esse arquivo?"
             )
+
+            if (confirm) {
+                const response = await fetch(
+                    `${api}/resume/delete/${resumeId}`,
+                    {
+                        method: "DELETE",
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    }
+                )
+
+                const data = await response.json()
+                setAllResumes(allResumes.filter(resume => resume._id !== resumeId))
+                toast.success(data.message)
+            }
+        } catch (error) {
+            toast.error(error.message)
         }
     }
 
@@ -476,7 +491,8 @@ const Dashboard = () => {
                             <button
                                 className="
                         w-full
-                        py-2
+                        py-2 flex justify-center
+                        items-center gap-2
                         bg-gray-900
                         text-white
                         rounded
@@ -484,7 +500,12 @@ const Dashboard = () => {
                         transition-colors
                      "
                             >
-                                Atualizar Currículo
+                                {isLoading && (
+                                    <LoaderCircleIcon className="animate-spin size-4 text-white" />
+                                )}
+                                {isLoading
+                                    ? "Carregando..."
+                                    : "Atualizar Currículo"}
                             </button>
 
                             <XIcon
