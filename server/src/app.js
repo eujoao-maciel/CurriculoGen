@@ -11,7 +11,7 @@ export const app = express()
 app.use(express.json())
 app.use('/api-doc', swaggerUI.serve, swaggerUI.setup(swaggerDocs))
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: process.env.CLIENT_URL || 'http://localhost:5173',
   credentials: true
 }))
 
@@ -22,4 +22,3 @@ app.get('/status', (req, res) => {
 app.use('/users/', authRoutes)
 app.use('/resume/', resumeRoutes)
 app.use('/ai', aiRoutes)
-
