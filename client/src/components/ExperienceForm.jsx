@@ -1,6 +1,13 @@
 import { Plus, Briefcase, Trash2, Sparkles } from 'lucide-react'
+import { useSelector } from 'react-redux'
+import { useState } from 'react'
+import { Loader2 } from 'lucide-react'
+import { api } from '../configs/api.js'
 
 const ExperienceForm = ({ data, onChange }) => {
+   const { token } = useSelector((state) => state.auth)
+   const [generatingIndex, setGenerateingIndex] = useState(-1)
+
    const addExperience = () => {
       const newExperience = {
          company: '',
@@ -22,6 +29,34 @@ const ExperienceForm = ({ data, onChange }) => {
       const updated = [...data]
       updated[index] = { ...updated[index], [field]: value }
       onChange(updated)
+   }
+
+   const generateDescription = async (index) => {
+      setGenerateingIndex(index)
+      const experience = data[index]
+
+      const prompt = `melhore essa descrição de trabalho ${experience.description}
+      para a posição ${experience.position} na ${experience.company}
+      `
+
+      try {
+         const response = await fetch(`${api}/ai/enhance-job-desc`, {
+            method: 'POST',
+            headers: {
+               Authorization: `Bearer ${token}`,
+               'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ userContent: prompt }),
+         })
+
+         const data = await response.json()
+
+         updateExperience(index, 'description', data.enhancedJobDescription)
+      } catch (error) {
+         console.log(error.message)
+      } finally {
+         setGenerateingIndex(-1)
+      }
    }
 
    return (
@@ -140,6 +175,12 @@ const ExperienceForm = ({ data, onChange }) => {
                            </label>
 
                            <button
+                              onClick={() => generateDescription(index)}
+                              disabled={
+                                 generatingIndex === index ||
+                                 !experience.position ||
+                                 !experience.company
+                              }
                               className="
                                     flex items-center gap-1 px-2
                                     py-1 text-xs bg-sky-50 
@@ -149,7 +190,11 @@ const ExperienceForm = ({ data, onChange }) => {
                                     disabled:opacity-50
                                 "
                            >
-                              <Sparkles className="w-3 h-3" />
+                              {generatingIndex === index ? (
+                                 <Loader2 className="w-3 h-3 animate-spin" />
+                              ) : (
+                                 <Sparkles className="w-3 h-3" />
+                              )}
                               Melhorar
                            </button>
                         </div>
