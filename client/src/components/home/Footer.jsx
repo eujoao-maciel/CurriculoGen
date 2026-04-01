@@ -57,7 +57,7 @@ const Footer = () => {
 
                                 <li>
                                     <a
-                                        href="https://www.linkedin.com/in/jo%C3%A3o-maciel-644357259/"
+                                        href="https://www.linkedin.com/in/joão-maciel-644357259/"
                                         className="hover:text-sky-800 transition"
                                     >
                                         Linkedin
@@ -90,7 +90,7 @@ const Footer = () => {
 
                     <div className="flex items-center gap-4 mt-3">
                         <a
-                            href="https://www.linkedin.com/in/jo%C3%A3o-maciel-644357259/"
+                            href="https://www.linkedin.com/in/joão-maciel-644357259/"
                             target="_blank"
                             rel="noreferrer"
                         >

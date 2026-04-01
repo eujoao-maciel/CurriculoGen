@@ -88,7 +88,7 @@ const Dashboard = () => {
             },
             body: JSON.stringify({
                resumeId: editResumeId,
-               resumeData: title,
+               resumeData: JSON.stringify({ title }),
             }),
          })
 
