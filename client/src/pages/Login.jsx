@@ -37,16 +37,17 @@ const Login = ({ title }) => {
          const data = await response.json()
 
          if (!response.ok) {
+            toast.error(data?.error || "Campo inválido. Verifique suas credenciais e tente novamente.")
             throw new Error(data.message || 'Server error.')
          }
 
          dispatch(login(data))
          localStorage.setItem('token', data.token)
          toast.success(data.message)
-        
+
          navigate('/app')
       } catch (error) {
-         toast.error(error.message)
+         console.log(error)
       }
    }
 
@@ -174,7 +175,7 @@ const Login = ({ title }) => {
 
             <p
                onClick={() =>
-                  setState((prev) => (prev === 'login' ? 'cadastro' : 'login'))
+                  setState((prev) => (prev === 'login' ? 'register' : 'login'))
                }
                className="text-gray-700 text-sm mt-3 mb-11"
             >
