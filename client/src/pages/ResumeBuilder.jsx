@@ -1,5 +1,8 @@
 import { useState, useEffect, useRef } from 'react'
 import { useParams, Link } from 'react-router-dom'
+import { api } from '../configs/api.js'
+import { useSelector } from 'react-redux'
+import toast from 'react-hot-toast'
 import {
    ArrowLeftIcon,
    User,
@@ -26,6 +29,7 @@ import SkillsForm from '../components/SkillsForm.jsx'
 const ResumeBuilder = () => {
    const { resumeId } = useParams()
    const contentRef = useRef(null)
+   const { token } = useSelector((state) => state.auth)
 
    const printResume = () => {
       window.print()
@@ -64,7 +68,69 @@ const ResumeBuilder = () => {
       { id: 'skills', name: 'Skills', icon: Sparkles },
    ]
 
+   const loadExistingResume = async () => {
+      try {
+         const response = await fetch(`${api}/resume/resumes/${resumeId}`, {
+            method: 'GET',
+            headers: {
+               Authorization: `Bearer ${token}`,
+            },
+         })
+
+         const data = await response.json()
+
+         if (data.resume) {
+            setResumeData(data.resume)
+            document.title = data.resume.title
+         }
+      } catch (error) {
+         console.log(error)
+         toast.error('Erro ao carregar currículo')
+      }
+   }
+
    const activeSection = sections[activeSectionIndex]
+
+   const saveResume = async () => {
+      try {
+         let updatedResumeData = structuredClone(resumeData)
+
+         if (typeof resumeData.personal_info.image === 'object') {
+            delete updatedResumeData.personal_info.image
+         }
+
+         const formData = new FormData()
+         formData.append('resumeId', resumeId)
+         formData.append('resumeData', JSON.stringify(updatedResumeData))
+         removeBackground && formData.append('removeBackground', 'true')
+         typeof resumeData.personal_info.image === 'object' &&
+            formData.append('image', resumeData.personal_info.image)
+
+         const response = await fetch(`${api}/resume/update`, {
+            method: 'PUT',
+            headers: {
+               Authorization: `Bearer ${token}`,
+            },
+            body: formData,
+         })
+
+         const data = await response.json()
+
+         if (data.resume) {
+            setResumeData(data.resume)
+            toast.success('Curriculo atualizado com sucesso.')
+         }
+      } catch (error) {
+         console.log(error)
+         toast.error('Falha em atualizar o currículo.')
+      }
+   }
+
+   useEffect(() => {
+      if (resumeId) {
+         loadExistingResume()
+      }
+   }, [resumeId])
 
    return (
       <div>
@@ -289,6 +355,11 @@ const ResumeBuilder = () => {
                         )}
                      </div>
                      <button
+                        onClick={() => {
+                           toast.promise(saveResume(), {
+                              loading: 'Salvando...',
+                           })
+                        }}
                         className="
                                    bg-gradient-to-br from-sky-100
                                    to-sky-200 ring-sky-300

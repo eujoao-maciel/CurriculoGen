@@ -30,12 +30,15 @@ const MinimalImageTemplate = ({ data = {}, accentColor = '#2563eb' }) => {
             {/* Header area: image + name/title on top for mobile, left for sm+ */}
             <div className="sm:col-span-1 flex items-center justify-center sm:justify-start p-6 sm:p-10">
                {imageSrc ? (
-                  <img
-                     src={imageSrc}
-                     alt={data.personal_info?.full_name || 'Foto de perfil'}
-                     className="w-28 h-28 sm:w-32 sm:h-32 object-cover rounded-full"
-                     style={{ boxShadow: `0 1px 0 ${accentColor}33` }}
-                  />
+                  <div
+                     className="w-28 h-28 sm:w-32 sm:h-32 rounded-full overflow-hidden flex items-center justify-center"
+                     style={{ backgroundColor: `${accentColor}33` }}                   >
+                     <img
+                        src={imageSrc}
+                        alt={data.personal_info?.full_name || 'Foto de perfil'}
+                        className="w-full h-full object-cover"
+                     />
+                  </div>
                ) : (
                   <div
                      className="w-28 h-28 sm:w-32 sm:h-32 rounded-full flex items-center justify-center text-sm font-medium"
@@ -151,9 +154,7 @@ const MinimalImageTemplate = ({ data = {}, accentColor = '#2563eb' }) => {
                {/* Education */}
                {data.education && data.education.length > 0 && (
                   <section className="mb-6">
-                     <h3
-                        className="text-sm font-semibold tracking-widest text-zinc-600 mb-3"
-                     >
+                     <h3 className="text-sm font-semibold tracking-widest text-zinc-600 mb-3">
                         ESCOLARIDADE
                      </h3>
                      <div className="space-y-3 text-sm">

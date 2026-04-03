@@ -1,2 +1,8 @@
-JWT_SECRET=""
-MONGODB_URL=""
+PORT=3333
+CLIENT_URL=http://localhost:5173
+JWT_SECRET=
+MONGODB_URL=
+IMAGEKIT_PRIVATE_KEY=
+GEMINI_API_KEY=
+GEMINI_BASE_URL=https://generativelanguage.googleapis.com/v1beta/openai/
+GEMINI_MODEL_NAME=gemini-3-flash-preview
