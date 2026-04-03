@@ -91,7 +91,7 @@ const Dashboard = () => {
                     resumeData: title,
                 }),
             })
-            
+
             const data = await response.json()
 
             setAllResumes(
@@ -100,8 +100,8 @@ const Dashboard = () => {
                 )
             )
 
-            setTitle('')
-            setEditResumeId('')
+            setTitle("")
+            setEditResumeId("")
             toast.success(data.message)
         } catch (error) {
             toast.error(error.message)
@@ -178,7 +178,6 @@ const Dashboard = () => {
                 <p className="text-sm text-transparent mb-6 bg-gradient-to-r from-slate-600 to-slate-700 bg-clip-text font-medium sm:hidden">
                     Olá, {user?.name}
                 </p>
-
                 <div className="flex gap-4">
                     <button
                         onClick={() => setShowCreateResume(true)}
@@ -189,7 +188,7 @@ const Dashboard = () => {
                             Criar Currículo
                         </p>
                     </button>
-
+                    {/*
                     <button
                         onClick={() => setShowUploadResume(true)}
                         className="group flex h-48 w-full cursor-pointer flex-col items-center justify-center gap-2 rounded-lg border border-dashed border-slate-300 bg-white text-slate-600 transition-all duration-300 hover:border-indigo-500 hover:shadow-lg sm:max-w-36"
@@ -199,10 +198,9 @@ const Dashboard = () => {
                             Carregar Arquivo
                         </p>
                     </button>
+                    */}
                 </div>
-
                 <hr className="my-6 border-slate-300 sm:w-[305px]" />
-
                 <div className="grid grid-cols-2 flex-wrap gap-4 sm:flex">
                     {allResumes.map((resume, index) => {
                         const baseColor = colors[index % colors.length]
@@ -330,7 +328,6 @@ const Dashboard = () => {
                         )
                     })}
                 </div>
-
                 {showCreateResume && (
                     <form
                         onSubmit={createResume}
