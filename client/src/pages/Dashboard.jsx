@@ -148,7 +148,7 @@ const Dashboard = () => {
          <div className="flex gap-4">
             <button
                onClick={() => setShowCreateResume(true)}
-               className="group flex h-48 w-full max-w-36 flex-col items-center justify-center gap-2 rounded-lg border border-dashed border-slate-300 bg-white text-slate-600 hover:border-purple-500 hover:shadow-lg"
+               className="group flex h-48 w-full sm:max-w-36 flex-col items-center justify-center gap-2 rounded-lg border border-dashed border-slate-300 bg-white text-slate-600 hover:border-purple-500 hover:shadow-lg"
             >
                <PlusIcon className="size-10 text-white bg-purple-500 p-2 rounded-full" />
                <p className="text-sm group-hover:text-purple-600">
@@ -183,11 +183,27 @@ const Dashboard = () => {
 
                      <div
                         onClick={(e) => e.stopPropagation()}
-                        className="absolute top-1 right-1 flex gap-1"
+                        className="
+                             absolute 
+                             top-1
+                             right-1
+                             group-hover:flex
+                             items-center
+                             lg:hidden
+                             flex
+                          "
                      >
                         <TrashIcon
                            onClick={() => deleteResume(resume._id)}
-                           className="size-5 cursor-pointer"
+                           className="
+                                size-7
+                                p-1.5
+                                hover:bg-white/50
+                                rounded
+                                hover:text-slate-700
+                                text-slate-500
+                                transition-colors
+                              "
                         />
 
                         <PencilIcon
@@ -195,7 +211,15 @@ const Dashboard = () => {
                               setEditResumeId(resume._id)
                               setTitle(resume.title)
                            }}
-                           className="size-5 cursor-pointer"
+                           className="
+                                size-7
+                                p-1.5
+                                hover:bg-white/50
+                                rounded
+                                text-slate-500
+                                hover:text-slate-700
+                                transition-colors
+                              "
                         />
                      </div>
                   </button>

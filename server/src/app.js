@@ -1,24 +1,24 @@
-import express from 'express'
-import cors from 'cors'
-import swaggerUI from 'swagger-ui-express'
-import swaggerDocs from '../swagger.json' with { type: 'json' }
-import { authRoutes } from './routes/auth.js'
-import { resumeRoutes } from './routes/resume.js'
-import { aiRoutes } from './routes/ai.js'
+import express from "express"
+import cors from "cors"
+import swaggerUI from "swagger-ui-express"
+import swaggerDocs from "../swagger.json" with { type: "json" }
+import { authRoutes } from "./routes/auth.js"
+import { resumeRoutes } from "./routes/resume.js"
+import { aiRoutes } from "./routes/ai.js"
 
 export const app = express()
 
 app.use(express.json())
-app.use('/api-doc', swaggerUI.serve, swaggerUI.setup(swaggerDocs))
+app.use("/api-doc", swaggerUI.serve, swaggerUI.setup(swaggerDocs))
 app.use(cors({
   origin: process.env.CLIENT_URL || 'http://localhost:5173',
   credentials: true
 }))
 
-app.get('/status', (req, res) => {
-  res.json({ message: 'api is running' })
+app.get("/status", (req, res) => {
+    res.json({ message: "api is running" })
 })
 
-app.use('/users/', authRoutes)
-app.use('/resume/', resumeRoutes)
-app.use('/ai', aiRoutes)
+app.use("/users/", authRoutes)
+app.use("/resume/", resumeRoutes)
+app.use("/ai", aiRoutes)
