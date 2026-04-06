@@ -5,12 +5,7 @@ import { useSelector } from 'react-redux'
 import { api } from '../configs/api.js'
 import toast from 'react-hot-toast'
 
-import {
-   FilePenLineIcon,
-   PencilIcon,
-   TrashIcon,
-   XIcon,
-} from 'lucide-react'
+import { FilePenLineIcon, PencilIcon, TrashIcon, XIcon } from 'lucide-react'
 
 const Dashboard = () => {
    const colors = ['#9333ea', '#d97706', '#dc2626', '#0284c7', '#16a32a']
@@ -92,9 +87,7 @@ const Dashboard = () => {
 
          setAllResumes((prev) =>
             prev.map((resume) =>
-               resume._id === editResumeId
-                  ? { ...resume, title }
-                  : resume
+               resume._id === editResumeId ? { ...resume, title } : resume
             )
          )
 
@@ -166,10 +159,8 @@ const Dashboard = () => {
                return (
                   <button
                      key={resume._id}
-                     onClick={() =>
-                        navigate(`/app/builder/${resume._id}`)
-                     }
-                     className="relative h-48 w-full sm:max-w-36 rounded-lg flex flex-col items-center justify-center gap-2 border hover:shadow-lg"
+                     onClick={() => navigate(`/app/builder/${resume._id}`)}
+                     className="relative h-48 w-full sm:max-w-36 rounded-lg flex flex-col p-3 items-center justify-center gap-2 border hover:shadow-lg"
                      style={{
                         background: `linear-gradient(135deg, ${baseColor}10, ${baseColor}40)`,
                         borderColor: baseColor + '40',
@@ -177,7 +168,7 @@ const Dashboard = () => {
                   >
                      <FilePenLineIcon style={{ color: baseColor }} />
 
-                     <p style={{ color: baseColor }}>
+                     <p className="[overflow-wrap:anywhere] text-center" style={{ color: baseColor }}>
                         {resume.title}
                      </p>
 
@@ -189,7 +180,6 @@ const Dashboard = () => {
                              right-1
                              group-hover:flex
                              items-center
-                             lg:hidden
                              flex
                           "
                      >
@@ -232,10 +222,8 @@ const Dashboard = () => {
                onSubmit={createResume}
                className="fixed inset-0 flex items-center justify-center bg-black/70"
             >
-               <div className="bg-white p-6 rounded-lg w-full max-w-sm">
-                  <h2 className="text-lg font-bold mb-4">
-                     Criar Currículo
-                  </h2>
+               <div className="relative bg-white p-6 rounded-lg w-full max-w-sm">
+                  <h2 className="text-lg font-bold mb-4">Criar Currículo</h2>
 
                   <input
                      value={title}
@@ -261,10 +249,8 @@ const Dashboard = () => {
                onSubmit={editTitle}
                className="fixed inset-0 flex items-center justify-center bg-black/70"
             >
-               <div className="bg-white p-6 rounded-lg w-full max-w-sm">
-                  <h2 className="text-lg font-bold mb-4">
-                     Editar título
-                  </h2>
+               <div className="relative bg-white p-6 rounded-lg w-full max-w-sm">
+                  <h2 className="text-lg font-bold mb-4">Editar título</h2>
 
                   <input
                      value={title}
