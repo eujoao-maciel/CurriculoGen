@@ -10,7 +10,7 @@
 
 --- 
 
-<p align="center">Uma aplicação que auxilia na criação de currículo profissionais.</p>
+<p align="center">Uma aplicação que auxilia na criação de currículos profissionais.</p>
 
 <h2 align="center">Sobre</h2>
 <p align="center">
