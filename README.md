@@ -58,7 +58,7 @@
 
    <tr>
      <td>Backend</td>
-     <td>Node.js | Express | Mongoose | Vitest | Swagger | Zod | JWT | Bcrypt | Openai | ImageKit</td>
+     <td>Node.js | Express | Mongoose | Docker | Vitest | Swagger | Zod | JWT | Bcrypt | Openai | ImageKit</td>
    </tr>
 
    <tr>
