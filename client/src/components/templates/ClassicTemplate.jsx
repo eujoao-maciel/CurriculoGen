@@ -150,7 +150,7 @@ const ClassicTemplate = ({ data, accentColor }) => {
                            <li className="text-base sm:text-lg font-normal text-gray-900 ">
                               {proj.name}
                            </li>
-                           <p className="text-sm text-gray-600">
+                           <p className="text-sm whitespace-pre-line text-gray-600">
                               {proj.description}
                            </p>
                         </div>

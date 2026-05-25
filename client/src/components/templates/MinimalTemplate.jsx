@@ -105,7 +105,7 @@ const MinimalTemplate = ({ data = {}, accentColor = '#2563eb' }) => {
                            {proj.name}
                         </h3>
                         {proj.description && (
-                           <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
+                           <p className="text-sm sm:text-base whitespace-pre-line text-gray-600 leading-relaxed">
                               {proj.description}
                            </p>
                         )}
