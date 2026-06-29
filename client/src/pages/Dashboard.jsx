@@ -169,7 +169,7 @@ const Dashboard = () => {
                      onClick={() =>
                         navigate(`/app/builder/${resume._id}`)
                      }
-                     className="relative h-48 w-full sm:max-w-36 rounded-lg flex flex-col items-center justify-center gap-2 border hover:shadow-lg"
+                     className="[overflow-wrap:anywhere] p-2 relative h-48 w-full sm:max-w-36 rounded-lg flex flex-col items-center justify-center gap-2 border hover:shadow-lg"
                      style={{
                         background: `linear-gradient(135deg, ${baseColor}10, ${baseColor}40)`,
                         borderColor: baseColor + '40',

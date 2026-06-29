@@ -1,217 +1,346 @@
-import { Mail, Phone, MapPin, Linkedin, Globe } from 'lucide-react'
+import {
+  Document,
+  Page,
+  Text,
+  View,
+  StyleSheet,
+} from "@react-pdf/renderer";
 
-const ClassicTemplate = ({ data, accentColor }) => {
-   const formatDate = (dateStr) => {
-      if (!dateStr) return ''
-      const [year, month] = dateStr.split('-')
-      return new Date(year, month - 1).toLocaleDateString('pt-BR', {
-         year: 'numeric',
-         month: 'short',
-      })
-   }
+const styles = StyleSheet.create({
+  page: {
+    padding: 30,
+    color: "#374151",
+    fontSize: 11,
+  },
 
-   return (
-      <div className="max-w-4xl mx-auto p-8 bg-white text-gray-800 leading-relaxed">
-         {/* Header */}
-         <header
-            className="text-center mb-5 sm:mb-5 pb-5 border-b-2"
-            style={{ borderColor: accentColor }}
-         >
-            <h1
-               className="text-2xl flex flex-nowrap text-left justify-start md:text-3xl font-bold mb-2"
-               style={{ color: accentColor }}
+  header: {
+    marginBottom: 20,
+    paddingBottom: 12,
+    borderBottomWidth: 2,
+  },
+
+  name: {
+    fontSize: 24,
+    fontWeight: 700,
+    marginBottom: 8,
+  },
+
+  contactContainer: {
+    flexDirection: "column",
+    gap: 2,
+  },
+
+  section: {
+    marginBottom: 18,
+  },
+
+  sectionTitle: {
+    fontSize: 14,
+    fontWeight: 700,
+    marginBottom: 10,
+  },
+
+  experienceItem: {
+    borderLeftWidth: 2,
+    paddingLeft: 10,
+    marginBottom: 12,
+  },
+
+  rowBetween: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+
+  position: {
+    fontSize: 12,
+    fontWeight: 700,
+  },
+
+  company: {
+    color: "#4b5563",
+    marginTop: 2,
+  },
+
+  description: {
+    marginTop: 4,
+    lineHeight: 1.5,
+  },
+
+  skillContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+  },
+
+  skill: {
+    marginRight: 12,
+    marginBottom: 6,
+  },
+});
+
+export const ClassicTemplate = ({
+  data,
+  accentColor = "#3B82F6",
+}) => {
+  const formatDate = (dateStr) => {
+    if (!dateStr) return "";
+
+    const [year, month] = dateStr.split("-");
+
+    const months = [
+      "jan",
+      "fev",
+      "mar",
+      "abr",
+      "mai",
+      "jun",
+      "jul",
+      "ago",
+      "set",
+      "out",
+      "nov",
+      "dez",
+    ];
+
+    return `${months[Number(month) - 1]}/${year}`;
+  };
+
+  const personalInfo = data?.personal_info ?? {};
+
+  return (
+    <Document>
+      <Page size="A4" style={styles.page}>
+        {/* HEADER */}
+
+        <View
+          style={[
+            styles.header,
+            {
+              borderColor: accentColor,
+            },
+          ]}
+        >
+          <Text
+            style={[
+              styles.name,
+              {
+                color: accentColor,
+              },
+            ]}
+          >
+            {personalInfo.full_name || "Seu Nome"}
+          </Text>
+
+          <View style={styles.contactContainer}>
+            {personalInfo.email ? (
+              <Text>Email: {String(personalInfo.email)}</Text>
+            ) : null}
+
+            {personalInfo.phone ? (
+              <Text>Tel: {String(personalInfo.phone)}</Text>
+            ) : null}
+
+            {personalInfo.location ? (
+              <Text>
+                Local: {String(personalInfo.location)}
+              </Text>
+            ) : null}
+
+            {personalInfo.linkedin ? (
+              <Text>
+                LinkedIn: {String(personalInfo.linkedin)}
+              </Text>
+            ) : null}
+
+            {personalInfo.website ? (
+              <Text>
+                Site: {String(personalInfo.website)}
+              </Text>
+            ) : null}
+          </View>
+        </View>
+
+        {/* RESUMO */}
+
+        {data?.professional_summary ? (
+          <View style={styles.section}>
+            <Text
+              style={[
+                styles.sectionTitle,
+                {
+                  color: accentColor,
+                },
+              ]}
             >
-               {data.personal_info?.full_name || 'Seu Nome'}
-            </h1>
+              RESUMO
+            </Text>
 
-            <div
-               className="flex flex-col text-xs 
-                   flex-wrap justify-start sm:flex-row 
-                   gap-3 sm:gap-4 sm:text-sm text-gray-600"
+            <Text>
+              {String(data.professional_summary)}
+            </Text>
+          </View>
+        ) : null}
+
+        {/* EXPERIÊNCIA */}
+
+        {Array.isArray(data?.experience) &&
+        data.experience.length > 0 ? (
+          <View style={styles.section}>
+            <Text
+              style={[
+                styles.sectionTitle,
+                {
+                  color: accentColor,
+                },
+              ]}
             >
-               {data.personal_info?.email && (
-                  <div className="flex items-center gap-1">
-                     <Mail className="size-4" />
-                     <span>{data.personal_info.email}</span>
-                  </div>
-               )}
-               {data.personal_info?.phone && (
-                  <div className="flex items-center gap-1">
-                     <Phone className="size-4" />
-                     <span>{data.personal_info.phone}</span>
-                  </div>
-               )}
-               {data.personal_info?.location && (
-                  <div className="flex items-center gap-1">
-                     <MapPin className="size-4" />
-                     <span>{data.personal_info.location}</span>
-                  </div>
-               )}
-               {data.personal_info?.linkedin && (
-                  <div className="hidden sm:flex items-center gap-1">
-                     <Linkedin className="size-4" />
-                     <span className="break-all">
-                        {data.personal_info.linkedin}
-                     </span>
-                  </div>
-               )}
-               {data.personal_info?.website && (
-                  <div className="hidden sm:flex items-center gap-1">
-                     <Globe className="size-4" />
-                     <span className="break-all">
-                        {data.personal_info.website}
-                     </span>
-                  </div>
-               )}
-            </div>
-         </header>
+              EXPERIÊNCIA PROFISSIONAL
+            </Text>
 
-         {/* Professional Summary */}
-         {data.professional_summary && (
-            <section className="mb-6">
-               <h2
-                  className="text-base sm:text-xl font-semibold mb-3"
-                  style={{ color: accentColor }}
-               >
-                  RESUMO
-               </h2>
-               <p className="text-sm sm:text-base text-gray-700 leading-relaxed">
-                  {data.professional_summary}
-               </p>
-            </section>
-         )}
+            {data.experience.map((exp, index) => (
+              <View
+                key={index}
+                style={[
+                  styles.experienceItem,
+                  {
+                    borderLeftColor: accentColor,
+                  },
+                ]}
+              >
+                <View style={styles.rowBetween}>
+                  <View>
+                    <Text style={styles.position}>
+                      {exp?.position || ""}
+                    </Text>
 
-         {/* Experience */}
-         {data.experience && data.experience.length > 0 && (
-            <section className="mb-6">
-               <h2
-                  className="text-base sm:text-xl font-semibold mb-4"
-                  style={{ color: accentColor }}
-               >
-                  EXPERIÊNCIA PROFISSIONAL
-               </h2>
+                    <Text style={styles.company}>
+                      {exp?.company || ""}
+                    </Text>
+                  </View>
 
-               <div className="space-y-4">
-                  {data.experience.map((exp, index) => (
-                     <div
-                        key={index}
-                        className="border-l-2 pl-4"
-                        style={{ borderColor: accentColor }}
-                     >
-                        <div className="flex flex-col sm:flex-row justify-between items-start mb-2">
-                           <div>
-                              <h3 className="text-base sm:text-lg font-normal text-gray-900">
-                                 {exp.position}
-                              </h3>
-                              <p className="text-sm sm:text-base text-gray-700 font-normal">
-                                 {exp.company}
-                              </p>
-                           </div>
-                           <div className="text-right text-xs text-gray-500">
-                              <p className="flex flex-row gap-2 sm:flex-col">
-                                 <span>{formatDate(exp.start_date)} - </span>
-                                 <span>
-                                    {exp.is_current
-                                       ? 'Atual'
-                                       : formatDate(exp.end_date)}
-                                 </span>
-                              </p>
-                           </div>
-                        </div>
-                        {exp.description && (
-                           <div className="text-sm text-gray-600 leading-relaxed whitespace-pre-line">
-                              {exp.description}
-                           </div>
-                        )}
-                     </div>
-                  ))}
-               </div>
-            </section>
-         )}
+                  <Text>
+                    {formatDate(exp?.start_date)}
+                    {" - "}
+                    {exp?.is_current
+                      ? "Atual"
+                      : formatDate(exp?.end_date)}
+                  </Text>
+                </View>
 
-         {/* Projects */}
-         {data.project && data.project.length > 0 && (
-            <section className="mb-6">
-               <h2
-                  className="text-base sm:text-xl font-semibold mb-4"
-                  style={{ color: accentColor }}
-               >
-                  PROJETOS
-               </h2>
+                {exp?.description ? (
+                  <Text style={styles.description}>
+                    {String(exp.description)}
+                  </Text>
+                ) : null}
+              </View>
+            ))}
+          </View>
+        ) : null}
 
-               <ul className="space-y-3 ">
-                  {data.project.map((proj, index) => (
-                     <div
-                        key={index}
-                        className="flex justify-between items-start border-l-2 pl-4"
-                        style={{ borderColor: accentColor }}
-                     >
-                        <div>
-                           <li className="text-base sm:text-lg font-normal text-gray-900 ">
-                              {proj.name}
-                           </li>
-                           <p className="text-sm text-gray-600">
-                              {proj.description}
-                           </p>
-                        </div>
-                     </div>
-                  ))}
-               </ul>
-            </section>
-         )}
+        {/* PROJETOS */}
 
-         {/* Education */}
-         {data.education && data.education.length > 0 && (
-            <section className="mb-6">
-               <h2
-                  className="text-base sm:text-lg font-semibold mb-4"
-                  style={{ color: accentColor }}
-               >
-                  ESCOLARIDADE
-               </h2>
+        {Array.isArray(data?.project) &&
+        data.project.length > 0 ? (
+          <View style={styles.section}>
+            <Text
+              style={[
+                styles.sectionTitle,
+                {
+                  color: accentColor,
+                },
+              ]}
+            >
+              PROJETOS
+            </Text>
 
-               <div className="space-y-3">
-                  {data.education.map((edu, index) => (
-                     <div
-                        key={index}
-                        className="flex justify-between items-start"
-                     >
-                        <div>
-                           <h3 className="text-base sm:text-lg font-normal text-gray-900">
-                              {edu.field && `${edu.field} - `} {edu.degree}
-                           </h3>
-                           <p className="text-gray-600">{edu.institution}</p>
-                        </div>
-                     </div>
-                  ))}
-               </div>
-            </section>
-         )}
+            {data.project.map((proj, index) => (
+              <View
+                key={index}
+                style={[
+                  styles.experienceItem,
+                  {
+                    borderLeftColor: accentColor,
+                  },
+                ]}
+              >
+                <Text style={styles.position}>
+                  {proj?.name || ""}
+                </Text>
 
-         {/* Skills */}
-         {data.skills && data.skills.length > 0 && (
-            <section className="mb-6">
-               <h2
-                  className="text-base sm:text-xl font-semibold mb-3"
-                  style={{ color: accentColor }}
-               >
-                  HABILIDADES
-               </h2>
+                {proj?.description ? (
+                  <Text style={styles.description}>
+                    {String(proj.description)}
+                  </Text>
+                ) : null}
+              </View>
+            ))}
+          </View>
+        ) : null}
 
-               <div className="flex gap-4 flex-wrap">
-                  {data.skills.map((skill, index) => (
-                     <div
-                        key={index}
-                        className="text-xs sm:text-sm text-gray-700"
-                     >
-                        • {skill}
-                     </div>
-                  ))}
-               </div>
-            </section>
-         )}
-      </div>
-   )
-}
+        {/* EDUCAÇÃO */}
 
-export default ClassicTemplate
+        {Array.isArray(data?.education) &&
+        data.education.length > 0 ? (
+          <View style={styles.section}>
+            <Text
+              style={[
+                styles.sectionTitle,
+                {
+                  color: accentColor,
+                },
+              ]}
+            >
+              ESCOLARIDADE
+            </Text>
+
+            {data.education.map((edu, index) => (
+              <View
+                key={index}
+                style={{ marginBottom: 8 }}
+              >
+                <Text style={styles.position}>
+                  {edu?.field
+                    ? `${edu.field} - `
+                    : ""}
+                  {edu?.degree || ""}
+                </Text>
+
+                <Text>
+                  {edu?.institution || ""}
+                </Text>
+              </View>
+            ))}
+          </View>
+        ) : null}
+
+        {/* HABILIDADES */}
+
+        {Array.isArray(data?.skills) &&
+        data.skills.length > 0 ? (
+          <View style={styles.section}>
+            <Text
+              style={[
+                styles.sectionTitle,
+                {
+                  color: accentColor,
+                },
+              ]}
+            >
+              HABILIDADES
+            </Text>
+
+            <View style={styles.skillContainer}>
+              {data.skills.map((skill, index) => (
+                <Text
+                  key={index}
+                  style={styles.skill}
+                >
+                  • {String(skill)}
+                </Text>
+              ))}
+            </View>
+          </View>
+        ) : null}
+      </Page>
+    </Document>
+  );
+};
