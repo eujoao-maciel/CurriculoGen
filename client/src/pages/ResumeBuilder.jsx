@@ -1,150 +1,151 @@
-import { useState, useEffect, useRef } from 'react'
-import { useParams, Link } from 'react-router-dom'
-import { api } from '../configs/api.js'
-import { useSelector } from 'react-redux'
-import toast from 'react-hot-toast'
+import { useState, useEffect, useRef } from "react"
+import { useParams, Link } from "react-router-dom"
+import { api } from "../configs/api.js"
+import { useSelector } from "react-redux"
+import toast from "react-hot-toast"
 import {
-   ArrowLeftIcon,
-   User,
-   FileText,
-   Briefcase,
-   GraduationCap,
-   FolderIcon,
-   Sparkles,
-   ChevronLeft,
-   ChevronRight,
-   DownloadIcon,
-} from 'lucide-react'
+    ArrowLeftIcon,
+    User,
+    FileText,
+    Briefcase,
+    GraduationCap,
+    FolderIcon,
+    Sparkles,
+    ChevronLeft,
+    ChevronRight,
+    DownloadIcon,
+} from "lucide-react"
 
-import TemplateSelector from '../components/TemplateSelector.jsx'
-import PersonalInfoForm from '../components/PersonalInfoForm.jsx'
-import ResumePreview from '../components/ResumePreview.jsx'
-import ColorPicker from '../components/ColorPicker.jsx'
-import ProfessionalSummaryForm from '../components/ProfessionalSummaryForm.jsx'
-import ExperienceForm from '../components/ExperienceForm.jsx'
-import EducationForm from '../components/EducationForm.jsx'
-import ProjectForm from '../components/ProjectForm.jsx'
-import SkillsForm from '../components/SkillsForm.jsx'
+import TemplateSelector from "../components/TemplateSelector.jsx"
+import PersonalInfoForm from "../components/PersonalInfoForm.jsx"
+import ResumePreview from "../components/ResumePreview.jsx"
+import ColorPicker from "../components/ColorPicker.jsx"
+import ProfessionalSummaryForm from "../components/ProfessionalSummaryForm.jsx"
+import ExperienceForm from "../components/ExperienceForm.jsx"
+import EducationForm from "../components/EducationForm.jsx"
+import ProjectForm from "../components/ProjectForm.jsx"
+import SkillsForm from "../components/SkillsForm.jsx"
+import PdfDownload from "../components/PdfDownload.jsx"
 
 const ResumeBuilder = () => {
-   const { resumeId } = useParams()
-   const contentRef = useRef(null)
-   const { token } = useSelector((state) => state.auth)
+    const { resumeId } = useParams()
+    const contentRef = useRef(null)
+    const { token } = useSelector((state) => state.auth)
 
-   const printResume = () => {
-      window.print()
-   }
+    const printResume = () => {
+        window.print()
+    }
 
-   const [resumeData, setResumeData] = useState({
-      _id: '',
-      title: '',
-      personal_info: {
-         full_name: '',
-         email: '',
-         phone: '',
-         location: '',
-         linkedin: '',
-         website: '',
-      },
-      professional_summary: '',
-      experience: [],
-      education: [],
-      project: [],
-      skills: [],
-      template: 'classic',
-      accent_color: '#3B82F6',
-      public: true,
-   })
+    const [resumeData, setResumeData] = useState({
+        _id: "",
+        title: "",
+        personal_info: {
+            full_name: "",
+            email: "",
+            phone: "",
+            location: "",
+            linkedin: "",
+            website: "",
+        },
+        professional_summary: "",
+        experience: [],
+        education: [],
+        project: [],
+        skills: [],
+        template: "classic",
+        accent_color: "#3B82F6",
+        public: true,
+    })
 
-   const [activeSectionIndex, setActiveSectionIndex] = useState(0)
-   const [removeBackground, setRemoveBackground] = useState(false)
+    const [activeSectionIndex, setActiveSectionIndex] = useState(0)
+    const [removeBackground, setRemoveBackground] = useState(false)
 
-   const sections = [
-      { id: 'personal', name: 'Personal Info', icon: User },
-      { id: 'summary', name: 'Summary', icon: FileText },
-      { id: 'experience', name: 'Experience', icon: Briefcase },
-      { id: 'education', name: 'Education', icon: GraduationCap },
-      { id: 'projects', name: 'Projects', icon: FolderIcon },
-      { id: 'skills', name: 'Skills', icon: Sparkles },
-   ]
+    const sections = [
+        { id: "personal", name: "Personal Info", icon: User },
+        { id: "summary", name: "Summary", icon: FileText },
+        { id: "experience", name: "Experience", icon: Briefcase },
+        { id: "education", name: "Education", icon: GraduationCap },
+        { id: "projects", name: "Projects", icon: FolderIcon },
+        { id: "skills", name: "Skills", icon: Sparkles },
+    ]
 
-   const loadExistingResume = async () => {
-      try {
-         const response = await fetch(`${api}/resume/resumes/${resumeId}`, {
-            method: 'GET',
-            headers: {
-               Authorization: `Bearer ${token}`,
-            },
-         })
+    const loadExistingResume = async () => {
+        try {
+            const response = await fetch(`${api}/resume/resumes/${resumeId}`, {
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
 
-         const data = await response.json()
+            const data = await response.json()
 
-         if (data.resume) {
-            setResumeData(data.resume)
-            document.title = data.resume.title
-         }
-      } catch (error) {
-         console.log(error)
-         toast.error('Erro ao carregar currículo')
-      }
-   }
+            if (data.resume) {
+                setResumeData(data.resume)
+                document.title = data.resume.title
+            }
+        } catch (error) {
+            console.log(error)
+            toast.error("Erro ao carregar currículo")
+        }
+    }
 
-   const activeSection = sections[activeSectionIndex]
+    const activeSection = sections[activeSectionIndex]
 
-   const saveResume = async () => {
-      try {
-         let updatedResumeData = structuredClone(resumeData)
+    const saveResume = async () => {
+        try {
+            let updatedResumeData = structuredClone(resumeData)
 
-         if (typeof resumeData.personal_info.image === 'object') {
-            delete updatedResumeData.personal_info.image
-         }
+            if (typeof resumeData.personal_info.image === "object") {
+                delete updatedResumeData.personal_info.image
+            }
 
-         const formData = new FormData()
-         formData.append('resumeId', resumeId)
-         formData.append('resumeData', JSON.stringify(updatedResumeData))
-         removeBackground && formData.append('removeBackground', 'true')
-         typeof resumeData.personal_info.image === 'object' &&
-            formData.append('image', resumeData.personal_info.image)
+            const formData = new FormData()
+            formData.append("resumeId", resumeId)
+            formData.append("resumeData", JSON.stringify(updatedResumeData))
+            removeBackground && formData.append("removeBackground", "true")
+            typeof resumeData.personal_info.image === "object" &&
+                formData.append("image", resumeData.personal_info.image)
 
-         const response = await fetch(`${api}/resume/update`, {
-            method: 'PUT',
-            headers: {
-               Authorization: `Bearer ${token}`,
-            },
-            body: formData,
-         })
+            const response = await fetch(`${api}/resume/update`, {
+                method: "PUT",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+                body: formData,
+            })
 
-         const data = await response.json()
+            const data = await response.json()
 
-         if (data.resume) {
-            setResumeData(data.resume)
-            toast.success('Curriculo atualizado com sucesso.')
-         }
-      } catch (error) {
-         console.log(error)
-         toast.error('Falha em atualizar o currículo.')
-      }
-   }
+            if (data.resume) {
+                setResumeData(data.resume)
+                toast.success("Curriculo atualizado com sucesso.")
+            }
+        } catch (error) {
+            console.log(error)
+            toast.error("Falha em atualizar o currículo.")
+        }
+    }
 
-   useEffect(() => {
-      if (resumeId) {
-         loadExistingResume()
-      }
-   }, [resumeId])
+    useEffect(() => {
+        if (resumeId) {
+            loadExistingResume()
+        }
+    }, [resumeId])
 
-   return (
-      <div>
-         <div
-            className="
+    return (
+        <div>
+            <div
+                className="
           max-w-7xl
           mx-auto
           px-4
           py-4
       "
-         >
-            <Link
-               to={'/app'}
-               className="
+            >
+                <Link
+                    to={"/app"}
+                    className="
                flex
                gap-2
                items-center
@@ -152,16 +153,16 @@ const ResumeBuilder = () => {
                hover:text-slate-700
                transition-all
             "
-            >
-               <ArrowLeftIcon className="size-4" /> Voltar
-            </Link>
-         </div>
+                >
+                    <ArrowLeftIcon className="size-4" /> Voltar
+                </Link>
+            </div>
 
-         <div className="max-w-7xl mx-auto px-4 pb-8">
-            <div className="grid lg:grid-cols-12 gap-8">
-               {/* Left Panel - Form*/}
-               <div
-                  className="
+            <div className="max-w-7xl mx-auto px-4 pb-8">
+                <div className="grid lg:grid-cols-12 gap-8">
+                    {/* Left Panel - Form*/}
+                    <div
+                        className="
                         relative
                         lg:col-span-5
                         rounded-lg
@@ -169,9 +170,9 @@ const ResumeBuilder = () => {
                         overflow-y-hidden
                         
                     "
-               >
-                  <div
-                     className="
+                    >
+                        <div
+                            className="
                             bg-white
                             rounded-lg
                             shadow-sm
@@ -180,20 +181,20 @@ const ResumeBuilder = () => {
                             p-6
                             pt-1
                        "
-                  >
-                     {/* progress bar using activeSectionIndex */}
+                        >
+                            {/* progress bar using activeSectionIndex */}
 
-                     <hr
-                        className="
+                            <hr
+                                className="
                               absolute 
                               top-0
                               left-0
                               right-0
                               border-2
                           "
-                     />
-                     <hr
-                        className="
+                            />
+                            <hr
+                                className="
                               absolute
                               top-0
                               left-0
@@ -203,216 +204,219 @@ const ResumeBuilder = () => {
                               transition-all
                               duration-1000
                               "
-                        style={{
-                           width: `${(activeSectionIndex * 100) / (sections.length - 1)}%`,
-                        }}
-                     />
+                                style={{
+                                    width: `${(activeSectionIndex * 100) / (sections.length - 1)}%`,
+                                }}
+                            />
 
-                     {/* section navigation */}
+                            {/* section navigation */}
 
-                     <div
-                        className="
+                            <div
+                                className="
                           flex justify-between
                           items-center mb-6
                           border-b py-1
                           border-gray-300
                        "
-                     >
-                        <div className="flex items-center gap-2">
-                           <TemplateSelector
-                              selectedTemplate={resumeData.template}
-                              onChange={(template) =>
-                                 setResumeData((prev) => ({
-                                    ...prev,
-                                    template,
-                                 }))
-                              }
-                           />
+                            >
+                                <div className="flex items-center gap-2">
+                                    <TemplateSelector
+                                        selectedTemplate={resumeData.template}
+                                        onChange={(template) =>
+                                            setResumeData((prev) => ({
+                                                ...prev,
+                                                template,
+                                            }))
+                                        }
+                                    />
 
-                           <ColorPicker
-                              selectedColor={resumeData.accent_color}
-                              onChange={(color) =>
-                                 setResumeData((prev) => ({
-                                    ...prev,
-                                    accent_color: color,
-                                 }))
-                              }
-                           />
-                        </div>
+                                    <ColorPicker
+                                        selectedColor={resumeData.accent_color}
+                                        onChange={(color) =>
+                                            setResumeData((prev) => ({
+                                                ...prev,
+                                                accent_color: color,
+                                            }))
+                                        }
+                                    />
+                                </div>
 
-                        <div className="flex items-center">
-                           {activeSectionIndex !== 0 && (
-                              <button
-                                 onClick={() =>
-                                    setActiveSectionIndex((prevIndex) =>
-                                       Math.max(prevIndex - 1, 0)
-                                    )
-                                 }
-                                 className="
+                                <div className="flex items-center">
+                                    {activeSectionIndex !== 0 && (
+                                        <button
+                                            onClick={() =>
+                                                setActiveSectionIndex(
+                                                    (prevIndex) =>
+                                                        Math.max(
+                                                            prevIndex - 1,
+                                                            0
+                                                        )
+                                                )
+                                            }
+                                            className="
                                    flex items-center gap-1
                                    p-3 rounded-lg text-sm
                                    font-medium text-gray-600
                                    hover:bg-gray-50 transition-all
                                 "
-                                 disabled={activeSectionIndex === 0}
-                              >
-                                 <ChevronLeft className="size-4" /> Anterior
-                              </button>
-                           )}
+                                            disabled={activeSectionIndex === 0}
+                                        >
+                                            <ChevronLeft className="size-4" />{" "}
+                                            Anterior
+                                        </button>
+                                    )}
 
-                           <button
-                              onClick={() =>
-                                 setActiveSectionIndex((prevIndex) =>
-                                    Math.min(prevIndex + 1, sections.length - 1)
-                                 )
-                              }
-                              className={`
+                                    <button
+                                        onClick={() =>
+                                            setActiveSectionIndex((prevIndex) =>
+                                                Math.min(
+                                                    prevIndex + 1,
+                                                    sections.length - 1
+                                                )
+                                            )
+                                        }
+                                        className={`
                                     flex items-center gap-1
                                     p-3 rounded-lg text-sm
                                     font-medium text-gray-600
                                     hover:bg-gray-50 transition-all
-                                    ${activeSectionIndex === sections.length - 1 && 'opacity-50'}
+                                    ${activeSectionIndex === sections.length - 1 && "opacity-50"}
                                  `}
-                              disabled={
-                                 activeSectionIndex === sections.length - 1
-                              }
-                           >
-                              Proximo <ChevronRight className="size-4" />
-                           </button>
-                        </div>
-                     </div>
+                                        disabled={
+                                            activeSectionIndex ===
+                                            sections.length - 1
+                                        }
+                                    >
+                                        Proximo{" "}
+                                        <ChevronRight className="size-4" />
+                                    </button>
+                                </div>
+                            </div>
 
-                     {/* Form Content */}
-                     <div className="space-y-6">
-                        {activeSection.id === 'personal' && (
-                           <PersonalInfoForm
-                              data={resumeData.personal_info}
-                              onChange={(data) =>
-                                 setResumeData((prev) => ({
-                                    ...prev,
-                                    personal_info: data,
-                                 }))
-                              }
-                              removeBackground={removeBackground}
-                              setRemoveBackground={setRemoveBackground}
-                           />
-                        )}
-                        {activeSection.id === 'summary' && (
-                           <ProfessionalSummaryForm
-                              data={resumeData.professional_summary}
-                              onChange={(data) =>
-                                 setResumeData((prev) => ({
-                                    ...prev,
-                                    professional_summary: data,
-                                 }))
-                              }
-                              setResumeData={setResumeData}
-                           />
-                        )}
-                        {activeSection.id === 'experience' && (
-                           <ExperienceForm
-                              data={resumeData.experience}
-                              onChange={(data) =>
-                                 setResumeData((prev) => ({
-                                    ...prev,
-                                    experience: data,
-                                 }))
-                              }
-                           />
-                        )}
-                        {activeSection.id === 'education' && (
-                           <EducationForm
-                              data={resumeData.education}
-                              onChange={(data) =>
-                                 setResumeData((prev) => ({
-                                    ...prev,
-                                    education: data,
-                                 }))
-                              }
-                           />
-                        )}
-                        {activeSection.id === 'projects' && (
-                           <ProjectForm
-                              data={resumeData.project}
-                              onChange={(data) => {
-                                 setResumeData((prev) => ({
-                                    ...prev,
-                                    project: data,
-                                 }))
-                              }}
-                           />
-                        )}{' '}
-                        {activeSection.id === 'skills' && (
-                           <SkillsForm
-                              data={resumeData.skills}
-                              onChange={(data) => {
-                                 setResumeData((prev) => ({
-                                    ...prev,
-                                    skills: data,
-                                 }))
-                              }}
-                           />
-                        )}
-                     </div>
-                     <button
-                        onClick={() => {
-                           toast.promise(saveResume(), {
-                              loading: 'Salvando...',
-                           })
-                        }}
-                        className="
+                            {/* Form Content */}
+                            <div className="space-y-6">
+                                {activeSection.id === "personal" && (
+                                    <PersonalInfoForm
+                                        data={resumeData.personal_info}
+                                        onChange={(data) =>
+                                            setResumeData((prev) => ({
+                                                ...prev,
+                                                personal_info: data,
+                                            }))
+                                        }
+                                        removeBackground={removeBackground}
+                                        setRemoveBackground={
+                                            setRemoveBackground
+                                        }
+                                    />
+                                )}
+                                {activeSection.id === "summary" && (
+                                    <ProfessionalSummaryForm
+                                        data={resumeData.professional_summary}
+                                        onChange={(data) =>
+                                            setResumeData((prev) => ({
+                                                ...prev,
+                                                professional_summary: data,
+                                            }))
+                                        }
+                                        setResumeData={setResumeData}
+                                    />
+                                )}
+                                {activeSection.id === "experience" && (
+                                    <ExperienceForm
+                                        data={resumeData.experience}
+                                        onChange={(data) =>
+                                            setResumeData((prev) => ({
+                                                ...prev,
+                                                experience: data,
+                                            }))
+                                        }
+                                    />
+                                )}
+                                {activeSection.id === "education" && (
+                                    <EducationForm
+                                        data={resumeData.education}
+                                        onChange={(data) =>
+                                            setResumeData((prev) => ({
+                                                ...prev,
+                                                education: data,
+                                            }))
+                                        }
+                                    />
+                                )}
+                                {activeSection.id === "projects" && (
+                                    <ProjectForm
+                                        data={resumeData.project}
+                                        onChange={(data) => {
+                                            setResumeData((prev) => ({
+                                                ...prev,
+                                                project: data,
+                                            }))
+                                        }}
+                                    />
+                                )}{" "}
+                                {activeSection.id === "skills" && (
+                                    <SkillsForm
+                                        data={resumeData.skills}
+                                        onChange={(data) => {
+                                            setResumeData((prev) => ({
+                                                ...prev,
+                                                skills: data,
+                                            }))
+                                        }}
+                                    />
+                                )}
+                            </div>
+                            <button
+                                onClick={() => {
+                                    toast.promise(saveResume(), {
+                                        loading: "Salvando...",
+                                    })
+                                }}
+                                className="
                                    bg-gradient-to-br from-sky-100
                                    to-sky-200 ring-sky-300
                                    text-sky-600 ring px-6 py-2
                                    hover:ring-sky-400 transition-all
                                    rounded-md mt-6 text-sm
                                 "
-                     >
-                        Salvar Alterações
-                     </button>
-                  </div>
-               </div>
+                            >
+                                Salvar Alterações
+                            </button>
+                        </div>
+                    </div>
 
-               {/* Right Panel - Preview*/}
-               <div className="lg:col-span-7 max-lg:mt-6">
-                  <div className="relative w-full">
-                     <div
-                        className="
+                    {/* Right Panel - Preview*/}
+                    <div className="lg:col-span-7 max-lg:mt-6">
+                        <div className="relative w-full">
+                            <div
+                                className="
                                 absolute bottom-4 left-0
                                 right-0 flex items-center
                                 justify-end gap-2
                              "
-                     >
-                        <button
-                           onClick={printResume}
-                           className="
-                              flex items-center gap-2 px-6
-                              py-2 text-xs rounded-lg
-                              bg-gradient-to-br from-sky-100
-                              to-sky-200 text-sky-600
-                              ring-sky-300 hover:ring
-                              transition-colors
-                          "
-                        >
-                           <DownloadIcon className="size-4" />
-                           Download
-                        </button>
-                     </div>
-                  </div>
+                            >
+                                <PdfDownload
+                                    data={resumeData}
+                                    template={resumeData.template}
+                                    accentColor={resumeData.accent_color}
+                                />
+                            </div>
+                        </div>
 
-                  {/* -- resume preview -- */}
-                  <div>
-                     <ResumePreview
-                        data={resumeData}
-                        template={resumeData.template}
-                        accentColor={resumeData.accent_color}
-                     />
-                  </div>
-               </div>
+                        {/* -- resume preview -- */}
+                        <div>
+                            <ResumePreview
+                                data={resumeData}
+                                template={resumeData.template}
+                                accentColor={resumeData.accent_color}
+                            />
+                        </div>
+                    </div>
+                </div>
             </div>
-         </div>
-      </div>
-   )
+        </div>
+    )
 }
 
 export default ResumeBuilder
