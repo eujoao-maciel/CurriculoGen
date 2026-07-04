@@ -72,8 +72,10 @@ const styles = StyleSheet.create({
     description: {
         fontSize: 9.5,
         color: "#374151",
-        lineHeight: 1.5,
         marginTop: 6,
+    },
+    descriptionLine: {
+        marginBottom: 2,
     },
     twoColGrid: {
         flexDirection: "row",
@@ -107,6 +109,22 @@ const styles = StyleSheet.create({
         borderRadius: 10,
     },
 })
+
+const MultiLineText = ({ children, style }) => {
+    if (!children) return null
+
+    return (
+        <View style={style}>
+            {String(children)
+                .split("\n")
+                .map((line, index) => (
+                    <Text key={index} style={styles.descriptionLine}>
+                        {line}
+                    </Text>
+                ))}
+        </View>
+    )
+}
 
 export const ModernTemplatePdf = ({ data = {}, accentColor = "#3B82F6" }) => {
     const formatDate = (dateStr) => {
@@ -174,9 +192,9 @@ export const ModernTemplatePdf = ({ data = {}, accentColor = "#3B82F6" }) => {
                     {data?.professional_summary && (
                         <View style={styles.section}>
                             <Text style={styles.sectionTitle}>Resumo</Text>
-                            <Text style={styles.summaryText}>
+                            <MultiLineText>
                                 {String(data.professional_summary)}
-                            </Text>
+                            </MultiLineText>
                         </View>
                     )}
 

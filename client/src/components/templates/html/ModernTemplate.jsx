@@ -156,7 +156,7 @@ const ModernTemplate = ({ data, accentColor }) => {
                                         </div>
                                     </div>
                                     {p.description && (
-                                        <div className="text-gray-700 leading-relaxed text-sm mt-3">
+                                        <div className="text-sm text-gray-700 leading-relaxed mt-3 whitespace-pre-line">
                                             {p.description}
                                         </div>
                                     )}
