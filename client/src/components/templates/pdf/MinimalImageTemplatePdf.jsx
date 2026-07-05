@@ -110,7 +110,6 @@ const styles = StyleSheet.create({
         marginBottom: 18,
     },
     summaryText: {
-        lineHeight: 1.5,
         color: "#3f3f46",
     },
     expItem: {
@@ -148,6 +147,22 @@ const styles = StyleSheet.create({
         color: "#18181b",
     },
 })
+
+const MultiLineText = ({ children, style }) => {
+    if (!children) return null
+
+    return (
+        <View style={style}>
+            {String(children)
+                .split("\n")
+                .map((line, index) => (
+                    <Text key={index} style={styles.descriptionLine}>
+                        {line}
+                    </Text>
+                ))}
+        </View>
+    )
+}
 
 export const MinimalImageTemplatePdf = ({
     data = {},
@@ -308,9 +323,10 @@ export const MinimalImageTemplatePdf = ({
                                 >
                                     Resumo
                                 </Text>
-                                <Text style={styles.summaryText}>
-                                    {String(data.professional_summary)}
-                                </Text>
+
+                                <MultiLineText style={styles.summaryText}>
+                                    {data.professional_summary}
+                                </MultiLineText>
                             </View>
                         )}
 
