@@ -35,7 +35,6 @@ const styles = StyleSheet.create({
     },
     summaryText: {
         color: "#374151",
-        lineHeight: 1.5,
     },
     itemBlock: {
         marginBottom: 14,
@@ -60,13 +59,38 @@ const styles = StyleSheet.create({
     },
     description: {
         color: "#374151",
-        lineHeight: 1.5,
     },
     skillsText: {
         color: "#374151",
         lineHeight: 1.6,
     },
+    lineSpacing: {
+        marginBottom: 3,
+    },
+    blankLine: {
+        height: 6,
+    },
 })
+
+const renderMultilineText = (text, textStyle, keyPrefix = "") => {
+    if (!text) return null
+
+    return String(text)
+        .split("\n")
+        .map((line, i) => {
+            if (line.trim() === "") {
+                return <View key={`${keyPrefix}-blank-${i}`} style={styles.blankLine} />
+            }
+            return (
+                <Text
+                    key={`${keyPrefix}-line-${i}`}
+                    style={[textStyle, styles.lineSpacing]}
+                >
+                    {line}
+                </Text>
+            )
+        })
+}
 
 export const MinimalTemplatePdf = ({ data = {}, accentColor = "#2563eb" }) => {
     const formatDate = (dateStr) => {
@@ -132,9 +156,11 @@ export const MinimalTemplatePdf = ({ data = {}, accentColor = "#2563eb" }) => {
                 {/* RESUMO */}
                 {data?.professional_summary && (
                     <View style={styles.section}>
-                        <Text style={styles.summaryText}>
-                            {String(data.professional_summary)}
-                        </Text>
+                        {renderMultilineText(
+                            data.professional_summary,
+                            styles.summaryText,
+                            "summary"
+                        )}
                     </View>
                 )}
 
@@ -167,11 +193,12 @@ export const MinimalTemplatePdf = ({ data = {}, accentColor = "#2563eb" }) => {
                                     <Text style={styles.itemSubtitle}>
                                         {exp?.company || ""}
                                     </Text>
-                                    {exp?.description && (
-                                        <Text style={styles.description}>
-                                            {String(exp.description)}
-                                        </Text>
-                                    )}
+                                    {exp?.description &&
+                                        renderMultilineText(
+                                            exp.description,
+                                            styles.description,
+                                            `exp-${i}`
+                                        )}
                                 </View>
                             ))}
                         </View>
@@ -194,11 +221,12 @@ export const MinimalTemplatePdf = ({ data = {}, accentColor = "#2563eb" }) => {
                                 <Text style={styles.itemTitle}>
                                     {proj?.name || ""}
                                 </Text>
-                                {proj?.description && (
-                                    <Text style={styles.description}>
-                                        {String(proj.description)}
-                                    </Text>
-                                )}
+                                {proj?.description &&
+                                    renderMultilineText(
+                                        proj.description,
+                                        styles.description,
+                                        `proj-${i}`
+                                    )}
                             </View>
                         ))}
                     </View>

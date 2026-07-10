@@ -42,7 +42,7 @@ const MinimalTemplate = ({ data = {}, accentColor = '#2563eb' }) => {
          {/* Professional Summary */}
          {data.professional_summary && (
             <section className="mb-8 sm:mb-12">
-               <p className="text-sm sm:text-base text-gray-700 leading-relaxed">
+               <p className="text-sm sm:text-base text-gray-700 leading-relaxed whitespace-pre-line break-words">
                   {data.professional_summary}
                </p>
             </section>
@@ -78,7 +78,7 @@ const MinimalTemplate = ({ data = {}, accentColor = '#2563eb' }) => {
                         </p>
 
                         {exp.description && (
-                           <div className="text-sm sm:text-base text-gray-700 leading-relaxed whitespace-pre-line">
+                           <div className="text-sm sm:text-base text-gray-700 leading-relaxed whitespace-pre-line break-words">
                               {exp.description}
                            </div>
                         )}
@@ -98,6 +98,7 @@ const MinimalTemplate = ({ data = {}, accentColor = '#2563eb' }) => {
                   PROJETOS
                </h2>
 
+
                <div className="space-y-6">
                   {data.project.map((proj, index) => (
                      <div key={index}>
@@ -105,7 +106,7 @@ const MinimalTemplate = ({ data = {}, accentColor = '#2563eb' }) => {
                            {proj.name}
                         </h3>
                         {proj.description && (
-                           <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
+                           <p className="text-sm sm:text-base text-gray-600 leading-relaxed whitespace-pre-line break-words">
                               {proj.description}
                            </p>
                         )}
@@ -161,7 +162,7 @@ const MinimalTemplate = ({ data = {}, accentColor = '#2563eb' }) => {
                   HABILIDADES
                </h2>
 
-               <div className="text-sm sm:text-base text-gray-700 leading-relaxed">
+               <div className="text-sm sm:text-base text-gray-700 leading-relaxed break-words">
                   {data.skills.join(' • ')}
                </div>
             </section>
